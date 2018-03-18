@@ -3,13 +3,15 @@ var express         = require("express"),
     methodOverride  = require("method-override"),
     bodyParser      = require("body-parser"),
     mongoose        = require("mongoose"),
-    passport        = require("passport-local");
+    passport        = require("passport-local"),
+    path            = require("path");
 
 mongoose.connect("mongodb://localhost/timebank");
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(methodOverride("_method"));
+app.use(express.static(path.join(__dirname, 'css')));
 
 //DATABASE SCHEMA SETUP
 var requestSchema = new mongoose.Schema({
