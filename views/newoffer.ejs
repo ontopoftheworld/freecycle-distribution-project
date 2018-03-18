@@ -1,0 +1,15 @@
+<% include partials/header %>
+
+    <div class="container">
+        <h1>Create a New Offers</h1>
+
+        <form action="/offers" method="POST">
+            <input type="text" name="offer[title]" placeholder="Enter title here.">
+            <input type="text" name="offer[desc]" placeholder="Enter description">
+            <button>Submit</button>
+        </form>
+
+        <a href="/offers" class="btn btn-primary">Back</a>
+    </div>
+
+<% include partials/footer %>

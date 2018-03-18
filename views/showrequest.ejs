@@ -1,0 +1,19 @@
+<% include partials/header %>
+
+    <div class="container">
+        <h1>Request Details</h1>
+
+        <h4><%= request.title %></h4>
+        <h4><%= request.desc %></h4>
+        <span>
+            <a class="btn btn-secondary" href="/requests/<%= request._id %>/edit">Edit Request</a>
+
+            <form action="/requests/<%= request._id %>?_method=DELETE" method="POST">
+                <button class="btn btn-danger">Delete Request</button>
+            </form>
+        </span>
+
+        <a href="/requests%>">Go Back</a>
+    </div>
+
+<% include partials/footer %>

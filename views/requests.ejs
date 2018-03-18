@@ -1,0 +1,21 @@
+<% include partials/header %>
+
+    <div class="container">
+        <h1>Requests page</h1>
+            <div style="">
+                <% requests.forEach(function(request){ %>
+                    <span>
+                        <h4><%= request.title %></h4>
+                        <h4><%= request.desc %></h4>
+                    </span>
+                    <p>
+                        <a href="/requests/<%= request._id %>" class="btn btn-primary">More Info</a>
+                    </p>
+                <% }); %>
+            </div>
+        <div>
+            <a class="btn btn-primary" href="/requests/new">Make New Request</a>
+        </div>
+    </div>
+
+<% include partials/footer %>

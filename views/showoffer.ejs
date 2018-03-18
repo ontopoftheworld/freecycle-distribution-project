@@ -1,0 +1,18 @@
+<% include partials/header %>
+
+    <div class="container">
+        <h1>Offer Details</h1>
+
+        <h4><%= offer.title %></h4>
+        <h4><%= offer.desc %></h4>
+
+        <a class="btn btn-secondary" href="/offers/<%= offer._id %>/edit">Edit Offer</a>
+
+        <form action="/offers/<%= offer._id %>?_method=DELETE" method="POST">
+            <button class="btn btn-danger">Delete Offer</button>
+        </form>
+
+        <a href="/offers%>">Go Back</a>
+    </div>
+
+<% include partials/footer %>

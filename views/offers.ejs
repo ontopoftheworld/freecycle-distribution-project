@@ -1,0 +1,19 @@
+<% include partials/header %>
+
+    <div class="container">
+        <h1>Offers page</h1>
+            <div>
+                <% offers.forEach(function(offer){ %>
+                    <span>
+                        <h4><%= offer.title %></h4>
+                        <h4><%= offer.desc %></h4>
+                    </span>
+                    <p>
+                        <a href="/offers/<%= offer._id %>" class="btn btn-primary">More Info</a>
+                    </p>
+                <% }); %>
+            </div>
+        <a class="btn btn-primary" href="/offers/new">Make New Offer</a>
+    </div>
+
+<% include partials/footer %>
