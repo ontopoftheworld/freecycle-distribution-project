@@ -8,7 +8,7 @@ var Offer = require("../models/offers"),
 
 // Store routes:
 
-router.get("/store", function(req, res) {
+router.get("/store", isLoggedIn, function(req, res) {
     res.render("store");
 });
 
