@@ -21,7 +21,8 @@ mongoose.connect("mongodb://localhost/timebank");
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(methodOverride("_method"));
-app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static(path.join(__dirname, 'public')));
+app.use('/static', express.static(path.join(__dirname, '/public')));
 
 app.use(require("express-session")({
     secret: "! t1m3b@nk s3cr3t !",
