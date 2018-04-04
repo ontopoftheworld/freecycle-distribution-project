@@ -23,11 +23,18 @@ router.get("/offers/new", isLoggedIn, function(req, res) {
 });
 
 router.post("/offers", isLoggedIn, function(req, res) {
-    Offer.create(req.body.offer, function(err, newR) {
+    var title = req.body.offer.title;
+    var desc = req.body.offer.desc;
+    var author = {
+        id: req.user._id,
+        username: req.user.username
+    }
+    var newOffer = {title: title, desc: desc, author: author};
+    Offer.create(newOffer, function(err, newR) {
         if(err){
             res.render("newoffer");
         } else {
-            res.redirect("offers");
+            res.redirect("/offers");
         }
     });
 });
@@ -45,9 +52,13 @@ router.get("/offers/:id", isLoggedIn, function(req, res) {
 router.get("/offers/:id/edit", isLoggedIn, function(req, res) {
     Offer.findById(req.params.id, function(err, foundOffer) {
         if(err) {
-            res.redirect("offers");
+            res.redirect("/offers");
         } else {
-            res.render("editoffer", {offer: foundOffer});
+            if (foundOffer.author.id.equals(req.user._id)) {
+                res.render("editoffer", {offer: foundOffer});
+            } else {
+                res.redirect("back");
+            }
         }
     });
 });
