@@ -1,5 +1,9 @@
 body {
-    background-image: linear-gradient(to right, #32c8ba, #27cbce, #2ecedf, #43d0ef, #5dd1fb);
+    background-image: linear-gradient(to top, #4b40bc, #3c53c3, #3163c8, #3071c9, #397ec9);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
     color: white;
 }
 
@@ -7,19 +11,29 @@ h1 {
     margin: 70px auto 30px auto;
     text-align: center;
     text-shadow: 2px 2px 10px black;
+    font-family: 'Glegoo', serif;
+}
+
+h4 {
+    font-family: 'Glegoo', serif;
+    text-decoration: underline;
 }
 
 h5 {
     color: white;
-    font-family: Arial;
+    font-family: 'Glegoo', serif;
     font-size: 20px;
     text-shadow: 0px 0px 15px black;
+}
+
+h6 {
+    font-family: 'Open Sans', sans-serif;
 }
 
 /* ----------------- Landing Page ----------------- */
 
 #landingPageEntirety {
-    background-image: url("/static/images/timeBlue.jpg");
+    background-image: url("/static/images/timeBank.jpg");
     background-color: lightgrey;
    /*background: rgba(76, 175, 80, 0.7);*/
     background-repeat: no-repeat;
@@ -27,7 +41,8 @@ h5 {
     background-position: center;
     background-size: cover;
     background-blend-mode: multiply;
-    padding: 30px 100px 30px 100px;
+    padding: 30px 100px 150px 100px;
+    margin: -8px -8px -8px -8px;
     color: white;
 }
 
@@ -38,16 +53,21 @@ h5 {
 
 #landingHeader {
     margin-right: 200px;
-    font-family: 'Merienda One', cursive;
-    font-size: 46px;
     width: 500px;
     display: inline-block;
     color: white;
+}
+
+#landingHeader h1 {
+    font-family: 'Merienda One', cursive;
+    font-size: 80px;
     /*text-shadow: 0px 10px 90px grey;*/
+    text-align: left;
     text-shadow: 0px 0px 15px grey;
 }
 
 #landingLoginBox h2 {
+    font-family: 'Glegoo', serif;
     padding: 0 0 0 95px;
     font-size: 24px;
 }
@@ -107,7 +127,7 @@ h5 {
     /*background: rgba(255, 255, 255, 0.85);*/
     /*background: rgba(0,0,0,0.6);*/
     background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.9));
-    font-family: Arial;
+    font-family: 'Open Sans', sans-serif;
     font-size: 14px;
 }
 
@@ -174,6 +194,8 @@ h5 {
     border-radius: 10px;
     border: solid white;
     padding: 20px 50px 5px 50px;
+/* display: inline-block;
+    width: 25%; */
 }
 
 .indivPost a {
@@ -186,4 +208,132 @@ h5 {
 .indivPost a:hover {
     background-color: blue;
     border: solid blue;
+}
+
+.indivPost:hover {
+    background-color: white;
+    opacity: 0.9;
+    color: black;
+}
+
+.indivPost:hover a {
+    background-color: #5bc0de;
+    opacity: 0.9;
+    color: white;
+    border: solid #5bc0de;
+}
+
+.indivPost:hover a:hover {
+    background-color: blue;
+    border: solid blue;
+}
+
+
+/* ---- Login Page ---- */
+#loginPage form {
+    border-radius: 10px;
+    border: solid white;
+    padding: 50px;
+    text-align: center;
+}
+
+/* ---- Sign up Page --- */
+
+#registration {
+    margin: 0;
+    padding: 0 0 170px 0;
+    background-image: linear-gradient(to top, #4b40bc, #3c53c3, #3163c8, #3071c9, #397ec9);
+}
+
+#signupBox {
+    margin: 0px auto;
+    text-align: center;
+}
+
+#signupBox h2 {
+    font-family: 'Glegoo', serif;
+}
+
+#signupBox form {
+    padding: 0 20px 0 20px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+#signupBox input {
+    font-size: 14px;
+    padding: 10px 10px;
+    border-radius: 2px;
+    border-style: solid;
+    border-color: lightgrey;
+    width: 90%;
+}
+
+#signupBox button {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    padding: 10px 10px;
+    margin: 20px 0 20px 0;
+    border: none;
+    cursor: pointer;
+    width: 90%;
+    border-radius: 2px;
+}
+
+#signupBox button:hover {
+    background-color: #2D9434; 
+}
+
+#signupBox hr {
+    background-color: white;
+    height: 1px;
+    width: 80%;
+    margin-bottom: 50px;
+}
+
+#signupBox {
+    margin-top: 140px;
+    border-radius: 10px;
+    padding: 30px 0 50px 0;
+    width: 310px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.2));
+}
+
+#backButton {
+    margin: 10px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+/* --- new Posts ---  */
+
+.newPostForm {
+    margin: 30px 0 0 0;
+    border-radius: 10px;
+    padding: 70px 0 50px 0;
+    text-align: center;
+    min-width: 310px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.2));
+}
+
+.newPostForm input {
+    font-size: 14px;
+    padding: 10px 10px;
+    border-radius: 2px;
+    border-style: solid;
+    border-color: lightgrey;
+    min-width: 280px;
+    width: 50%;
+}
+
+.newPostForm button {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    padding: 10px 10px;
+    margin: 20px 0 20px 0;
+    border: none;
+    cursor: pointer;
+    width: 30%;
+    min-width: 280px;
+    border-radius: 2px;
 }

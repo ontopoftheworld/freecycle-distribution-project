@@ -11,22 +11,24 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Glegoo" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+	<link rel="stylesheet" href="/static/css/style.css">
     </head>
-    <body>
-        <div class="container">
-        
-            <h1>Register</h1>
-
-            <form action="/register" method="POST">
-                <label for="uname"><b>Username</b></label>
-                <input type="text" placeholder="Enter Username" name="username" required>
-                <label for="psw"><b>Password</b></label>
-                <input type="password" placeholder="Enter Password" name="password" required>
-                <button type="submit">Sign Up</button>
-            </form>
-        
-            <a href="/" class="btn btn-primary">Back</a>
-        
-        </div>
+    <body id="registration">
+      <div id="backButton">
+        <a href="/" class="btn btn-primary">Back</a>
+      </div>
+      <div id="signupBox">
+	<h2> Register </h2>
+	<hr>
+        <form action="/register" method="POST">
+          <label for="uname"></label>
+          <input type="text" placeholder="Username" name="username" required><br><br>
+          <label for="psw"></label>
+          <input type="password" placeholder="Password" name="password" required><br>
+          <button type="submit">Sign Up</button>
+        </form>
+      </div>
     </body>
 </html>
