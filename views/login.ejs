@@ -11,20 +11,29 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/css/style.css">
     </head>
     <body>
-        <div class="container">
+        <div class="container" id="loginPage">
         
             <h1>Login</h1>
 
             <form action="/login" method="POST">
+<<<<<<< HEAD
                 <label for="email"><b>Email</b></label>
                 <input type="text" placeholder="Enter email" name="username" required>
                 <label for="password"><b>Password</b></label>
                 <input type="password" placeholder="Enter Password" name="password" required>
+=======
+                <label for="uname"><b>Username</b></label>
+                <input type="text" placeholder="Enter Username" name="username" required>
+		<br>
+                <label for="psw"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="password" required><br>
+>>>>>>> 2055419585befe42277ecac2bbb6c9af2c0180f8
                 <button type="submit">Login</button>
             </form>
-        
+            <br>
             <a href="/" class="btn btn-primary">Back</a>
         
         </div>

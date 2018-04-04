@@ -1,10 +1,42 @@
 <% include partials/header %>
 
+<<<<<<< HEAD
     <div class="container">
         <h1> Welcome to Time Bank, <%= currentUser.firstName %>! </h1>
+=======
+<div class="container">
+<div id="homepage">
+<h1> Welcome to your time bank, <%= currentUser.username %>! </h1>
+>>>>>>> 2055419585befe42277ecac2bbb6c9af2c0180f8
 
-        <div><a href="/requests">See all requests</a></div>
-        <div><a href="/offers">See all offers</a></div>
-    </div>
+<!-- <div><a href="/requests">See all requests</a></div>
+<div><a href="/offers">See all offers</a></div> -->
+
+<div class="listingBoxH" id="userAssignments">
+<h5>My Accepted Assignments:</h5>
+<ul>
+<li>
+This is a placeholder.
+</li>
+</ul>
+</div>
+<div class="listingBoxV" id="userRequests">
+<h5> My Open Requests: </h5>
+<ul>
+<li>
+This is a placeholder.
+</li>
+</ul>
+</div>
+<div class="listingBoxV" id="userOffers">
+<h5>My Open Offers: </h5>
+<ul>
+<li>
+This is a placeholder.
+</li>
+</ul>
+</div>
+</div>
+</div>
 
 <% include partials/footer %>

@@ -1,15 +1,15 @@
 <% include partials/header %>
 
+    <a href="/offers" class="btn btn-primary" id="backButton">Back</a>
     <div class="container">
-        <h1>Create a New Offers</h1>
-
+        <h1>Create a New Offer</h1>
+	<div class="newPostForm">
         <form action="/offers" method="POST">
-            <input type="text" name="offer[title]" placeholder="Enter title here.">
-            <input type="text" name="offer[desc]" placeholder="Enter description">
+            <input type="text" name="offer[title]" placeholder="Enter title here."><br><br>
+            <input type="text" name="offer[desc]" placeholder="Enter description"><br><br>
             <button>Submit</button>
         </form>
-
-        <a href="/offers" class="btn btn-primary">Back</a>
+	</div>
     </div>
 
 <% include partials/footer %>
