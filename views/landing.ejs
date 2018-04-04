@@ -16,22 +16,24 @@
     </head>
     <body>
       <div id="landingPageEntirety">
-        <div id="landingHeader">
-	  <h1>The Freecycle Distribution Project</h1>
+	<div id="landingPageCover">
+          <div id="landingHeader">
+	    <h1>The Freecycle Distribution Project</h1>
+	  </div>
+	  <div id="landingLoginBox">
+	    <h2>Login</h2>
+            <form action="/login" method="POST">
+              <input type="text" placeholder="Username" name="username" required>
+	      <br>
+	      <br>
+              <input type="password" placeholder="Password" name="password" required>
+	      <br>
+              <button type="submit">Login</button>
+            </form>
+	    <br>
+            <div id="landingSignUp"><b>Don't have an account?</b><br><br><a href="/register"> Sign up</a></div>
+          </div>
 	</div>
-	<div id="landingLoginBox">
-	  <h2>Login</h2>
-          <form action="/login" method="POST">
-            <input type="text" placeholder="Username" name="username" required>
-	    <br>
-	    <br>
-            <input type="password" placeholder="Password" name="password" required>
-	    <br>
-            <button type="submit">Login</button>
-          </form>
-	  <br>
-          <div id="landingSignUp"><b>Don't have an account?</b><br><br><a href="/register"> Sign up</a></div>
-        </div>
 	<!-- <div id="landingFooter">
 	</div> -->
       </div>

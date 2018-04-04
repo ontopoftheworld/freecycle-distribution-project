@@ -1,15 +1,40 @@
+body {
+    background-image: linear-gradient(to right, #32c8ba, #27cbce, #2ecedf, #43d0ef, #5dd1fb);
+    color: white;
+}
+
+h1 {
+    margin: 70px auto 30px auto;
+    text-align: center;
+    text-shadow: 2px 2px 10px black;
+}
+
+h5 {
+    color: white;
+    font-family: Arial;
+    font-size: 20px;
+    text-shadow: 0px 0px 15px black;
+}
 
 /* ----------------- Landing Page ----------------- */
 
 #landingPageEntirety {
-    background-image: url("/static/images/timeBeige.jpg");
-    background-color: #cceeff; /* #c9d7e8;*/
+    background-image: url("/static/images/timeBlue.jpg");
+    background-color: lightgrey;
+   /*background: rgba(76, 175, 80, 0.7);*/
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
-    background-blend-mode: darken;
+    background-size: cover;
+    background-blend-mode: multiply;
     padding: 30px 100px 30px 100px;
+    color: white;
 }
+
+/*#landingPageCover {
+    background: rgba(255, 255, 255, 0.3);
+    padding: 0 0 0 40px;
+}*/
 
 #landingHeader {
     margin-right: 200px;
@@ -18,11 +43,12 @@
     width: 500px;
     display: inline-block;
     color: white;
-    text-shadow: 0px 10px 90px grey;
+    /*text-shadow: 0px 10px 90px grey;*/
+    text-shadow: 0px 0px 15px grey;
 }
 
 #landingLoginBox h2 {
-    padding: 0 0 0 100px;
+    padding: 0 0 0 95px;
     font-size: 24px;
 }
 
@@ -59,6 +85,7 @@
     margin-left: 92px;
     padding: 8px 10px;
     border-radius: 2px;
+    font-size: 14px;
 }
 
 #landingLoginBox a:hover {
@@ -70,16 +97,93 @@
 }
 
 #landingLoginBox {
-    background-color: white;
     margin-top: 140px;
     padding: 30px 0 50px 50px;
     border-radius: 10px;
     width: 300px;
     display: inline-block;
     vertical-align: top;
-    border: solid lightgrey;
+    border: solid 1px darkgrey;
+    /*background: rgba(255, 255, 255, 0.85);*/
+    /*background: rgba(0,0,0,0.6);*/
+    background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.9));
+    font-family: Arial;
+    font-size: 14px;
 }
 
 #landingSignUp {
     margin: 20px 20px 0 80px;
+}
+
+/* ------------ Post Login Home Page ------------ */
+
+.listingBoxH {
+    padding: 20px;
+    border: solid white;
+    border-radius: 10px;
+    margin: 10px;
+    width: 95.5%;
+    min-width: 450px;
+}
+
+.listingBoxV {
+    padding: 20px;
+    border: solid white;
+    border-radius: 10px;
+    margin-left: 10px;
+    margin-top: 20px;
+    display: inline-block;
+    width: 47%;
+    min-width: 450px;
+}
+
+.listingBoxH ul {
+    margin-top: 20px;
+    list-style-type: none;
+}
+
+.listingBoxH li {
+    margin-top: 5px;
+    margin-right: 24px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 5px;
+    color: black;
+    opacity: 0.8;
+}
+
+.listingBoxV ul {
+    margin-top: 20px;
+    list-style-type: none;
+}
+
+.listingBoxV li {
+    margin-top: 5px;
+    margin-right: 24px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 5px;
+    color: black;
+    opacity: 0.8;
+}
+
+
+/* -------  Offers, Requests Main Pages ------ */
+.indivPost {
+    margin: 0px auto 20px auto;
+    border-radius: 10px;
+    border: solid white;
+    padding: 20px 50px 5px 50px;
+}
+
+.indivPost a {
+    background-color: white;
+    color: blue;
+    border: solid white;
+    padding: 2px 10px 2px 10px;
+}
+
+.indivPost a:hover {
+    background-color: blue;
+    border: solid blue;
 }

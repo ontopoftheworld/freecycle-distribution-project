@@ -4,13 +4,15 @@
         <h1>Requests page</h1>
             <div style="">
                 <% requests.forEach(function(request){ %>
+		<div class="indivPost">	
                     <span>
                         <h4><%= request.title %></h4>
-                        <h4><%= request.desc %></h4>
+                        <h6><%= request.desc %></h6>
                     </span>
                     <p>
                         <a href="/requests/<%= request._id %>" class="btn btn-primary">More Info</a>
                     </p>
+		</div>	
                 <% }); %>
             </div>
         <div>

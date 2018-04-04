@@ -4,13 +4,15 @@
         <h1>Offers page</h1>
             <div>
                 <% offers.forEach(function(offer){ %>
+		   <div class="indivPost">
                     <span>
                         <h4><%= offer.title %></h4>
-                        <h4><%= offer.desc %></h4>
+                        <h6><%= offer.desc %></h6>
                     </span>
                     <p>
                         <a href="/offers/<%= offer._id %>" class="btn btn-primary">More Info</a>
                     </p>
+		    </div>
                 <% }); %>
             </div>
         <a class="btn btn-primary" href="/offers/new">Make New Offer</a>
