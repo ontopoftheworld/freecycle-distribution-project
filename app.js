@@ -16,7 +16,7 @@ var indexRoutes =   require("./routes/index"),
     requestRoutes = require("./routes/requests"),
     storeRoutes =   require("./routes/store");
 
-mongoose.connect("mongodb://localhost/timebank");
+mongoose.connect("mongodb://root:Eh2KuegK1vQk@127.0.0.1:8080/game");
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
