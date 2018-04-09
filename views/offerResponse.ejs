@@ -1,0 +1,17 @@
+<% include partials/header %>
+
+<div class="container">
+        <h1>Review Offer</h1>
+        <h4><%= offer.title %></h4>
+        <h6><%= offer.desc %></h6>
+        <h6>Hours offered: <%= offer.hoursOffered %></h6>
+        <h6>Category: <%= offer.category %></h6>
+        <h6>Date posted: <%= offer.postDate.toDateString() %></h6>
+        <p>Submitted by: <a href="/users/<%= offer.author.id %>"><%= offer.author.username %></a></p>
+        <form action="/offers/<%= offer._id %>/response" method="POST">
+            <textarea name="message" rows="10" cols="30"></textarea>
+            <button>Accept Offer</button>
+        </form>
+</div>
+
+<% include partials/footer %>

@@ -23,18 +23,29 @@ router.get("/offers/new", isLoggedIn, function(req, res) {
 });
 
 router.post("/offers", isLoggedIn, function(req, res) {
-    var title = req.body.offer.title;
-    var desc = req.body.offer.desc;
-    var author = {
-        id: req.user._id,
-        username: req.user.username
-    }
-    var newOffer = {title: title, desc: desc, author: author};
-    Offer.create(newOffer, function(err, newR) {
+    User.findById(req.user._id, function(err, user){
         if(err){
-            res.render("newoffer");
+            console.log(err);
         } else {
-            res.redirect("/offers");
+            var title = req.body.offer.title;
+            var desc = req.body.offer.desc;
+            var author = {
+                id: req.user._id,
+                username: req.user.username
+            }
+            var hoursOffered = req.body.offer.hoursOffered;
+            var category = req.body.offer.category;
+            var newOffer = {title: title, desc: desc, author: author, hoursOffered: hoursOffered, category: category};
+            Offer.create(newOffer, function(err, newO) {
+                if(err){
+                    console.log(err);
+                    res.render("newoffer");
+                } else {
+                    user.offers.push(newO);
+                    user.save();
+                    res.redirect("/offers");
+                }
+            });
         }
     });
 });
@@ -80,6 +91,36 @@ router.delete("/offers/:id", isLoggedIn, function(req, res) {
             res.redirect("/offers");
         } else {
             res.redirect("/offers");
+        }
+    });
+});
+
+router.get("/offers/:id/response", isLoggedIn, function(req, res) {
+    Offer.findById(req.params.id, function(err, foundOffer) {
+        if(err && (!foundOffer)) {
+            console.log(err);
+            res.redirect("/offers");
+        } else {
+            if (foundOffer.author.id.equals(req.user._id)) {
+                res.redirect("back");
+            } else {
+                res.render("offerResponse", {offer: foundOffer});
+            }
+        }
+    });
+});
+
+router.post("/offers/:id/response", isLoggedIn, function(req, res) {
+    Offer.findById(req.params.id, function(err, foundOffer) {
+        if(err) {
+            console.log(err);
+            res.redirect("/offers");
+        } else {
+            if (foundOffer.author.id.equals(req.user._id)) {
+                res.redirect("back");
+            } else {
+                res.render("offerResponse", {offer: foundOffer});
+            }
         }
     });
 });

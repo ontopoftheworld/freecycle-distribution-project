@@ -8,10 +8,16 @@
                     <span>
                         <h4><%= offer.title %></h4>
                         <p><%= offer.desc %></p>
+                        <h6>Hours offered: <%= offer.hoursOffered %></h6>
+                        <h6>Category: <%= offer.category %></h6>
+                        <h6>Date posted: <%= offer.postDate.toDateString() %></h6>
                         <p>Submitted by: <a href="/users/<%= offer.author.id %>"><%= offer.author.username %></a></p>
                     </span>
                     <p>
                         <a href="/offers/<%= offer._id %>" class="btn btn-primary">More Info</a>
+                        <% if(!(currentUser && offer.author.id.equals(currentUser._id))) { %>
+                            <a href="/offers/<%= offer._id %>/response" class="btn btn-primary">Take on</a>
+                        <% } %>
                     </p>
 		    </div>
                 <% }); %>
