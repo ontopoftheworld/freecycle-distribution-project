@@ -1,24 +1,24 @@
 <% include partials/header %>
 
-<div class="container">
+<div class="container" style="font-size:25px">
         <h1>Response to your Request</h1>
         <p>Hours Offered: <%= offer.hoursOffered %></p>
-        <form action="/offers/<%= offer._id %>/response" method="POST">
+        <form action="/offers/<%= offer._id %>/response" method="POST" >
             <p>Response from</p>
-            <input type="text" name="responserName" placeholder="<%= offer.author.username %>">
+            <input type="text" name="responserName" placeholder="<%= offer.author.username %>" style="width:100%">
             <p>Subject</p>
-            <input type="text" name="subject">
+            <input type="text" name="subject" style="width:100%">
             <p>Message from <%= offer.author.username %></p>
-            <textarea name="message" rows="10" cols="30"></textarea>
+            <textarea name="message" rows="10"  style="width:100%"></textarea>
             <p>Contact <%= offer.author.username %> By</p>
-            <input type="text" name="contact">
+            <input type="text" name="contact" style="width:100%">
             <p>Choose Time<p>
-            <input type="checkbox" name="checkbox" value="Wed"><label>Wed</label><br><br>
-            <input type="checkbox" name="checkbox" value="Sun"><label>Sun</label><br><br>
+            <input type="checkbox" name="checkbox" value="Wed"><label>Wed</label>
+            <input type="checkbox" name="checkbox" value="Sun"><label>Sun</label>
             <input type="checkbox" name="checkbox" value="Mon"><label>Mon</label><br><br>
             <button class="btn btn-primary">Accept Offer</button> 
         </form>
-        <a class="btn btn-primary" href="/offers">Decline Offer</a>
+        <a class="btn btn-primary" href="/offers" >Decline Offer</a>
 </div>
 
 <% include partials/footer %>
