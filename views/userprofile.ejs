@@ -1,0 +1,17 @@
+<% include partials/header %>
+
+<div class="container">
+<div id="userProfile">
+<h1> <%= currentUser.username %>! </h1>
+<img src="/static/images/noProfilePic" width="100px" height="100px">
+<div id="hoursSection">
+<h4> Hours: <%= currentUser.hours %> </h4>
+</div>
+<div id="infoSection">
+<p>Contact me: </p>
+<p></p>
+</div>
+</div>
+</div>
+
+<% include partials/footer %>
