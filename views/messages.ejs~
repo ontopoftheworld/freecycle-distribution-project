@@ -1,0 +1,11 @@
+<% include partials/header %>
+    <div id="chatId"><%= chatId %></div>
+    <%= messages %>
+    <div id="messageList">
+    </div>
+    <div id="userTypingSection">
+    <input type="text" id="message">
+    <input type="submit" id="submitButton" value="Send">
+    </div>
+    <script src="/static/js/messagesClient.js"></script>
+<% include partials/footer %>

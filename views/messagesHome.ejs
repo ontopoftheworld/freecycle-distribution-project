@@ -1,0 +1,23 @@
+<% include partials/header %>
+   <h4> Messages </h4>
+   <div id="allChats">
+   	<%= allMessages %>
+	<h5> Previous Messages </h5>
+        <% allMessages.forEach(function(message){ %>
+	   <div class="indivChat">
+	   <% if (message.senderA.displayName == thisUserDisplayName) { %>
+	      <%= message.senderB.displayName %>
+	   <% } else { %>
+	      <%= message.senderA.displayName %>
+	   <% } %>
+	   </div>
+	<% }); %>
+   </div>
+   <div id="startNewChat">
+   <h4> Start a new Chat: </h4>
+   <form action="/messages" method="POST">
+   	 To User: <input type="text" id="toUser" name="message[toUser]" placeholder="Name of user">
+   	 <input type="submit" id="submitButton" value="Send">
+   </form>
+   </div>
+<% include partials/footer %>

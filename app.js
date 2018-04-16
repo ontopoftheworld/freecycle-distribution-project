@@ -6,7 +6,9 @@ var express         = require("express"),
     passport        = require("passport"),
     LocalStrategy   = require("passport-local")
     path            = require("path");
-    
+
+var server = require('http').createServer(app);
+
 var Offer           = require("./models/offers"),
     Request         = require("./models/requests"),
     User            = require("./models/users");
@@ -14,9 +16,11 @@ var Offer           = require("./models/offers"),
 var indexRoutes =   require("./routes/index"),
     offerRoutes =   require("./routes/offers"),
     requestRoutes = require("./routes/requests"),
-    storeRoutes =   require("./routes/store");
+    storeRoutes =   require("./routes/store"),
+    messagesRoutes = require("./routes/messages");
 
-mongoose.connect("mongodb://localhost/timebank");
+//mongoose.connect("mongodb://localhost/timebank");
+mongoose.connect("mongodb://cs132:cs132p@ds117749.mlab.com:17749/132project");
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
@@ -45,7 +49,64 @@ app.use(indexRoutes);
 app.use(requestRoutes);
 app.use(offerRoutes);
 app.use(storeRoutes);
+app.use(messagesRoutes);
 
-app.listen(8080, function(){
+server.listen(8080, function(){
     console.log('- Server listening on port 8080');
+});
+
+// add socket.io for messages
+var io = require('socket.io').listen(server);
+var Messages = require("./models/messages");
+
+io.sockets.on('connection', function(socket){
+    // clients emit this when they join new rooms
+    socket.on('join', function(cGrp, displayName, callback){
+        socket.join(cGrp); // this is a socket.io method
+        socket.displayName = displayName;
+	socket.cGrp = cGrp;
+    });
+
+    // the client emits this when they want to send a message
+    socket.on('message', function(messageU){
+	// add the message to the database
+	var date = new Date(); 
+	var timeU = (date.getMonth()+1) + "/" +
+	    date.getDate()  + "/" + date.getFullYear() + ", " +
+	    date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+	console.log("socket.cGrp: " + socket.cGrp);
+	console.log("MESSAGE: " +  messageU + "," + "TIME: " + timeU);
+	Messages.find({chatGroup : socket.cGrp}, function(err, foundGrp){
+	    console.log("FOUND: " + foundGrp);
+	});
+	Messages.update(
+	    { "chatGroup" : socket.cGrp },
+	    { $push : { "message" : { "sentBy" : socket.displayName,
+				      "time" : timeU,
+				      "info" : messageU }}},
+	    { upsert : false, multi : true },
+	    function (err, object) {
+		if (err) {
+		    console.log("ERROR: problems updating message");
+		} 
+	    }
+	);
+	
+	// send the message to all users in the room
+	io.sockets.in(socket.cGrp).emit('message', socket.displayName, timeU, messageU);
+    });
+
+    // the client disconnected/closed their browser window
+    socket.on('disconnect', function(){
+        // Leave the room!
+	//io.sockets.in(socket.roomName).emit('memberLeft', socket.nickname);
+    });
+
+    // an error occured with sockets
+    socket.on('error', function(){
+        // Notify users that an error occured and log the error as well.
+	io.sockets.in(socket.roomName).emit('error');
+	console.log("ERROR: something went wrong");
+    });
+
 });

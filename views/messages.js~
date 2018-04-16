@@ -1,0 +1,67 @@
+var socket = io.connect();
+
+// fired when the page has loaded
+$(document).ready(function(){
+    // handle incoming messages
+    socket.on('message', function(nickname, message, time){
+	// display a newly-arrived message
+	var newMessage = $("<li></li>");
+	newMessage.html(time + "<br><b>" +
+			nickname + ": </b>" +
+			message + "<br>");
+	$("#messageList").append(newMessage);
+	window.scrollTo(0, document.body.scrollHeight);
+    });
+
+    // handle error occurances
+    socket.on('error', function() {
+    });
+    
+    // join the room
+    socket.emit('join', meta('roomName'), nickname, displayData);
+
+    // user submits a new message
+    $("#message").keypress(function(e) {
+        if(e.which == 13) {
+	    socket.emit('message', $("#message").val());
+	    $("#message").val("");
+	}
+    });
+    
+    $("#submitButton").click(function(){
+	socket.emit('message', $("#message").val());
+	$("#message").val("");
+    });
+    
+    $("#changeButton").click(function(){
+	if ($("#newNickname").val() === "") {
+	    $("#newNickname").val("Anonymous");
+	}
+	socket.emit('nickname', $("#newNickname").val());
+	$("#newNickname").attr("placeholder", "Enter new nickname here: ");
+    });
+});
+
+function meta(metaName) {
+    return $('meta[name='+metaName+']').attr("content");
+}
+
+function displayData(messages, members) {
+    // process the list of messages the server sent back
+    const $messageSection = $("#messageList");
+    for (var i = 0; i < messages.length; i++) {
+	var newMessage = $("<li></li>");
+	newMessage.html(messages[i].time + "<br><b>" +
+			messages[i].nickname + ": </b>" +
+			messages[i].body + "<br>");
+	$messageSection.append(newMessage);
+    }
+    
+    const $membersSection = $("#roomMembersList");
+    for (var i = 0; i < members.length; i++) {
+	var newModified = members[i].nickname.replace(/[\W_]+/g,"_");
+	var newMember = $('<div class="memberX" id="newMemN'+ newModified +'"></div>');
+	newMember.html(members[i].nickname);
+	$("#roomMembersList").append(newMember);
+    }
+}

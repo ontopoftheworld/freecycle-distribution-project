@@ -14,13 +14,13 @@ var userSchema = new mongoose.Schema({
            type: mongoose.Schema.Types.ObjectId,
            ref: "Request"
         }
-     ],
-     offers: [
+    ],
+    offers: [
         {
-           type: mongoose.Schema.Types.ObjectId,
-           ref: "Offer"
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Offer"
         }
-     ]
+    ]
 });
 
 userSchema.plugin(passportLocalMongoose);

@@ -1,0 +1,53 @@
+var socket = io.connect();
+
+// fired when the page has loaded
+$(document).ready(function(){
+    // handle incoming messages
+    socket.on('message', function(username, message){
+	// display a newly-arrived message
+	var newMessage = $("<li></li>");
+	newMessage.html(username + ": </b>" +
+			message + "<br>");
+	$("#messageList").append(newMessage);
+	window.scrollTo(0, document.body.scrollHeight);
+    });
+
+    // handle error occurances
+    socket.on('error', function() {
+    });
+
+    console.log("here");
+    // join the room
+    socket.emit('join', $("#chatId").html(), meta("userFirstName"), displayData);
+
+    // user submits a new message
+    $("#message").keypress(function(e) {
+        if(e.which == 13) {
+	    socket.emit('message', $("#message").val());
+	    $("#message").val("");
+	}
+    });
+    
+    $("#submitButton").click(function(){
+	socket.emit('message', $("#message").val());
+	$("#message").val("");
+    });
+});
+
+function displayData(messages, members) {
+    // process the list of messages the server sent back
+    const $messageSection = $("#messageList");
+    /*for (var i = 0; i < messages.length; i++) {
+	var newMessage = $("<li></li>");
+	newMessage.html(messages[i].time + "<br><b>" +
+			messages[i].nickname + ": </b>" +
+			messages[i].body + "<br>");
+	$messageSection.append(newMessage);
+	}*/
+    console.log("displaying!");
+}
+
+
+function meta(metaName) {
+    return $('meta[name='+metaName+']').attr("content");
+}
