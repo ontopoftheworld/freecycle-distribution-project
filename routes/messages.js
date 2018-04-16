@@ -71,7 +71,12 @@ router.get("/messages/:chatGroup", isLoggedIn, function(req, res) {
             console.log(err);
         } else {
 	    // If there is an existing chat
-            res.render("messages", {chatId: cGrp, messages: foundGrp[0].message} );
+	    let toUser = foundGrp[0].senderA.displayName;
+	    if (toUser === req.user.firstName) {
+		toUser = foundGrp[0].senderB.displayName;
+	    }
+            res.render("messages", {chatId: cGrp, messages: foundGrp[0].message,
+				    chatWith: toUser} );
         }
     });
 });

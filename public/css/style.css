@@ -337,3 +337,71 @@ h6 {
     min-width: 280px;
     border-radius: 2px;
 }
+
+/* -------- messageHome ---------- */
+#chatId {
+    display: none;
+}
+
+#startNewChat {
+    text-align: center;
+}
+
+#allChats {
+    text-align: center;
+}
+
+.indivChat a {
+    margin-top: 10px;
+    border-radius: 10px;
+    border: solid white;
+    background-color: white;
+    padding: 5px 50px 5px 50px;
+}
+
+.indivChat a:hover {
+    color: white;
+    background-color: #5bc0de;
+}
+
+/* -------- messages ---------- */
+#messagesPage {
+    text-align: center;
+    margin: 50px auto 50px auto;
+}
+
+#messageList {
+    padding: 10px;
+    max-height: 420px;
+    overflow-y: auto;
+    border-bottom: solid white;
+    color: black;
+}
+
+.indivMessage {
+    padding: 10px;
+    background-color: white;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+    width: 70%;
+}
+
+#chatbox {
+    text-align: left;
+    border: solid 2px white;
+    margin: 50px auto 50px auto;
+    width: 800px;
+    height: 500px;
+    position: relative;
+}
+
+#userTypingSection {
+    position: absolute;
+    bottom: 20px;
+    margin-left: 180px;
+}
+
+#message {
+    width: 400px;
+}

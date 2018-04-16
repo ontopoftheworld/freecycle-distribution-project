@@ -19,8 +19,7 @@ var indexRoutes =   require("./routes/index"),
     storeRoutes =   require("./routes/store"),
     messagesRoutes = require("./routes/messages");
 
-//mongoose.connect("mongodb://localhost/timebank");
-mongoose.connect("mongodb://cs132:cs132p@ds117749.mlab.com:17749/132project");
+mongoose.connect("mongodb://localhost/timebank");
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");

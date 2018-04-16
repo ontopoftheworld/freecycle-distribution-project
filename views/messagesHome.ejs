@@ -1,23 +1,28 @@
 <% include partials/header %>
-   <h4> Messages </h4>
-   <div id="allChats">
-   	<%= allMessages %>
-	<h5> Previous Messages </h5>
-        <% allMessages.forEach(function(message){ %>
-	   <div class="indivChat">
-	   <% if (message.senderA.displayName == thisUserDisplayName) { %>
-	      <%= message.senderB.displayName %>
-	   <% } else { %>
-	      <%= message.senderA.displayName %>
-	   <% } %>
-	   </div>
-	<% }); %>
-   </div>
+   <h1> Messages </h1>
+   <hr>
+   <br>
    <div id="startNewChat">
-   <h4> Start a new Chat: </h4>
    <form action="/messages" method="POST">
-   	 To User: <input type="text" id="toUser" name="message[toUser]" placeholder="Name of user">
-   	 <input type="submit" id="submitButton" value="Send">
+   	 Open a chat: <input type="text" id="toUser" name="message[toUser]" placeholder="Member's email">
+   	 <input type="submit" id="submitButton" value="Open">
    </form>
+   </div>
+   <br>
+   <hr>
+   <br>
+   <div id="allChats">
+	<h4> Previous Messages </h4><br>
+        <% allMessages.forEach(function(message){ %>
+	   <a href="/messages/<%= message.chatGroup %>">
+	   <div class="indivChat">
+	   	<% if (message.senderA.displayName == thisUserDisplayName) { %>
+	      		<%= message.senderB.displayName %></a>
+		<% } else { %>
+	   		<%= message.senderA.displayName %></a>
+		<% } %>
+	   </div>
+	   </a><br>
+	<% }); %>
    </div>
 <% include partials/footer %>
