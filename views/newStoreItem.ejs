@@ -1,0 +1,17 @@
+<% include partials/header %>
+
+    <a href="/store" class="btn btn-primary" id="backButton">Back</a>
+    <div class="container">
+        <h1>Post a New Item</h1>
+	<div class="newPostForm">
+        <form action="/store" method="POST">
+            <input type="text" name="item[title]" placeholder="Enter title here."><br><br>
+            <input type="text" name="item[desc]" placeholder="Enter description"><br><br>
+            <input type="number" name="item[hourPrice]" placeholder="Enter hour price"><br><br>
+            <input type="text" name="item[category]" placeholder="Enter category"><br><br>
+            <button>Submit</button>
+        </form>
+	</div>
+    </div>
+
+<% include partials/footer %>

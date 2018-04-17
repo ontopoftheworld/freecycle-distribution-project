@@ -12,6 +12,7 @@ var server = require('http').createServer(app);
 var Offer           = require("./models/offers"),
     Request         = require("./models/requests"),
     User            = require("./models/users");
+    Store           = require("./models/store");
 
 var indexRoutes =   require("./routes/index"),
     offerRoutes =   require("./routes/offers"),

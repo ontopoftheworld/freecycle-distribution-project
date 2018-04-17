@@ -1,8 +1,28 @@
 <% include partials/header %>
 
-<div class="container">
-    <h1>Store Page</h1>
-</div>
-
+    <div class="container">
+        <h1>Store page</h1>
+        <a class="btn btn-primary" href="/store/new">Post a New Item</a>
+            <div id="item">
+                <% items.forEach(function(item){ %>
+		   <div class="indivPost">
+                    <span>
+                        <h4><%= item.title %></h4>
+                        <p><%= item.desc %></p>
+                        <h6>Hour Price: <%= item.hourPrice %></h6>
+                        <h6>Category: <%= item.category %></h6>
+                        <h6>Date posted: <%= item.postDate.toDateString() %></h6>
+                        <p>Submitted by: <a href="/users/<%= item.author.id %>"><%= item.author.username %></a></p>
+                    </span>
+                    <p>
+                        <a href="/store/<%= item._id %>" class="btn btn-primary">More Info</a>
+                        <% if(!(currentUser && item.author.id.equals(currentUser._id))) { %>
+                            <a href="/store/<%= item._id %>" class="btn btn-primary">Buy</a>
+                        <% } %>
+                    </p>
+		    </div>
+                <% }); %>
+            </div>
+    </div>
 
 <% include partials/footer %>

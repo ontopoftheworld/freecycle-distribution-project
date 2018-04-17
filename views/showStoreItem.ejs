@@ -1,0 +1,25 @@
+<% include partials/header %>
+
+    <div class="container">
+        <h1>Item Details</h1>
+
+        <h4><%= item.title %></h4>
+        <h6><%= item.desc %></h6>
+        <h6>Hours price: <%= item.hourPrice %></h6>
+        <h6>Category: <%= item.category %></h6>
+        <h6>Date posted: <%= item.postDate.toDateString() %></h6>
+        <p>Submitted by: <a href="/users/<%= item.author.id %>"><%= item.author.username %></a></p>
+        <% if(currentUser && item.author.id.equals(currentUser._id)) { %>
+            <a class="btn btn-secondary" href="/store/<%= item._id %>/edit">Edit Item</a>
+            <form action="/store/<%= item._id %>?_method=DELETE" method="POST">
+                <button class="btn btn-danger">Delete item</button>
+            </form>
+        <% } %>
+        <% if(!(currentUser && item.author.id.equals(currentUser._id))) { %>
+            <a href="/store/<%= item._id %>" class="btn btn-primary">Buy</a>
+        <% } %>
+
+        <a href="/store%>">Go Back</a>
+    </div>
+
+<% include partials/footer %>
