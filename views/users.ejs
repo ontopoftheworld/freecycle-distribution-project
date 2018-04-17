@@ -1,0 +1,21 @@
+<% include partials/header %>
+
+    <div class="container">
+        <h1>Members</h1>
+            <div style="">
+                <% users.forEach(function(user){ %>
+		            <div class="indivPost">	
+                    <span>
+                        <h4><%= user.firstName %></h4>
+                        <h4><%= user.username %></h4>
+                    </span>
+                    <p>
+                        <a href="/users/<%= user._id %>" class="btn btn-primary">More Info</a>
+                        <a href="/users/<%= user._id %>" class="btn btn-primary">Message</a>
+                    </p>
+		            </div>	
+                <% }); %>
+            </div>
+    </div>
+
+<% include partials/footer %>
