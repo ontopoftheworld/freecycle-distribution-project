@@ -2,6 +2,9 @@
 
     <div class="container">
         <h1>Requests page</h1>
+        <div>
+            <a class="btn btn-primary" href="/requests/new">Make New Request</a>
+        </div>
             <div style="">
                 <% requests.forEach(function(request){ %>
 		<div class="indivPost">	
@@ -15,9 +18,10 @@
 		</div>	
                 <% }); %>
             </div>
-        <div>
-            <a class="btn btn-primary" href="/requests/new">Make New Request</a>
-        </div>
     </div>
+
+    <script>
+        $( "#requests" ).addClass( "selected" );
+    </script>
 
 <% include partials/footer %>

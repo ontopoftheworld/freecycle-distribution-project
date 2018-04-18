@@ -13,7 +13,7 @@ var offerSchema = new mongoose.Schema({
     postDate: { type: Date, default: Date.now },
     hoursOffered: Number,
     category: String,
-    status: {type: Boolean, default: false}
+    status: {type: Boolean, default: false},
 });
 
 module.exports = mongoose.model("Offer", offerSchema);

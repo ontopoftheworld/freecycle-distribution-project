@@ -5,7 +5,7 @@
 <h1> <%= user.username %>! </h1>
 <img src="/static/images/noProfilePic" width="100px" height="100px">
 <div id="hoursSection">
-<h4> Hours: <%= user.hours %> </h4>
+<h4> Hours: <%= user.userHours %> </h4>
 </div>
 <div id="infoSection">
 <p>Contact me: </p>
@@ -13,5 +13,9 @@
 </div>
 </div>
 </div>
+
+<script>
+    $( "#members" ).addClass( "selected" );
+</script>
 
 <% include partials/footer %>

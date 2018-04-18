@@ -5,6 +5,26 @@ body {
     background-position: center;
     background-size: cover;
     color: white;
+    font-family: 'Lucida Grande', 'Lucida Sans Unicode', Arial, Verdana, sans-serif;
+}
+
+ul#bootstrap-overrides>li>a {
+    font-size: 115%;
+    color: #666;
+}
+
+ul#bootstrap-overrides>li.selected>a {
+    font-size: 115%;
+    color: #37a000
+}
+
+ul#bootstrap-overrides>li>a:hover {
+    color: #37a000
+}
+
+.navbar-custom {
+    color: #FFFFFF;
+    background-color: #CC3333;
 }
 
 h1 {
