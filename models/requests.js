@@ -16,4 +16,6 @@ var requestSchema = new mongoose.Schema({
     status: {type: Boolean, default: false}
 });
 
+requestSchema.index({title: 'text'});
+
 module.exports = mongoose.model("Request", requestSchema);

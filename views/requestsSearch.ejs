@@ -1,0 +1,27 @@
+<% include partials/header %>
+
+    <div class="container">
+        <h1>Requests search result page</h1>
+        <div>
+            <a class="btn btn-primary" href="/requests/new">Make New Request</a>
+        </div>
+            <div style="">
+                <% requests.forEach(function(request){ %>
+		<div class="indivPost">	
+                    <span>
+                        <h4><%= request.title %></h4>
+                        <h6><%= request.desc %></h6>
+                    </span>
+                    <p>
+                        <a href="/requests/<%= request._id %>" class="btn btn-primary">More Info</a>
+                    </p>
+		</div>	
+                <% }); %>
+            </div>
+    </div>
+
+    <script>
+        $( "#requests" ).addClass( "selected" );
+    </script>
+
+<% include partials/footer %>

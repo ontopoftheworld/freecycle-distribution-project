@@ -21,6 +21,7 @@ var indexRoutes =   require("./routes/index"),
     messagesRoutes = require("./routes/messages");
     userRoutes = require("./routes/users");
     accountRoutes =   require("./routes/account"),
+    searchRoutes = require("./routes/search")
 
 mongoose.connect("mongodb://localhost/timebank");
 
@@ -54,6 +55,7 @@ app.use(storeRoutes);
 app.use(messagesRoutes);
 app.use(userRoutes);
 app.use(accountRoutes);
+app.use(searchRoutes);
 
 server.listen(8080, function(){
     console.log('- Server listening on port 8080');

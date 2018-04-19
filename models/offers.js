@@ -15,5 +15,5 @@ var offerSchema = new mongoose.Schema({
     category: String,
     status: {type: Boolean, default: false},
 });
-
+offerSchema.index({title: 'text'});
 module.exports = mongoose.model("Offer", offerSchema);

@@ -50,9 +50,19 @@
                         </li>
                     </ul>
 
-                    <form action="" id="searchForm" class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Find Offers/Requests" aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    <form action="/search" id="searchForm" class="form-inline my-2 my-lg-0" method="GET">
+                        <input class="form-control mr-sm-2" type="text" placeholder="Find Offers/Requests" aria-label="Search" name="seachContent" value="">
+                        <script type="text/javascript">
+                            function selectOnlyThis(id) {
+                                for (var i = 1;i <= 2; i++){
+                                    document.getElementById(i).checked = false;
+                                    }
+                                document.getElementById(id).checked = true;
+                            }
+                        </script>
+                        <label><input onclick="selectOnlyThis(this.id)" id="1" type="checkbox" class="check" value="requests" name="searchType" /><font color="grey">Requests</font></label>
+                        <label><input onclick="selectOnlyThis(this.id)" id="2" type="checkbox" class="check" value="offers" name="searchType" /><font color="grey">Offers</font></label>
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search </button>
                     </form>
         
                     <ul class="navbar-nav" id="bootstrap-overrides">
