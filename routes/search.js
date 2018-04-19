@@ -26,7 +26,7 @@ router.get("/search", isLoggedIn, function(req, res) {
         	}
     });
     }else{
-    	console.log("error")
+    	res.render("home");
     }
 });
 
