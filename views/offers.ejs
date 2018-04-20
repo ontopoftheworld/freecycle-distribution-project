@@ -1,9 +1,28 @@
 <% include partials/header %>
 
     <div class="container">
-        <h1>Offers page</h1>
+        <h1>Offers</h1>
+        <h3>Offers Posted By You:</h3>
+        <div id="offer">
+            <% var i = 0; %>
+            <% offers.forEach(function(offer){ %>
+                <% if((currentUser && offer.author.id.equals(currentUser._id))) { %>
+		            <div class="indivPost">
+                        <p>
+                            <a href="/offers/<%= offer._id %>" ><%= offer.title %></a>                       
+                        </p>
+                    </div>
+                    <% i++; %>
+                <% } %>
+            <% }); %>
+            <% if (i == 0) { %>
+                <p>You do not currently have any active Offer posting</p>
+            <% } %>
+        </div>
+
+        <h3>Browse Offers Posted By Others:</h3>
         <form action="/offers/sort" method="GET">
-            <p>filter:</p>
+            <p>Filer:</p>
             <select name="category">
                 <option value="">Choose Category</option>
                 <option value="categoryA">categoryA</option>
@@ -17,6 +36,7 @@
         <a class="btn btn-primary" href="/offers/new">Make New Offer</a>
             <div id="offer">
                 <% offers.forEach(function(offer){ %>
+                    <% if(!(currentUser && offer.author.id.equals(currentUser._id))) { %>
 		   <div class="indivPost">
                     <span>
                         <h4><%= offer.title %></h4>
@@ -28,12 +48,12 @@
                     </span>
                     <p>
                         <a href="/offers/<%= offer._id %>" class="btn btn-primary">More Info</a>
-                        <% if(!(currentUser && offer.author.id.equals(currentUser._id))) { %>
-                            <a href="/offers/<%= offer._id %>/response" class="btn btn-primary">Take on</a>
-                        <% } %>
+                        <a href="/offers/<%= offer._id %>/response" class="btn btn-primary">Take on</a>
+                        
                     </p>
-		    </div>
-                <% }); %>
+            </div>
+            <% } %>
+            <% }); %>
         </div>
         </div>
 

@@ -55,6 +55,7 @@ router.post("/offers", isLoggedIn, function(req, res) {
                 } else {
                     user.offers.push(newO);
                     user.save();
+                    req.flash("success", "You have successfully posted an offer");
                     res.redirect("/offers");
                 }
             });
@@ -138,8 +139,22 @@ router.post("/offers/:id/response", isLoggedIn, function(req, res) {
                         if (foundOffer.author.id.equals(req.user._id)) {
                             res.redirect("back");
                         } else {
-                            foundOffer.offerResponse.push(newResponse);
-                            foundOffer.save();
+                            var found = false;
+                            for (var i = 0; i < foundOffer.offerResponse.length; i++) {
+                                if (foundOffer.offerResponse[i].responder.equals(req.user._id)) {
+                                    found = true;
+                                    break;
+                                }
+                            }
+                            if (!found) {
+                                foundOffer.offerResponse.push(newResponse);
+                                foundOffer.save();
+                                req.flash("success", "Your response has been sent");
+                                res.redirect("/offers");
+                            } else {
+                                req.flash("error", "You have already responded to this offer");
+                                res.redirect("/offers");
+                                }
                         }
                     }
                 });
@@ -151,6 +166,7 @@ function isLoggedIn(req, res, next) {
     if(req.isAuthenticated()) {
         return next();
     }
+    req.flash("error", "Please Login First");
     res.redirect("/login");
 }
 

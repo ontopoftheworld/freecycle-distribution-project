@@ -1,6 +1,7 @@
 var express         = require("express"),
     app             = express(),
     methodOverride  = require("method-override"),
+    flash           = require("connect-flash"),
     bodyParser      = require("body-parser"),
     mongoose        = require("mongoose"),
     passport        = require("passport"),
@@ -28,8 +29,8 @@ mongoose.connect("mongodb://localhost/timebank");
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(methodOverride("_method"));
-//app.use(express.static(path.join(__dirname, 'public')));
 app.use('/static', express.static(path.join(__dirname, '/public')));
+app.use(flash());
 
 app.use(require("express-session")({
     secret: "! t1m3b@nk s3cr3t !",
@@ -45,6 +46,8 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req, res, next) {
     res.locals.currentUser = req.user;
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
     next();
 });
 

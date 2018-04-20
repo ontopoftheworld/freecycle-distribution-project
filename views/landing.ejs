@@ -17,11 +17,23 @@
 	<link rel="stylesheet" type="text/css" href="/static/css/style.css">
     </head>
     <body>
+      <div class="container">
+        <% if(error && error.length > 0) { %>
+            <div class="alert alert-danger" role="alert">
+                <%= error %>
+            </div>
+        <% } %>
+        <% if(success && success.length > 0) { %>
+            <div class="alert alert-success" role="alert">
+                <%= success %>
+            </div>
+        <% } %>
+      </div>
       <div id="landingPageEntirety">
 	<div id="landingPageCover">
           <div id="landingHeader">
 	    <h1>The Freecycle Distribution Project</h1>
-	  </div>
+    </div>
 	  <div id="landingLoginBox">
 	    <h2>Login</h2>
             <form action="/login" method="POST">
