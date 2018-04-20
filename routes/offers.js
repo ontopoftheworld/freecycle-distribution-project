@@ -22,6 +22,18 @@ router.get("/offers/new", isLoggedIn, function(req, res) {
     res.render("newoffer");
 });
 
+router.get("/offers/sort", isLoggedIn, function(req, res) {
+    var sortCategory=req.query.category;
+    Offer.find({"category": sortCategory} , function(err, allOffers){
+    if(err){
+        console.log(err);
+    } else {
+        res.render("offers", {offers: allOffers} );
+    }
+    });
+});
+
+
 router.post("/offers", isLoggedIn, function(req, res) {
     User.findById(req.user._id, function(err, user){
         if(err){

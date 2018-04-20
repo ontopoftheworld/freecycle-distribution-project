@@ -22,6 +22,17 @@ router.get("/requests/new", isLoggedIn, function(req, res) {
     res.render("newrequest");
 });
 
+router.get("/requests/sort", isLoggedIn, function(req, res) {
+    var sortCategory=req.query.category;
+    Offer.find({"category": sortCategory} , function(err, allOffers){
+    if(err){
+        console.log(err);
+    } else {
+        res.render("requests", {requests: allRequests} );
+    }
+    });
+});
+
 router.post("/requests", isLoggedIn, function(req, res) {
     Request.create(req.body.request, function(err, newR) {
         if(err){

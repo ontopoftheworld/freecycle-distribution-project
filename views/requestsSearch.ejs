@@ -2,6 +2,20 @@
 
     <div class="container">
         <h1>Requests search result page</h1>
+        <form action="/search/sort" method="GET">
+            <input name="searchType" type="hidden" value="<%= searchType %>">
+            <input name="searchContent" type="hidden" value="<%= searchContent %>">
+            <p>filter:</p>
+            <select name="category">
+                <option value="">Choose Category</option>
+                <option value="categoryA">categoryA</option>
+                <option value="categoryB">categoryB</option>
+                <option value="categoryC">categoryC</option>
+                <option value="categoryD">categoryD</option>
+                <option value="categoryE">categoryE</option>
+            </select>
+            <button>Apply</button>
+        </form>
         <div>
             <a class="btn btn-primary" href="/requests/new">Make New Request</a>
         </div>
