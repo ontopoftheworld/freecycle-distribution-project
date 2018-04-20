@@ -68,8 +68,11 @@ router.get("/messages/:chatGroup", isLoggedIn, function(req, res) {
     var cGrp = req.params.chatGroup;
     Messages.find({"chatGroup" : cGrp}, function(err, foundGrp){
         if(err){
-            console.log(err);
-        } else {
+			console.log(err);
+			res.redirect("/messages");
+		} else if (!foundGrp[0]){
+			res.redirect("back");
+		} else {
 	    // If there is an existing chat
 	    let toUser = foundGrp[0].senderA.displayName;
 	    if (toUser === req.user.firstName) {

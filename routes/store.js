@@ -53,6 +53,8 @@ router.get("/store/:id", isLoggedIn, function(req, res) {
     Store.findById(req.params.id, function(err, foundItem) {
         if(err) {
             console.log(err);
+        } else if (!foundItem) {
+            res.redirect("back");
         } else {
             res.render("showStoreItem", {item: foundItem});
         }
@@ -63,6 +65,8 @@ router.get("/store/:id/edit", isLoggedIn, function(req, res) {
     Store.findById(req.params.id, function(err, foundItem) {
         if(err) {
             res.redirect("/store");
+        } else if (!foundItem) {
+            res.redirect("back");
         } else {
             if (foundItem.author.id.equals(req.user._id)) {
                 res.render("editStoreItem", {item: foundItem});
@@ -77,6 +81,8 @@ router.put("/store/:id", isLoggedIn, function(req, res) {
     Store.findByIdAndUpdate(req.params.id, req.body.item, function(err, updatedItem) {
         if(err){
             res.redirect("/store");
+        } else if (!foundItem) {
+            res.redirect("back");
         } else {
             res.redirect("/store/" + req.params.id);
         }
@@ -87,6 +93,8 @@ router.delete("/store/:id", isLoggedIn, function(req, res) {
     Store.findByIdAndRemove(req.params.id, function(err, updatedItem) {
         if(err){
             res.redirect("/store");
+        } else if (!foundItem) {
+            res.redirect("back");
         } else {
             res.redirect("/store");
         }

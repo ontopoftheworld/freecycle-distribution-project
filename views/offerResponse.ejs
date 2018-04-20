@@ -1,24 +1,21 @@
 <% include partials/header %>
 
 <div class="container" style="font-size:25px">
-        <h1>Response to your Request</h1>
-        <p>Hours Offered: <%= offer.hoursOffered %></p>
+        <h1>Respond to <%= offer.author.username %>'s Offer</h1>
+        <p>Offer details:<p>
+        <h5>Title: <%= offer.title %></h5>
+        <h5>Description: <%= offer.desc %></h5>
+        <h5>Hours offered: <%= offer.hoursOffered %></h5>
+        <h5>Date needed by: <%= offer.postDate %></h5>
         <form action="/offers/<%= offer._id %>/response" method="POST" >
-            <p>Response from</p>
-            <input type="text" name="responserName" placeholder="<%= offer.author.username %>" style="width:100%">
-            <p>Subject</p>
-            <input type="text" name="subject" style="width:100%">
-            <p>Message from <%= offer.author.username %></p>
+            <p>Respond to <%= offer.author.username %>'s offer:</p>
             <textarea name="message" rows="10"  style="width:100%"></textarea>
-            <p>Contact <%= offer.author.username %> By</p>
-            <input type="text" name="contact" style="width:100%">
-            <p>Choose Time<p>
+            <!-- <p>Choose Time<p>
             <input type="checkbox" name="checkbox" value="Wed"><label>Wed</label>
             <input type="checkbox" name="checkbox" value="Sun"><label>Sun</label>
-            <input type="checkbox" name="checkbox" value="Mon"><label>Mon</label><br><br>
-            <button class="btn btn-primary">Accept Offer</button> 
+            <input type="checkbox" name="checkbox" value="Mon"><label>Mon</label><br><br> -->
+            <button class="btn btn-primary">Send Response</button> 
         </form>
-        <a class="btn btn-primary" href="/offers" >Decline Offer</a>
 </div>
 
 <script>

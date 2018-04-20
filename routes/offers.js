@@ -92,7 +92,6 @@ router.put("/offers/:id", isLoggedIn, function(req, res) {
             res.redirect("/offers");
         } else {
             res.redirect("/offers/" + req.params.id);
-            console.log
         }
     });
 });
@@ -122,20 +121,31 @@ router.get("/offers/:id/response", isLoggedIn, function(req, res) {
     });
 });
 
+// OFFER RESPONSE
 router.post("/offers/:id/response", isLoggedIn, function(req, res) {
-    Offer.findById(req.params.id, function(err, foundOffer) {
-        if(err) {
+    User.findById(req.user._id, function(err, user){
+        if(err){
             console.log(err);
-            res.redirect("/offers");
-        } else {
-            if (foundOffer.author.id.equals(req.user._id)) {
-                res.redirect("back");
-            } else {
-                res.render("offerResponse", {offer: foundOffer});
+        } else {                
+                var message = req.body.message;
+                var responder = req.user._id;
+                var newResponse = {responder: responder, message: message};
+                Offer.findById(req.params.id, function(err, foundOffer) {
+                    if(err && (!foundOffer)) {
+                        console.log(err);
+                        res.redirect("/offers");
+                    } else {
+                        if (foundOffer.author.id.equals(req.user._id)) {
+                            res.redirect("back");
+                        } else {
+                            foundOffer.offerResponse.push(newResponse);
+                            foundOffer.save();
+                        }
+                    }
+                });
             }
-        }
+        });
     });
-});
 
 function isLoggedIn(req, res, next) {
     if(req.isAuthenticated()) {
