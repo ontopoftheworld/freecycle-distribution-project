@@ -3,7 +3,7 @@
     <div class="container">
         <h1>Requests page</h1>
         <form action="/requests/sort" method="GET">
-            <p>filter:</p>
+            <h5>Filter:</h5>
             <select name="category">
                 <option value="">Choose Category</option>
                 <option value="categoryA">categoryA</option>
@@ -12,7 +12,8 @@
                 <option value="categoryD">categoryD</option>
                 <option value="categoryE">categoryE</option>
             </select>
-            <button>Apply</button>
+            <button class="btn btn-primary">Apply</button>
+			<br><br>
         </form>
         <div>
             <a class="btn btn-primary" href="/requests/new">Make New Request</a>

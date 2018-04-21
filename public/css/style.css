@@ -36,6 +36,10 @@ h1 {
     font-family: 'Open Sans', sans-serif;
 }
 
+h3{
+	color:#444444;
+}
+
 h4 {
     font-family: 'Open Sans', sans-serif;
     text-decoration: underline;
@@ -427,7 +431,25 @@ h6 {
 #message {
     width: 400px;
 }
+/* -------- account ---------- */
 
+#userbio{
+    padding: 10px;
+    background-color: white;
+    border-radius: 5px;
+	width:200px;
+    color: black;
+}
+
+#userinfo{
+	text-align:center;
+	position:relative;
+	margin-top:-120px;
+}
+
+#editinfo{
+	float:right;
+}
 div.footer-navbar-wrapper {
     background-color: #494949;
     position: relative;

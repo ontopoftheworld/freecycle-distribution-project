@@ -5,7 +5,7 @@
         <form action="/search/sort" method="GET">
             <input name="searchType" type="hidden" value="<%= searchType %>">
             <input name="searchContent" type="hidden" value="<%= searchContent %>">
-            <p>filter:</p>
+            <h5>filter:</h5>
             <select name="category">
                 <option value="">Choose Category</option>
                 <option value="categoryA">categoryA</option>
@@ -14,7 +14,7 @@
                 <option value="categoryD">categoryD</option>
                 <option value="categoryE">categoryE</option>
             </select>
-            <button>Apply</button>
+            <button class="btn btn-primary">Apply</button>
         </form>
 
         <a class="btn btn-primary" href="/offers/new">Make New Offer</a>
