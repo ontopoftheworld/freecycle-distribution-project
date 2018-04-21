@@ -51,6 +51,7 @@ router.post("/login", passport.authenticate("local",
 // Logout
 router.get("/logout", isLoggedIn, function(req, res){
     req.logout();
+    req.flash("success", "You have successfully logged out");
     res.redirect("/");
 });
 

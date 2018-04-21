@@ -5,9 +5,9 @@
         <h1>Create a New Offer</h1>
 	<div class="newPostForm">
         <form action="/offers" method="POST">
-            <input type="text" name="offer[title]" placeholder="Enter title here."><br><br>
-            <input type="text" name="offer[desc]" placeholder="Enter description"><br><br>
-            <input type="number" name="offer[hoursOffered]" placeholder="Enter hours offered"><br><br>
+            <input type="text" name="offer[title]" placeholder="Enter title here." required><br><br>
+            <input type="text" name="offer[desc]" placeholder="Enter description" required><br><br>
+            <input type="number" name="offer[hoursOffered]" placeholder="Enter hours offered" required><br><br>
             <p>category:</p>
             <select name="offer[category]">
                 <option value="categoryA">categoryA</option>

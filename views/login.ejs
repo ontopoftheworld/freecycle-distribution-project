@@ -14,10 +14,20 @@
 	<link rel="stylesheet" href="/static/css/style.css">
     </head>
     <body>
+        <div class="container">
+            <% if(error && error.length > 0) { %>
+                <div class="alert alert-danger" role="alert">
+                    <%= error %>
+                </div>
+            <% } %>
+            <% if(success && success.length > 0) { %>
+                <div class="alert alert-success" role="alert">
+                    <%= success %>
+                </div>
+            <% } %>
+        </div>
         <div class="container" id="loginPage">
-        
             <h1>Login</h1>
-
             <form action="/login" method="POST">
                 <label for="email"><b>Email</b></label>
                 <input type="text" placeholder="Enter email" name="username" required>
