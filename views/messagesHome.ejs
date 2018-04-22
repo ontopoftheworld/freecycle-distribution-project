@@ -14,7 +14,6 @@
    <div id="allChats">
 	<h4> Previous Messages </h4><br>
         <% allMessages.forEach(function(message){ %>
-	<%= message %>
 	   <a href="/messages/<%= message.chatGroup %>">
 	   <div class="indivChat">
 	   	<% if (message.senderA.displayName == thisUserDisplayName) { %>

@@ -7,7 +7,8 @@
     <% messages.forEach(function(message){ %>
        	<div class="indivMessage">
         <%= message.time %><br>
-	<b><%= message.sentBy %>: </b><%= message.info %>
+	<b><%= message.sentBy %>: </b>
+	<%= message.info %>
    	</div>
     <% }); %>
     </div>
