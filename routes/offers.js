@@ -143,7 +143,8 @@ router.get("/offers/:id/response", isLoggedIn, function(req, res) {
                                 } else if (!foundResponse){
                                     res.redirect("back");
                                 } else {
-                                    res.render("offerResponseB", {offer: foundOffer, offerResponses: foundResponse});
+                                    req.flash("error", "You have already responded to this offer");
+                                    res.redirect("/offers");
                                 }
                             });
                         }
@@ -233,11 +234,46 @@ router.get("/response/:id", isLoggedIn, function(req, res) {
     OfferResponse.findById(req.params.id, function(err, foundResponse) {
         if(err) {
             console.log(err);
+        if (!foundResponse) {
+            res.redirect("back");
         } else {
-            res.render("showOfferResponse", {response: foundResponse});
+            Offer.find({"offerId": req.params.id}, function(err, foundOffer){
+                if(err){
+                    console.log(err);
+                } if (!foundOffer) {
+                    res.redirect("back");
+                } else {
+                    res.render("showOfferResponse", {responses: foundResponses, offer: foundOffer} );
+                }
+            });
         }
+    }
     });
 });
+
+router.post("/response/:id", isLoggedIn, function(req, res) {
+    OfferResponse.findById(req.params.id, function(err, foundResponse) {
+        if(err) {
+            console.log(err);
+        if (!foundResponse) {
+            res.redirect("back");
+        } else {
+            Offer.find({"offerId": req.params.id}, function(err, foundOffer){
+                if(err){
+                    console.log(err);
+                } if (!foundOffer) {
+                    res.redirect("back");
+                } else {
+                    if (foundOffer.author.id.equals(req.user._id)) {
+                        foundResponse.isAccepted = true;
+                    }
+                }
+            });
+        }
+    }
+    });
+});
+
 
 function isLoggedIn(req, res, next) {
     if(req.isAuthenticated()) {

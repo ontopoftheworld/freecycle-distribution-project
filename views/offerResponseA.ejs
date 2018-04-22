@@ -10,6 +10,7 @@
                             <% if((response && response.offerId.equals(offer._id))) { %>
                                 <h4><%= response.message %></h4>
                                 <h5>Response sent by:<%= response.responder.firstName %></h5>
+                                <a href="/response/<%= response._id %>" class="btn btn-primary">More Info</a>
                                 <% i++; %>
                             <% } %>
                         <% }); %>
@@ -17,9 +18,6 @@
                             <p>You do not currently have any responses</p>
                         <% } %>
                 </span>
-                <p>
-                    <a href="/offers/<%= offer._id %>" class="btn btn-primary">More Info</a>
-                </p>
         </div>
 
         <h4>Offer Details</h4>

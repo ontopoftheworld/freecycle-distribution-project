@@ -8,6 +8,12 @@
             Accepted</h5>
             <% } else %> Waiting approval</h5>
 
+            <% if((currentUser && offer.author.id.equals(currentUser._id))) { %>
+                <form action="/response/<%= response._id %>" method="POST">
+                    <button class="btn btn-danger">Accept Offer</button>
+                </form>
+            <% } %>
+
         <a href="/response">Go Back</a>
     </div>
 
