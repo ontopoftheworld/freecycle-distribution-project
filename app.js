@@ -70,6 +70,11 @@ var io = require('socket.io').listen(server);
 var Messages = require("./models/messages");
 
 io.sockets.on('connection', function(socket){
+    // clients emit this when they log in
+    /*socket.on('enterSite', function(callback) {
+	socket.join("allLoggedIn");
+    }*/
+    
     // clients emit this when they join new rooms
     socket.on('join', function(cGrp, displayName, callback){
         socket.join(cGrp); // this is a socket.io method
@@ -80,15 +85,11 @@ io.sockets.on('connection', function(socket){
     // the client emits this when they want to send a message
     socket.on('message', function(messageU){
 	// add the message to the database
-	var date = new Date(); 
-	var timeU = (date.getMonth()+1) + "/" +
+	let date = new Date(); 
+	let timeU = (date.getMonth()+1) + "/" +
 	    date.getDate()  + "/" + date.getFullYear() + ", " +
 	    date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-	console.log("socket.cGrp: " + socket.cGrp);
-	console.log("MESSAGE: " +  messageU + "," + "TIME: " + timeU);
-	Messages.find({chatGroup : socket.cGrp}, function(err, foundGrp){
-	    console.log("FOUND: " + foundGrp);
-	});
+
 	Messages.update(
 	    { "chatGroup" : socket.cGrp },
 	    { $push : { "message" : { "sentBy" : socket.displayName,
@@ -101,7 +102,35 @@ io.sockets.on('connection', function(socket){
 		} 
 	    }
 	);
-	
+
+	// change the other user's seen status to false, to let them know
+	// that they have to check the message.
+	Messages.find({chatGroup : socket.cGrp}, function(err, foundGrp){
+	    if (foundGrp[0].senderA.displayName === socket.displayName) {
+		Messages.update(
+		    { "chatGroup" : socket.cGrp },
+		    { $set : { "senderB.seenMessages" : false }},
+		    { upsert : false, multi : true },
+		    function (err, object) {
+			if (err) {
+			    console.log("ERROR: problems updating seen status");
+			} 
+		    }
+		);
+	    } else {
+		Messages.update(
+		    { "chatGroup" : socket.cGrp },
+		    { $set : { "senderA.seenMessages" : false }},
+		    { upsert : false, multi : true },
+		    function (err, object) {
+			if (err) {
+			    console.log("ERROR: problems updating seen status");
+			} 
+		    }
+		);
+	    }
+	});
+		      
 	// send the message to all users in the room
 	io.sockets.in(socket.cGrp).emit('message', socket.displayName, timeU, messageU);
     });

@@ -10,14 +10,16 @@ var messageSchema = new mongoose.Schema({
 	    type: mongoose.Schema.Types.ObjectId,
 	    ref: "User"
 	},
-	displayName : String
+	displayName : String,
+	seenMessages : Boolean
     },
     senderB: {
 	id: {
 	    type: mongoose.Schema.Types.ObjectId,
 	    ref: "User"
 	},
-	displayName : String
+	displayName : String,
+	seenMessages : Boolean
     }
 });
 

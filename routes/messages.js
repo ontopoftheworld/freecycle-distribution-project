@@ -16,7 +16,8 @@ router.get("/messages", isLoggedIn, function(req, res) {
             console.log(err);
         } else {
 	    // If there is an existing chat
-            res.render("messagesHome", {thisUserDisplayName: req.user.firstName, allMessages: foundMessages} );
+            res.render("messagesHome", {thisUserDisplayName: req.user.firstName,
+					allMessages: foundMessages} );
         }
     });
 });
@@ -45,9 +46,11 @@ router.post("/messages", isLoggedIn, function(req, res) {
 				      var newChat = {message: [],
 						     chatGroup: chatGrpHashed,
 						     senderA: { id : req.user._id,
-								displayName : req.user.firstName },
+								displayName : req.user.firstName,
+							        seenMessages : true},
 						     senderB: { id : toUserId,
-							        displayName : foundUser[0].firstName }};
+							        displayName : foundUser[0].firstName,
+							        seenMessages : false}};
 				      Messages.create(newChat, function(err, newM) {
 					  if(err){
 					      console.log(err);
@@ -68,15 +71,41 @@ router.get("/messages/:chatGroup", isLoggedIn, function(req, res) {
     var cGrp = req.params.chatGroup;
     Messages.find({"chatGroup" : cGrp}, function(err, foundGrp){
         if(err){
-			console.log(err);
-			res.redirect("/messages");
-		} else if (!foundGrp[0]){
-			res.redirect("back");
-		} else {
+	    console.log(err);
+	    res.redirect("/messages");
+	} else if (!foundGrp[0]){
+	    res.redirect("back");
+	} else {
 	    // If there is an existing chat
 	    let toUser = foundGrp[0].senderA.displayName;
 	    if (toUser === req.user.firstName) {
 		toUser = foundGrp[0].senderB.displayName;
+	    }
+
+	    // change the current user's seen status to true, so that the message
+	    // can be marked as read. 
+	    if (foundGrp[0].senderA.displayName === req.user.firstName) {
+		Messages.update(
+		    { "chatGroup" : cGrp },
+		    { $set : { "senderA.seenMessages" : true }},
+		    { upsert : false, multi : true },
+		    function (err, object) {
+			if (err) {
+			    console.log("ERROR: problems updating seen status");
+			} 
+		    }
+		);
+	    } else {
+		Messages.update(
+		    { "chatGroup" : cGrp },
+		    { $set : { "senderB.seenMessages" : true }},
+		    { upsert : false, multi : true },
+		    function (err, object) {
+			if (err) {
+			    console.log("ERROR: problems updating seen status");
+			} 
+		    }
+		);
 	    }
             res.render("messages", {chatId: cGrp, messages: foundGrp[0].message,
 				    chatWith: toUser} );

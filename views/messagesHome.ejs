@@ -14,12 +14,25 @@
    <div id="allChats">
 	<h4> Previous Messages </h4><br>
         <% allMessages.forEach(function(message){ %>
+	<%= message %>
 	   <a href="/messages/<%= message.chatGroup %>">
 	   <div class="indivChat">
 	   	<% if (message.senderA.displayName == thisUserDisplayName) { %>
-	      		<%= message.senderB.displayName %></a>
+	      		<%= message.senderB.displayName %> :
+			<% if (message.senderA.seenMessages) { %>
+			      No new Messages.
+			<% } else { %>
+			      ALERT: New Message!
+			<% } %>
+			</a>
 		<% } else { %>
-	   		<%= message.senderA.displayName %></a>
+	   		<%= message.senderA.displayName %> :
+			<% if (message.senderB.seenMessages) { %>
+			      No new Messages.
+			<% } else { %>
+			      ALERT: New Message!
+			<% } %>
+			</a>
 		<% } %>
 	   </div>
 	   </a><br>
