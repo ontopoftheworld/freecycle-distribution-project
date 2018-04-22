@@ -2,6 +2,7 @@
 
     <div class="container">
         <h1>Offers</h1>
+        <a href="/response" class="btn btn-primary">See responses you have submitted</a>
         <h3>Offers Posted By You:</h3>
         <div id="offer">
             <% var i = 0; %>
@@ -9,14 +10,18 @@
                 <% if((currentUser && offer.author.id.equals(currentUser._id))) { %>
 		            <div class="indivPost">
                         <p>
-                            <a href="/offers/<%= offer._id %>" ><%= offer.title %></a>                       
+                            <span>
+                                <a href="/offers/<%= offer._id %>" class="btn btn-primary"><%= offer.title %></a>
+                                <a href="/offers/<%= offer._id %>" class="btn btn-primary">More Info</a>
+                                <a href="/offers/<%= offer._id %>/response" class="btn btn-primary">See Responses (<%= offer.offerResponse.length %>)</a>
+                            </span>
                         </p>
                     </div>
                     <% i++; %>
                 <% } %>
             <% }); %>
             <% if (i == 0) { %>
-                <p>You do not currently have any active Offer posting</p>
+                <p>You do not currently have any active offer postings</p>
             <% } %>
         </div>
 

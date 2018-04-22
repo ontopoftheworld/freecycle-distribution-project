@@ -1,0 +1,18 @@
+<% include partials/header %>
+
+    <div class="container">
+        <h1>Response Details</h1>
+
+        <h4>Message: <%= response.message %></h4>
+        <h5>Status: <% if (response.isAccepted) { %>
+            Accepted</h5>
+            <% } else %> Waiting approval</h5>
+
+        <a href="/response">Go Back</a>
+    </div>
+
+    <script>
+        $( "#Offer" ).addClass( "selected" );
+    </script>
+
+<% include partials/footer %>

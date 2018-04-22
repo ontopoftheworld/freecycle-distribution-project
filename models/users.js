@@ -21,6 +21,12 @@ var userSchema = new mongoose.Schema({
             ref: "Offer"
         }
     ],
+    offerResponse: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "OfferResponse"
+        }
+    ],
     ipAddress: String
 });
 

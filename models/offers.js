@@ -20,9 +20,10 @@ var offerSchema = new mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "User"
             },
-            message: String,
-            isAccepted: {type: Boolean, default: false},
-            isComplete: {type: Boolean, default: false},
+            responseID: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "OfferResponse"
+            }
         }
     ]
 });

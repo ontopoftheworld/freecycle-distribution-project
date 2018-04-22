@@ -5,6 +5,7 @@ var passport = require("passport");
 var Offer = require("../models/offers"),
     Request = require("../models/requests"),
     User = require("../models/users");
+    OfferResponse = require("../models/offerResponse");
 
 // Offers routes:
 
@@ -108,16 +109,50 @@ router.delete("/offers/:id", isLoggedIn, function(req, res) {
 });
 
 router.get("/offers/:id/response", isLoggedIn, function(req, res) {
-    Offer.findById(req.params.id, function(err, foundOffer) {
-        if(err && (!foundOffer)) {
+    User.findById(req.user._id, function(err, user){
+        if(err){
             console.log(err);
-            res.redirect("/offers");
         } else {
-            if (foundOffer.author.id.equals(req.user._id)) {
-                res.redirect("back");
-            } else {
-                res.render("offerResponse", {offer: foundOffer});
-            }
+            Offer.findById(req.params.id, function(err, foundOffer) {
+                if(err) {
+                    console.log(err);
+                } else if (!foundOffer){
+                    res.redirect("back");
+                } else {
+                    if (foundOffer.author.id.equals(req.user._id)) {
+                        OfferResponse.find({}, function(err, allOfferResponses){
+                            if(err){
+                                console.log(err);
+                            } else {
+                                res.render("offerResponseA", {offer: foundOffer, offerResponses: allOfferResponses});
+                            }
+                        });
+                    } else {
+                        var found = false;
+                        var i;
+                        for (i = 0; i < foundOffer.offerResponse.length; i++) {
+                            if (foundOffer.offerResponse[i].responder.equals(req.user._id)) {
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (found){
+                            OfferResponse.findById(foundOffer.offerResponse[i].responseID, function(err, foundResponse) {
+                                if(err) {
+                                    console.log(err);
+                                } else if (!foundResponse){
+                                    res.redirect("back");
+                                } else {
+                                    res.render("offerResponseB", {offer: foundOffer, offerResponses: foundResponse});
+                                }
+                            });
+                        }
+                        else {
+                            res.render("offerResponse", {offer: foundOffer});
+                        }
+                    }
+                }
+            });
         }
     });
 });
@@ -127,40 +162,82 @@ router.post("/offers/:id/response", isLoggedIn, function(req, res) {
     User.findById(req.user._id, function(err, user){
         if(err){
             console.log(err);
-        } else {                
-                var message = req.body.message;
-                var responder = req.user._id;
-                var newResponse = {responder: responder, message: message};
-                Offer.findById(req.params.id, function(err, foundOffer) {
-                    if(err && (!foundOffer)) {
-                        console.log(err);
+            res.redirect("/offers");
+        } else {
+            Offer.findById(req.params.id, function(err, foundOffer) {
+                if(err) {
+                    console.log(err);
+                } else if (!foundOffer){
+                    res.redirect("/offers");
+                } else {
+                    if (foundOffer.author.id.equals(req.user._id)) {
                         res.redirect("/offers");
                     } else {
-                        if (foundOffer.author.id.equals(req.user._id)) {
-                            res.redirect("back");
-                        } else {
-                            var found = false;
-                            for (var i = 0; i < foundOffer.offerResponse.length; i++) {
-                                if (foundOffer.offerResponse[i].responder.equals(req.user._id)) {
-                                    found = true;
-                                    break;
-                                }
+                        var found = false;
+                        var i;
+                        for (i = 0; i < foundOffer.offerResponse.length; i++) {
+                            if (foundOffer.offerResponse[i].responder.equals(req.user._id)) {
+                                found = true;
+                                break;
                             }
-                            if (!found) {
-                                foundOffer.offerResponse.push(newResponse);
-                                foundOffer.save();
-                                req.flash("success", "Your response has been sent");
-                                res.redirect("/offers");
-                            } else {
-                                req.flash("error", "You have already responded to this offer");
-                                res.redirect("/offers");
+                        }
+                        if (found){
+                            OfferResponse.findById(foundOffer.offerResponse[i].responseID, function(err, foundResponse) {
+                                if(err) {
+                                    console.log(err);
+                                } else if (!foundResponse){
+                                    res.redirect("/offers");
+                                } else {
+                                    res.redirect("/offers");
                                 }
+                            });
+                        }
+                        else {
+                            var offerId = foundOffer._id;
+                            var responder = req.user._id;
+                            var hours = foundOffer.hoursOffered;
+                            var message = req.body.message;
+                            var newResponse = {offerId: offerId, responder: responder, hours: hours, message: message};
+                            OfferResponse.create(newResponse, function(err, newOR) {
+                                if(err){
+                                    console.log(err);
+                                    res.render("offerResponse");
+                                } else {
+                                    user.offerResponse.push(newOR);
+                                    user.save();
+                                    foundOffer.offerResponse.push({responder: responder, responseID: newOR._id});
+                                    foundOffer.save();
+                                    req.flash("success", "Your response has been sent");
+                                    res.redirect("/offers");
+                                }
+                            });
                         }
                     }
-                });
-            }
-        });
+                }
+            });
+        }
     });
+});
+
+router.get("/response", isLoggedIn, function(req, res) {
+    OfferResponse.find({"responder": req.user._id}, function(err, foundResponses){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("allOfferResponses", {responses: foundResponses} );
+        }
+    });
+});
+
+router.get("/response/:id", isLoggedIn, function(req, res) {
+    OfferResponse.findById(req.params.id, function(err, foundResponse) {
+        if(err) {
+            console.log(err);
+        } else {
+            res.render("showOfferResponse", {response: foundResponse});
+        }
+    });
+});
 
 function isLoggedIn(req, res, next) {
     if(req.isAuthenticated()) {

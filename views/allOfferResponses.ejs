@@ -1,0 +1,25 @@
+<% include partials/header %>
+
+    <div class="container">
+        <h1>All your responses:</h1>
+                <div class="indivPost">
+                        <span>
+                                <% var i = 0; %>
+                                <% responses.forEach(function(response){ %>
+                                        <h4><%= response.message %></h4>
+                                        <a href="/response/<%= response._id %>" class="btn btn-primary">More Info</a>
+                                        <% i++; %>
+                                <% }); %>
+                                <% if (i == 0) { %>
+                                    <p>You have not submitted any responses</p>
+                                <% } %>
+                        </span>
+                    </div>
+    </div>
+
+        <script>
+            $( "#offers" ).addClass( "selected" );
+        </script>
+        
+        <% include partials/footer %>
+        
