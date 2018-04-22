@@ -234,20 +234,20 @@ router.get("/response/:id", isLoggedIn, function(req, res) {
     OfferResponse.findById(req.params.id, function(err, foundResponse) {
         if(err) {
             console.log(err);
-        if (!foundResponse) {
+        } else if (!foundResponse) {
             res.redirect("back");
         } else {
-            Offer.find({"offerId": req.params.id}, function(err, foundOffer){
+            var offerId = foundResponse.offerId;
+            Offer.findById(offerId, function(err, foundOffer){
                 if(err){
                     console.log(err);
                 } if (!foundOffer) {
-                    res.redirect("back");
+                    res.send("OFFER NOT FOUND");
                 } else {
-                    res.render("showOfferResponse", {responses: foundResponses, offer: foundOffer} );
+                    res.render("showOfferResponse", {response: foundResponse, offer: foundOffer} );
                 }
             });
         }
-    }
     });
 });
 
@@ -255,22 +255,29 @@ router.post("/response/:id", isLoggedIn, function(req, res) {
     OfferResponse.findById(req.params.id, function(err, foundResponse) {
         if(err) {
             console.log(err);
-        if (!foundResponse) {
+        } if (!foundResponse) {
             res.redirect("back");
         } else {
-            Offer.find({"offerId": req.params.id}, function(err, foundOffer){
+            var offerId = foundResponse.offerId;
+            Offer.findById(offerId, function(err, foundOffer){
                 if(err){
                     console.log(err);
                 } if (!foundOffer) {
                     res.redirect("back");
                 } else {
                     if (foundOffer.author.id.equals(req.user._id)) {
-                        foundResponse.isAccepted = true;
+                        OfferResponse.findByIdAndUpdate(foundResponse._id, {isAccepted: true}, function(err, updatedOffer) {
+                            if(err){
+                                res.redirect("/offers");
+                            } else {
+                                req.flash("success", "You have accepted this request");
+                                res.redirect('back');
+                            }
+                        });
                     }
                 }
             });
         }
-    }
     });
 });
 

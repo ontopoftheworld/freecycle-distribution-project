@@ -6,7 +6,7 @@
         <h4>Message: <%= response.message %></h4>
         <h5>Status: <% if (response.isAccepted) { %>
             Accepted</h5>
-            <% } else %> Waiting approval</h5>
+            <% } else if (!response.isAccepted) { %> Waiting approval <% } %></h5>
 
             <% if((currentUser && offer.author.id.equals(currentUser._id))) { %>
                 <form action="/response/<%= response._id %>" method="POST">
@@ -14,7 +14,7 @@
                 </form>
             <% } %>
 
-        <a href="/response">Go Back</a>
+        <a href="/offers/<%= offer._id %>/response ">Go Back</a>
     </div>
 
     <script>

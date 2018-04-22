@@ -10,10 +10,6 @@
         <form action="/offers/<%= offer._id %>/response" method="POST" >
             <p>Respond to <%= offer.author.username %>'s offer:</p>
             <textarea name="message" rows="10"  style="width:100%"></textarea>
-            <!-- <p>Choose Time<p>
-            <input type="checkbox" name="checkbox" value="Wed"><label>Wed</label>
-            <input type="checkbox" name="checkbox" value="Sun"><label>Sun</label>
-            <input type="checkbox" name="checkbox" value="Mon"><label>Mon</label><br><br> -->
             <button class="btn btn-primary">Send Response</button> 
         </form>
 </div>
