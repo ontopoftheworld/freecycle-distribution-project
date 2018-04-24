@@ -1,6 +1,8 @@
 var express = require("express");
 var router = express.Router();
 var passport = require("passport");
+var mongoose         = require('mongoose');
+var mongoosePaginate = require('mongoose-paginate');
 
 var Offer = require("../models/offers"),
     Request = require("../models/requests"),
@@ -8,13 +10,17 @@ var Offer = require("../models/offers"),
     OfferResponse = require("../models/offerResponse");
 
 // Offers routes:
-
 router.get("/offers", isLoggedIn, function(req, res) {
-    Offer.find({}, function(err, allOffers){
+    var currentPage = req.query.pageChoose;
+    if(currentPage === undefined){
+        currentPage=1;
+    }
+    
+    Offer.paginate({}, {page: currentPage, limit: 4 }, function(err, result) {
         if(err){
             console.log(err);
         } else {
-            res.render("offers", {offers: allOffers} );
+            res.render("offers", {offers: result.docs, pages: result.pages} );
         }
     });
 });
@@ -24,18 +30,27 @@ router.get("/offers/new", isLoggedIn, function(req, res) {
 });
 
 router.get("/offers/sort", isLoggedIn, function(req, res) {
+    var currentPage = req.query.pageChoose;
+    if(currentPage === undefined){
+        currentPage=1;
+    }
     var sortCategory=req.query.category;
-    Offer.find({"category": sortCategory} , function(err, allOffers){
+    Offer.paginate({"category": sortCategory} ,{page: currentPage, limit: 4 }, function(err, result){
     if(err){
         console.log(err);
     } else {
-        res.render("offers", {offers: allOffers} );
+        res.render("offers", {offers: result.docs, pages: result.pages} );
     }
     });
 });
 
 
+
 router.post("/offers", isLoggedIn, function(req, res) {
+    if (req.body.offer.hoursOffered) {
+        req.flash("error", "Invalid input for hours offered");
+        res.redirect("/offers");
+    }
     User.findById(req.user._id, function(err, user){
         if(err){
             console.log(err);
@@ -99,11 +114,24 @@ router.put("/offers/:id", isLoggedIn, function(req, res) {
 });
 
 router.delete("/offers/:id", isLoggedIn, function(req, res) {
-    Offer.findByIdAndRemove(req.params.id, function(err, updatedOffer) {
-        if(err){
+    Offer.findById(req.params.id, function(err, foundOffer) {
+        if(err) {
             res.redirect("/offers");
+        } if (!foundOffer) {
+            res.redirect("back");
         } else {
-            res.redirect("/offers");
+            if (foundOffer.offerResponse.length > 0) {
+                req.flash("error", "You can no longer delete this offer. However, you may close it.");
+                res.redirect("back");
+            } else {
+                Offer.findByIdAndRemove(req.params.id, function(err, updatedOffer) {
+                    if(err){
+                        res.redirect("/offers");
+                    } else {
+                        res.redirect("/offers");
+                    }
+                });
+            }
         }
     });
 });
@@ -208,8 +236,8 @@ router.post("/offers/:id/response", isLoggedIn, function(req, res) {
                                     user.save();
                                     foundOffer.offerResponse.push({responder: responder, responseID: newOR._id});
                                     foundOffer.save();
-				    createNewMessageWithOffer(req, foundOffer.author.id, foundOffer.author.username,
-							      offerId, foundOffer, hours, message);
+				                    createNewMessageWithOffer(req, foundOffer.author.id, foundOffer.author.username,
+							        offerId, foundOffer, hours, message);
                                     req.flash("success", "Your response has been sent");
                                     res.redirect("/offers");
                                 }
@@ -365,6 +393,9 @@ router.get("/response/:id", isLoggedIn, function(req, res) {
                     console.log(err);
                 } if (!foundOffer) {
                     res.send("OFFER NOT FOUND");
+                } else if (!(foundOffer.author.id(req.user._id)|| foundResponse.responder.equals(req.user._id))) {
+                    req.flash("error", "You do not have access to this page");
+                    res.redirect("back");
                 } else {
                     res.render("showOfferResponse", {response: foundResponse, offer: foundOffer} );
                 }
@@ -379,12 +410,15 @@ router.post("/response/:id", isLoggedIn, function(req, res) {
             console.log(err);
         } if (!foundResponse) {
             res.redirect("back");
-        } else {
+        }else {
             var offerId = foundResponse.offerId;
             Offer.findById(offerId, function(err, foundOffer){
                 if(err){
                     console.log(err);
                 } if (!foundOffer) {
+                    res.send("OFFER NOT FOUND");
+                } else if (!(foundOffer.author.id(req.user._id)|| foundResponse.responder.equals(req.user._id))) {
+                    req.flash("error", "You do not have access to this page");
                     res.redirect("back");
                 } else {
                     if (foundOffer.author.id.equals(req.user._id)) {

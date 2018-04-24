@@ -509,3 +509,15 @@ div.container {
     min-height:100%;
     position:relative;
  }
+
+
+ /* Search on nav bar */
+ #searchForm {
+     padding-left: 10px;
+     padding-right: 10px;
+ }
+
+ #lbl{
+     padding-right: 3px;
+     padding-left: 1px;
+ }

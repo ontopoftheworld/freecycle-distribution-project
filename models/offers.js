@@ -1,4 +1,6 @@
 var mongoose    = require("mongoose");
+var mongoose         = require('mongoose');
+var mongoosePaginate = require('mongoose-paginate');
 
 var offerSchema = new mongoose.Schema({
     title: String,
@@ -13,7 +15,7 @@ var offerSchema = new mongoose.Schema({
     postDate: { type: Date, default: Date.now },
     hoursOffered: Number,
     category: String,
-    status: {type: Boolean, default: false},
+    isActive: {type: Boolean, default: false},
     offerResponse: [
         {
             responder: {
@@ -27,5 +29,7 @@ var offerSchema = new mongoose.Schema({
         }
     ]
 });
+
+offerSchema.plugin(mongoosePaginate);
 offerSchema.index({title: 'text'});
 module.exports = mongoose.model("Offer", offerSchema);
