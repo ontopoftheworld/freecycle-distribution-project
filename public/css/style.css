@@ -1,11 +1,10 @@
 
 body {
     height: 100%;
-    background-image: linear-gradient(to top, #4b40bc, #3c53c3, #3163c8, #3071c9, #397ec9);
+    background-image: linear-gradient(to top, #287420, #298620, #29981f, #29ab1d, #28be19);
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
-    background-size: cover;
     color: white;
     font-family: 'Lucida Grande', 'Lucida Sans Unicode', Arial, Verdana, sans-serif;
 }
@@ -59,8 +58,8 @@ h6 {
 /* ----------------- Landing Page ----------------- */
 
 #landingPageEntirety {
-    background-image: url("/static/images/timeBank.jpg");
-    background-color: lightgrey;
+    background-image: url("/static/images/furniture.jpg");
+    background-color: lightyellow;
    /*background: rgba(76, 175, 80, 0.7);*/
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -85,14 +84,16 @@ h6 {
 }
 
 #landingHeader h1 {
-    font-family: 'Merienda One', cursive;
-    font-size: 80px;
+    /*font-family: 'Merienda One', cursive;*/
+    font-family: 'Open Sans', light;
+    font-size: 96px;
     /*text-shadow: 0px 10px 90px grey;*/
     text-align: left;
     text-shadow: 0px 0px 15px grey;
 }
 
 #landingLoginBox h2 {
+    color: green;
     font-family: 'Glegoo', serif;
     padding: 0 0 0 95px;
     font-size: 24px;
@@ -152,13 +153,14 @@ h6 {
     border: solid 1px darkgrey;
     /*background: rgba(255, 255, 255, 0.85);*/
     /*background: rgba(0,0,0,0.6);*/
-    background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.9));
+    background: linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(255,255,255,0.9));
     font-family: 'Open Sans', sans-serif;
     font-size: 14px;
 }
 
 #landingSignUp {
     margin: 20px 20px 0 80px;
+    color: green;
 }
 
 /* ------------ Post Login Home Page ------------ */
@@ -256,11 +258,45 @@ h6 {
 
 
 /* ---- Login Page ---- */
-#loginPage form {
-    border-radius: 10px;
-    border: solid white;
-    padding: 50px;
+
+#loginPage {
     text-align: center;
+}
+#loginPage form {
+    margin: 0px auto 0px auto;
+    background-color: white;
+    border-radius: 10px;
+    border: solid 2px white;
+    padding: 50px 25px 50px 25px;
+    text-align: left;
+    width: 400px;
+}
+
+#loginPage input {
+    border-radius: 2px;
+    border: solid 1px lightgrey;
+    padding: 10px 20px;
+    margin-left: 30px;
+    width: 80%;
+}
+
+#loginPage button {
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 2px;
+    margin-left: 30px;
+    width: 80%;
+    padding: 7px 0;
+}
+
+#loginPage button:hover {
+    background-color: #2D9434;
+}
+
+#backbutton {
+    position: absolute;
+    left: 20px;
+    top: 20px;
 }
 
 /* ---- Sign up Page --- */
@@ -268,7 +304,8 @@ h6 {
 #registration {
     margin: 0;
     padding: 0 0 170px 0;
-    background-image: linear-gradient(to top, #4b40bc, #3c53c3, #3163c8, #3071c9, #397ec9);
+    /*background-image: linear-gradient(to top, #4b40bc, #3c53c3, #3163c8, #3071c9, #397ec9);*/
+    background-image: linear-gradient(to top, #287420, #298620, #29981f, #29ab1d, #28be19);
 }
 
 #signupBox {

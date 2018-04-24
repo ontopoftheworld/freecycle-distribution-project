@@ -1,6 +1,8 @@
 var express = require("express");
 var router = express.Router();
 var passport = require("passport");
+var mongoose         = require('mongoose');
+var mongoosePaginate = require('mongoose-paginate');
 
 var Offer = require("../models/offers"),
     Request = require("../models/requests"),
@@ -8,13 +10,17 @@ var Offer = require("../models/offers"),
     OfferResponse = require("../models/offerResponse");
 
 // Offers routes:
-
 router.get("/offers", isLoggedIn, function(req, res) {
-    Offer.find({}, function(err, allOffers){
+    var currentPage = req.query.pageChoose;
+    if(currentPage === undefined){
+        currentPage=1;
+    }
+    
+    Offer.paginate({}, {page: currentPage, limit: 4 }, function(err, result) {
         if(err){
             console.log(err);
         } else {
-            res.render("offers", {offers: allOffers} );
+            res.render("offers", {offers: result.docs, pages: result.pages} );
         }
     });
 });
@@ -24,15 +30,20 @@ router.get("/offers/new", isLoggedIn, function(req, res) {
 });
 
 router.get("/offers/sort", isLoggedIn, function(req, res) {
+    var currentPage = req.query.pageChoose;
+    if(currentPage === undefined){
+        currentPage=1;
+    }
     var sortCategory=req.query.category;
-    Offer.find({"category": sortCategory} , function(err, allOffers){
+    Offer.paginate({"category": sortCategory} ,{page: currentPage, limit: 4 }, function(err, result){
     if(err){
         console.log(err);
     } else {
-        res.render("offers", {offers: allOffers} );
+        res.render("offers", {offers: result.docs, pages: result.pages} );
     }
     });
 });
+
 
 
 router.post("/offers", isLoggedIn, function(req, res) {
