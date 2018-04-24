@@ -50,13 +50,14 @@
                             <a class="nav-link" href="/messages">Messages</a>
                         </li>
                     </ul>
-
+                <span>
                     <form action="/search" id="searchForm" class="form-inline my-2 my-lg-0" method="GET">
                         <input class="form-control mr-sm-2" type="text" placeholder="Find Offers/Requests" aria-label="Search" name="seachContent" value="">
-                        <label><input type="radio" class="check" value="requests" name="searchType" /><font color="grey">Requests</font></label>
-                        <label><input type="radio" class="check" value="offers" name="searchType" /><font color="grey">Offers</font></label>
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search </button>
+                        <label id="lbl"><input type="radio" class="check" value="requests" name="searchType" /><font color="grey">Requests</font></label>
+                        <label id="lbl"><input id="radioc" type="radio" class="check" value="offers" name="searchType" /><font color="grey">Offers</font></label>
+                        <button id="searchBtn" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search </button>
                     </form>
+                </span>
         
                     <ul class="navbar-nav" id="bootstrap-overrides">
                         <!-- PROFILE DROPDOWN - scrolling off the page to the right -->
