@@ -392,6 +392,9 @@ router.post("/response/:id", isLoggedIn, function(req, res) {
                             if(err){
                                 res.redirect("/offers");
                             } else {
+				//check hours enough id:response
+				//transfer hours
+				//close button
                                 req.flash("success", "You have accepted this request");
                                 res.redirect('back');
                             }
