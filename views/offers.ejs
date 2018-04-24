@@ -1,8 +1,9 @@
 <% include partials/header %>
 
     <div class="container">
-        <h1>Offers</h1>
+        <h1>Offers</h1><a class="btn btn-primary" href="/offers/new">Make New Offer</a>
         <a href="/response" class="btn btn-primary">See responses you have submitted</a>
+		
         <h3>Offers Posted By You:</h3>
         <div id="offer">
             <% var i = 0; %>
@@ -28,11 +29,15 @@
         <h3>Browse Offers Posted By Others:</h3>
         <form action="/offers/sort" method="GET">
 
-            <h5>Filter:</h5>
-
-           
-
-            <select name="category">
+            <div style="margin: 0px auto -50px auto;
+    border-radius: 10px;
+    border: solid white;
+    padding: 0px;height:30px;width:100%;">
+			<div id="otitle" style="display:block;float:left;text-align:center;width:30%;">
+            <h5 style="font-weight:500;text-shadow: 0px 0px;">Filter:</h5>
+			</div>
+			<div id="oselect" style="display:block;float:left;width:30%;text-align:center;margin:-2px 0px 0px 0px">
+			<select name="category">
                 <option value="">Choose Category</option>
                 <option value="categoryA">categoryA</option>
                 <option value="categoryB">categoryB</option>
@@ -40,10 +45,13 @@
                 <option value="categoryD">categoryD</option>
                 <option value="categoryE">categoryE</option>
             </select>
-            <button class="btn btn-primary">Apply</button>
+			</div>
+			<div id="obutton" style="display:block;float:left;width:30%;text-align:center;color:blue;">
+            <button class="btn btn-primary" style="height:30px;font-size:17px;color:blue;background-color:white;font-weight:bold;border:none;margin:-3px 0px 0px 0px;text-align:center;">Apply</button>
+			</div></div>
 			<br><br>
         </form>
-        <a class="btn btn-primary" href="/offers/new">Make New Offer</a>
+        
             <div id="offer">
                 <% offers.forEach(function(offer){ %>
                     <% if(!(currentUser && offer.author.id.equals(currentUser._id))) { %>

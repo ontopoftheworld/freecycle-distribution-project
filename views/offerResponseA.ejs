@@ -1,6 +1,6 @@
 <% include partials/header %>
 
-<div class="container" style="font-size:25px">
+<div class="container" >
 
         <h1>Responses to your Offer:</h1>
         <div class="indivPost">
@@ -20,16 +20,17 @@
                 </span>
         </div>
 
-        <h4>Offer Details</h4>
-        <h4><%= offer.title %></h4>
-        <h6><%= offer.desc %></h6>
-        <h6>Hours offered: <%= offer.hoursOffered %></h6>
-        <h6>Category: <%= offer.category %></h6>
-        <h6>Date posted: <%= offer.postDate.toDateString() %></h6>
+        <h3>Offer Details</h3>
+        <h5>Title:<%= offer.title %></h5>
+        <h5>Description:<%= offer.desc %></h5>
+        <h5>Hours offered: <%= offer.hoursOffered %></h5>
+        <h5>Category: <%= offer.category %></h5>
+        <h5>Date posted: <%= offer.postDate.toDateString() %></h5>
         <a class="btn btn-secondary" href="/offers/<%= offer._id %>/edit">Edit Offer</a>
         <form action="/offers/<%= offer._id %>?_method=DELETE" method="POST">
             <button class="btn btn-danger">Delete Offer</button>
         </form>
+		<a href="/offers ">Go Back</a>
 </div>
 
 <script>

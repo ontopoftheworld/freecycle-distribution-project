@@ -1,17 +1,18 @@
 <% include partials/header %>
 
-<div class="container" style="font-size:25px">
+<div class="container" >
         <h1>Respond to <%= offer.author.username %>'s Offer</h1>
-        <p>Offer details:<p>
+        <h3>Offer details:</h3>
         <h5>Title: <%= offer.title %></h5>
         <h5>Description: <%= offer.desc %></h5>
         <h5>Hours offered: <%= offer.hoursOffered %></h5>
         <h5>Date needed by: <%= offer.postDate %></h5>
         <form action="/offers/<%= offer._id %>/response" method="POST" >
-            <p>Respond to <%= offer.author.username %>'s offer:</p>
-            <textarea name="message" rows="10"  style="width:100%"></textarea>
+            <h3>Respond to <%= offer.author.username %>'s offer:</h3>
+            <textarea name="message" rows="5"  style="width:100%;border-top-width:3px;border-top-color:grey;border-left-width:3px;border-left-color:grey;"></textarea>
             <button class="btn btn-primary">Send Response</button> 
         </form>
+		<a href="/offers ">Go Back</a>
 </div>
 
 <script>
