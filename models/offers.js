@@ -1,4 +1,6 @@
 var mongoose    = require("mongoose");
+var mongoose         = require('mongoose');
+var mongoosePaginate = require('mongoose-paginate');
 
 var offerSchema = new mongoose.Schema({
     title: String,
@@ -27,5 +29,7 @@ var offerSchema = new mongoose.Schema({
         }
     ]
 });
+
+offerSchema.plugin(mongoosePaginate);
 offerSchema.index({title: 'text'});
 module.exports = mongoose.model("Offer", offerSchema);

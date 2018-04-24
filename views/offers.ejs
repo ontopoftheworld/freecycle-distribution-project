@@ -1,5 +1,18 @@
 <% include partials/header %>
 
+<style>
+.pagination {
+    display: inline-block;
+}
+
+.pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+</style>
+
     <div class="container">
         <h1>Offers</h1><a class="btn btn-primary" href="/offers/new">Make New Offer</a>
         <a href="/response" class="btn btn-primary">See responses you have submitted</a>
@@ -73,6 +86,14 @@
             <% } %>
             <% }); %>
         </div>
+
+        <form action="/offers" method="GET">
+            <div class="pagination">
+            <%  for (i = 1; i <= pages; i++) { %>
+                <button name="pageChoose" type="submit" value="<%= i %>"><%= i %>
+            <%  } %>
+        </div>
+        </form>
         </div>
 
     <script>
