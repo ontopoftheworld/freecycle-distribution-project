@@ -2,19 +2,51 @@
 
     <div class="container">
         <h1>Response Details</h1>
-
-        <h4>Message: <%= response.message %></h4>
-        <h5>Status: <% if (response.isAccepted) { %>
-            Accepted</h5>
-            <% } else if (!response.isAccepted) { %> Waiting approval <% } %></h5>
-
-            <% if((currentUser && offer.author.id.equals(currentUser._id))) { %>
-                <form action="/response/<%= response._id %>" method="POST">
-                    <button class="btn btn-danger">Accept Offer</button>
+        <h4>Original Response Message:</h4> <p><%= response.message %></p>
+        <h4>Status: </h4>
+	<% if (response.isAccepted) { %>
+	    <% if (response.isComplete) { %>
+            <p> Completed </p>
+            <% } else if (!response.isComplete) { %>
+	    <p> In Progress <br>
+	    ( <%= offer.hoursOffered %> hours in holding and will be released upon completion )
+	    </p>
+	    <% } %>
+            <% if (currentUser && (offer.author.id.equals(currentUser._id) ||
+	          responderId.equals(currentUser._id))) { %>
+                <form action="/response/<%= response._id %>/closeIncomplete" method="POST">
+                    <button class="btn btn-danger">Close Incomplete Offer</button>
                 </form>
             <% } %>
-
-        <a href="/offers/<%= offer._id %>/response ">Go Back</a>
+	    <br>
+	    <% if (currentUser && responderId.equals(currentUser._id)) { %>
+		<form action="/response/<%= response._id %>/markCompleted" method="POST">
+		    <button class="btn btn-danger" id="completionButton">
+		    Mark as Completed
+		    </button>
+		</form>
+            <% } %>
+        <% } else if (!response.isAccepted) { %>
+	    Awaiting approval </h5>
+	    <% if((currentUser && offer.author.id.equals(currentUser._id))) { %>
+                <form action="/response/<%= response._id %>" method="POST">
+                    <button class="btn btn-danger">
+		    Accept Offer
+		    </button>
+                </form>
+            <% } %>
+	<% } %>
+	<br><hr><br>
+	<div class="offerDetails"> 
+	<h3>Offer Details</h3>
+        <p>Title: <%= offer.title %><br>
+        Description: <%= offer.desc %><br>
+        Hours offered: <%= offer.hoursOffered %><br>
+        Category: <%= offer.category %><br>
+        Date posted: <%= offer.postDate.toDateString() %></p>
+	<br>
+	</div>
+        <a href="/offers/<%= offer._id %>/response " id="backButton2">Go Back</a>
     </div>
 
     <script>

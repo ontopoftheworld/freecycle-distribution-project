@@ -6,8 +6,10 @@ var mongoosePaginate = require('mongoose-paginate');
 
 var Offer = require("../models/offers"),
     Request = require("../models/requests"),
-    User = require("../models/users");
-    OfferResponse = require("../models/offerResponse");
+    User = require("../models/users"),
+    OfferResponse = require("../models/offerResponse"),
+    Escrow = require("../models/escrow");
+
 
 // Offers routes:
 router.get("/offers", isLoggedIn, function(req, res) {
@@ -47,36 +49,38 @@ router.get("/offers/sort", isLoggedIn, function(req, res) {
 
 
 router.post("/offers", isLoggedIn, function(req, res) {
-    if (req.body.offer.hoursOffered) {
+    if (req.body.offer.hoursOffered < 0) {
         req.flash("error", "Invalid input for hours offered");
         res.redirect("/offers");
-    }
-    User.findById(req.user._id, function(err, user){
-        if(err){
-            console.log(err);
-        } else {
-            var title = req.body.offer.title;
-            var desc = req.body.offer.desc;
-            var author = {
-                id: req.user._id,
-                username: req.user.username
+    } else {
+	User.findById(req.user._id, function(err, user){
+            if(err){
+		console.log(err);
+            } else {
+		var title = req.body.offer.title;
+		var desc = req.body.offer.desc;
+		var author = {
+                    id: req.user._id,
+                    username: req.user.username
+		}
+		var hoursOffered = req.body.offer.hoursOffered;
+		var category = req.body.offer.category;
+		var newOffer = {title: title, desc: desc, author: author,
+				hoursOffered: hoursOffered, category: category};
+		Offer.create(newOffer, function(err, newO) {
+                    if(err){
+			console.log(err);
+			res.render("newoffer");
+                    } else {
+			user.offers.push(newO);
+			user.save();
+			req.flash("success", "You have successfully posted an offer");
+			res.redirect("/offers");
+                    }
+		});
             }
-            var hoursOffered = req.body.offer.hoursOffered;
-            var category = req.body.offer.category;
-            var newOffer = {title: title, desc: desc, author: author, hoursOffered: hoursOffered, category: category};
-            Offer.create(newOffer, function(err, newO) {
-                if(err){
-                    console.log(err);
-                    res.render("newoffer");
-                } else {
-                    user.offers.push(newO);
-                    user.save();
-                    req.flash("success", "You have successfully posted an offer");
-                    res.redirect("/offers");
-                }
-            });
-        }
-    });
+	});
+    }
 });
 
 router.get("/offers/:id", isLoggedIn, function(req, res) {
@@ -152,7 +156,9 @@ router.get("/offers/:id/response", isLoggedIn, function(req, res) {
                             if(err){
                                 console.log(err);
                             } else {
-                                res.render("offerResponseA", {offer: foundOffer, offerResponses: allOfferResponses});
+				// render the page that lets the author look at all requests put in
+                                res.render("offerResponseA",
+					   {offer: foundOffer, offerResponses: allOfferResponses});
                             }
                         });
                     } else {
@@ -165,7 +171,8 @@ router.get("/offers/:id/response", isLoggedIn, function(req, res) {
                             }
                         }
                         if (found){
-                            OfferResponse.findById(foundOffer.offerResponse[i].responseID, function(err, foundResponse) {
+                            OfferResponse.findById(foundOffer.offerResponse[i].responseID,
+						   function(err, foundResponse) {
                                 if(err) {
                                     console.log(err);
                                 } else if (!foundResponse){
@@ -236,8 +243,8 @@ router.post("/offers/:id/response", isLoggedIn, function(req, res) {
                                     user.save();
                                     foundOffer.offerResponse.push({responder: responder, responseID: newOR._id});
                                     foundOffer.save();
-				                    createNewMessageWithOffer(req, foundOffer.author.id, foundOffer.author.username,
-							        offerId, foundOffer, hours, message);
+				    createNewMessageWithOffer(req, foundOffer.author.id, foundOffer.author.username,
+							      offerId, foundOffer, hours, message);
                                     req.flash("success", "Your response has been sent");
                                     res.redirect("/offers");
                                 }
@@ -300,19 +307,20 @@ function createNewMessageWithOffer(req, toUserId, toUserName, offerId, foundOffe
 
 			  Messages.update(
 			      { "chatGroup" : cGrp },
-			      { $push : { "message" : { "sentBy" : "The Freecycle Distribution Project Admins",
-							"time" : timeU,
-							"info" : toUserName + ", you have a new response " +
-							"to your offer (" + foundOffer.title +
-							") from " +
-							req.user.firstName + "! " +
-							"They are offering " + hours + " hours in exchange " +
-							"for its completion." +
-							' Here is their message: "' +  message +
-						      	'". Feel free to use this chat to further discuss this with ' +
-							req.user.firstName + ". You may accept this offer from the " +
-							'"Responses to Your Offer" page or at this link: ' +
-							"/offers/" + offerId + "/response"}}},
+			      { $push : { "message" : {
+				  "sentBy" : "The Freecycle Distribution Project Admins",
+				  "time" : timeU,
+				  "info" : toUserName + ", you have a new response " +
+				      "to your offer (" + foundOffer.title +
+				      ") from " +
+				      req.user.firstName + "! " +
+				      "They are offering " + hours + " hours in exchange " +
+				      "for its completion." +
+				      ' Here is their message: "' +  message +
+				      '". Feel free to use this chat to further discuss this with ' +
+				      req.user.firstName + ". You may accept this offer from the " +
+				      '"Responses to Your Offer" page or at this link: ' +
+				      "/offers/" + offerId + "/response"}}},
 			      { upsert : false, multi : true },
 			      function (err, object) {
 				  if (err) {
@@ -344,19 +352,20 @@ function createNewMessageWithOffer(req, toUserId, toUserName, offerId, foundOffe
 
 				  Messages.update(
 				      { "chatGroup" : cGrp },
-				      { $push : { "message" : { "sentBy" : "The Freecycle Distribution Project Admins",
-								"time" : timeU,
-								"info" : toUserName + ", you have a new response " +
-								"to your offer (" + foundOffer.title +
-								") from " +
-								req.user.firstName + "! " +
-								"They are offering " + hours + " hours in exchange " +
-								"for its completion." +
-								' Here is their message: "' +  message +
-						      		'". Feel free to use this chat to further discuss this with ' +
-								req.user.firstName + ". You may accept this offer from the " +
-								'"Responses to Your Offer" page or at this link: ' +
-								"/offers/" + offerId + "/response"}}},
+				      { $push : { "message" : {
+					  "sentBy" : "The Freecycle Distribution Project Admins",
+					  "time" : timeU,
+					  "info" : toUserName + ", you have a new response " +
+					      "to your offer (" + foundOffer.title +
+					      ") from " +
+					      req.user.firstName + "! " +
+					      "They are offering " + hours + " hours in exchange " +
+					      "for its completion." +
+					      ' Here is their message: "' +  message +
+					      '". Feel free to use this chat to further discuss this with ' +
+					      req.user.firstName + ". You may accept this offer from the " +
+					      '"Responses to Your Offer" page or at this link: ' +
+					      "/offers/" + offerId + "/response"}}},
 				      { upsert : false, multi : true },
 				      function (err, object) {
 					  if (err) {
@@ -391,13 +400,17 @@ router.get("/response/:id", isLoggedIn, function(req, res) {
             Offer.findById(offerId, function(err, foundOffer){
                 if(err){
                     console.log(err);
-                } if (!foundOffer) {
+                } if (foundOffer.length <= 0) {
                     res.send("OFFER NOT FOUND");
-                } else if (!(foundOffer.author.id(req.user._id)|| foundResponse.responder.equals(req.user._id))) {
+                } else if (!(foundOffer.author.id.equals(req.user._id)|| foundResponse.responder.equals(req.user._id))) {
                     req.flash("error", "You do not have access to this page");
                     res.redirect("back");
                 } else {
-                    res.render("showOfferResponse", {response: foundResponse, offer: foundOffer} );
+		    res.render("showOfferResponse",
+			       {"currentUser": req.user,
+				"offer": foundOffer,
+				"response": foundResponse,
+				"responderId": foundResponse.responder});
                 }
             });
         }
@@ -406,40 +419,164 @@ router.get("/response/:id", isLoggedIn, function(req, res) {
 
 router.post("/response/:id", isLoggedIn, function(req, res) {
     OfferResponse.findById(req.params.id, function(err, foundResponse) {
-        if(err) {
+        if (err) {
             console.log(err);
-        } if (!foundResponse) {
+        } else if (!foundResponse) {
             res.redirect("back");
-        }else {
+        } else {
             var offerId = foundResponse.offerId;
             Offer.findById(offerId, function(err, foundOffer){
-                if(err){
+                if (err){
                     console.log(err);
-                } if (!foundOffer) {
+                } else if (foundOffer.length <= 0) {
                     res.send("OFFER NOT FOUND");
-                } else if (!(foundOffer.author.id(req.user._id)|| foundResponse.responder.equals(req.user._id))) {
-                    req.flash("error", "You do not have access to this page");
+                } else if (!(foundOffer.author.id.equals(req.user._id)||
+			     foundResponse.responder.equals(req.user._id))) {
+                    req.flash("error", "You do not have access to this page.");
                     res.redirect("back");
-                } else {
-                    if (foundOffer.author.id.equals(req.user._id)) {
-                        OfferResponse.findByIdAndUpdate(foundResponse._id, {isAccepted: true}, function(err, updatedOffer) {
-                            if(err){
-                                res.redirect("/offers");
-                            } else {
-				//check hours enough id:response
-				//transfer hours
-				//close button
-                                req.flash("success", "You have accepted this request");
-                                res.redirect('back');
-                            }
-                        });
-                    }
+                } else if (foundOffer.author.id.equals(req.user._id)) {
+		    handleAccept(req, foundResponse, foundOffer, res);
                 }
             });
         }
     });
 });
 
+function handleAccept(req, foundResponse, foundOffer, res) {
+    User.find({_id: foundResponse.responder}, function(err, responderInfo) {
+	// check if the responder has enough hours to request the user's offer.
+	if (responderInfo.length > 0 &&
+	    responderInfo[0].userHours >= foundResponse.hours) {
+	    // transfer specified amt of responder's hours to holding.
+	    let finalHrs = responderInfo[0].userHours - foundResponse.hours;
+	    User.findByIdAndUpdate(
+		foundResponse.responder, {"userHours": finalHrs}, function(err, updatedResponder) {
+		    var newEscrowEntry = {fromUser: foundResponse.responder,
+					  toUser: req.user._id,
+					  hours: foundResponse.hours,
+					  offerResponseId: foundResponse._id};
+		    Escrow.create(newEscrowEntry, function(err, newE) {
+			if(err){
+			    // in general, this should not occur
+			    req.flash("error", "Sorry, there was a " +
+				      "problem accepting the request.");
+			    res.redirect("/offers");
+			} else {
+			    // update status of request to accepted.
+			    OfferResponse.findByIdAndUpdate(
+				foundResponse._id,
+				{$set : {isAccepted: true}},
+				function(err, updatedResponse) {
+				    if(err){
+					// in general, this should not occur
+					req.flash("error", "Sorry, there was a problem " +
+						  "accepting the request.");
+					res.redirect("/offers");
+				    } else {
+					updatedResponse.isAccepted = true;
+					req.flash("success", "You have accepted this request.");
+					res.render("showOfferResponse",
+						   {"currentUser": req.user,
+						    "offer": foundOffer,
+						    "response": updatedResponse,
+						    "responderId": updatedResponder._id});
+				    }
+				});
+			}
+		    });
+		});
+	} else if (responderInfo.length > 0) {
+	    // if the responder does not have enough hours, notify the offer author.
+	    req.flash("error", "Unfortunately the responder does not have" +
+		      " enough hours to take on your offer.");
+	    res.redirect('back');
+
+	} else {
+	    req.flash("error", "Sorry, the responder has retracted their request.");
+	    res.redirect('back');
+	}
+    });
+}
+
+// close an incomplete response to offer -->
+// Hours get transferred from Escrow to responder.
+router.post("/response/:id/closeIncomplete", isLoggedIn, function(req, res) {
+    Escrow.find({"offerResponseId": req.params.id}, function(err, foundEscrow) {
+	if(err){
+	    // in general, this should not occur
+	    req.flash("error", "Sorry, an error occurred.");
+	    res.redirect("back");
+	} else {
+	    if (foundEscrow.length <= 0) {
+		req.flash("error", "This offer has already been closed.");
+		res.redirect("/offers");
+	    } else {
+		const messageUponSuccess = "The offer has been close." +
+		      " The hours have been returned to the responder."
+		addHours(foundEscrow[0].fromUser, foundEscrow[0].hours,
+			 req, res, messageUponSuccess);
+	    }
+	}
+    });
+});
+
+// close a completed response to offer -->
+// Hours get transferred from Escrow to poster
+router.post("/response/:id/markCompleted", isLoggedIn, function(req, res) {
+    Escrow.find({"offerResponseId": req.params.id}, function(err, foundEscrow) {
+	if(err){
+	    // in general, this should not occur
+	    req.flash("error", "Sorry, an error occurred.");
+	    res.redirect("back");
+	} else {
+	    if (foundEscrow.length <= 0) {
+		req.flash("error", "This offer has already been closed.");
+		res.redirect("/offers");
+	    } else {
+		const messageUponSuccess = "The offer has been completed." +
+		      " The hours have been released to the poster."
+		addHours(foundEscrow[0].toUser, foundEscrow[0].hours,
+			 req, res, messageUponSuccess);
+	    }
+	}
+    });
+});
+
+// Adds a certain number of hours to a user's account
+function addHours(toUser, numHours, req, res, messageUponSuccess) {
+    User.find({_id : toUser}, function(err, foundUser) {
+	if (err || foundUser.length <= 0) {
+	    req.flash("error", "Something went wrong.");
+	    res.redirect("back");
+	} else {
+	    User.findByIdAndUpdate(
+		toUser,
+		{"userHours": foundUser[0].userHours + numHours},
+		function(err, updatedUser) {
+		    if(err){
+			// in general, this should not occur
+			req.flash("error", "Something went wrong.");
+			res.redirect("/offers");
+		    } else {
+			Escrow.remove({"offerResponseId" : req.params.id}, function(err, result) {
+			    if (err) {
+				req.flash("error", "Something went wrong.");
+				res.redirect("/offers");
+			    } else {
+				req.flash("success", messageUponSuccess);
+				/*res.render("showOfferResponse",
+				  {"currentUser": req.user,
+				  "offer": foundOffer,
+				  "response": foundResponse,
+				  "responderId": updatedResponder._id});*/
+				res.redirect("/offers");
+			    }
+			});
+		    }
+		});
+	}
+    });
+}
 
 function isLoggedIn(req, res, next) {
     if(req.isAuthenticated()) {

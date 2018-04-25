@@ -521,3 +521,30 @@ div.container {
      padding-right: 3px;
      padding-left: 1px;
  }
+
+ /*  ------ specs for showOfferResponse ----- */
+
+ #completionButton {
+     background-color: blue;
+     border: blue;
+ }
+
+ #completionButton:hover {
+     background-color: darkblue;
+     border: blue;
+ }
+
+ #backButton2 {
+     padding: 10px 20px;
+     background-color: blue;
+     border: blue;
+     border-radius: 7px;
+     color: white;
+ }
+
+ #backButton2:hover {
+     background-color: darkblue;
+     border: darkblue;
+ }
+
+ 

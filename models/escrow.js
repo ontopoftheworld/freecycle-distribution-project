@@ -1,9 +1,19 @@
 var mongoose    = require("mongoose");
 
 var escrowSchema = new mongoose.Schema({
-    fromUser: String,
-    toUser: String,
-    hour: Number
+    fromUser: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
+    toUser: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
+    hours: Number,
+    offerResponseId: {
+	type: mongoose.Schema.Types.ObjectId,
+	ref: "OfferResponse"
+    }
 });
 
 module.exports = mongoose.model("Escrow", escrowSchema);
