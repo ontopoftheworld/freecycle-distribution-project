@@ -13,16 +13,11 @@ var Offer = require("../models/offers"),
 
 // Offers routes:
 router.get("/offers", isLoggedIn, function(req, res) {
-    var currentPage = req.query.pageChoose;
-    if(currentPage === undefined){
-        currentPage=1;
-    }
-    
-    Offer.paginate({}, {page: currentPage, limit: 4 }, function(err, result) {
+    Offer.find({}, function(err, allOffers){
         if(err){
             console.log(err);
         } else {
-            res.render("offers", {offers: result.docs, pages: result.pages} );
+            res.render("offers", {offers: allOffers} );
         }
     });
 });
@@ -32,16 +27,17 @@ router.get("/offers/new", isLoggedIn, function(req, res) {
 });
 
 router.get("/offers/sort", isLoggedIn, function(req, res) {
+    var id = req.query.userId;
     var currentPage = req.query.pageChoose;
     if(currentPage === undefined){
         currentPage=1;
     }
     var sortCategory=req.query.category;
-    Offer.paginate({"category": sortCategory} ,{page: currentPage, limit: 4 }, function(err, result){
+    Offer.paginate({"author.id": {$ne: id}, "category": sortCategory} ,{page: currentPage, limit: 4}, function(err, result){
     if(err){
         console.log(err);
     } else {
-        res.render("offers", {offers: result.docs, pages: result.pages} );
+        res.render("offersSearch", {offers: result.docs, pages: result.pages, searchContent: null, sortCategory: sortCategory} );
     }
     });
 });
