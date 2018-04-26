@@ -1,9 +1,22 @@
 <% include partials/header %>
+<style>
+.ScrollStyleYou{
+    width:100%;
+    max-height: 400px;
+    overflow-y: scroll;
+}
+.ScrollStyleOthers{
+    width:100%;
+    max-height: 700px;
+    overflow-y: scroll;
+}
+</style>
     <div class="container">
         <h1>Offers</h1><a class="btn btn-primary" style="background-color:#55DD71;" href="/offers/new">Make New Offer</a>
         <a href="/response" class="btn btn-primary">See responses you have submitted</a>
 		
         <h3>Offers Posted By You:</h3>
+        <div class="ScrollStyleYou">
         <div id="offer">
             <% var i = 0; %>
             <% offers.forEach(function(offer){ %>
@@ -23,6 +36,7 @@
             <% if (i == 0) { %>
                 <p>You do not currently have any active offer postings</p>
             <% } %>
+        </div>
         </div>
 
         <h3>Browse Offers Posted By Others:</h3>
@@ -50,11 +64,11 @@
 			</div></div>
 			<br><br>
         </form>
-        
+        <div class="ScrollStyleOthers">
             <div id="offer">
                 <% offers.forEach(function(offer){ %>
                     <% if(!(currentUser && offer.author.id.equals(currentUser._id))) { %>
-		   <div class="indivPost">
+		    <div class="indivPost">
                     <span>
                         <h4><%= offer.title %></h4>
                         <p><%= offer.desc %></p>
@@ -73,6 +87,7 @@
             <% }); %>
         </div>
         </div>
+    </div>
 
     <script>
         $( "#offers" ).addClass( "selected" );
