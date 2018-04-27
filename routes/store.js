@@ -1,12 +1,23 @@
 var express = require("express");
 var router = express.Router();
 var passport = require("passport");
+var multer = require('multer');
+var bodyParser = require('body-parser');
+var fs = require('fs');
+var AWS = require('aws-sdk');
+var fileUpload = require('express-fileupload');
+router.use(bodyParser.urlencoded({extended:true}));
+router.use(bodyParser.json({extended:true}));
+router.use(fileUpload());
 
 var Offer = require("../models/offers"),
     Request = require("../models/requests"),
     User = require("../models/users");
     Store = require("../models/store");
 
+AWS.config.loadFromPath('./config.json');
+var s3Bucket = new AWS.S3({params:{Bucket: "freecycle-distribution-project-storeimg"}});
+var baseAWSURL ="https://s3.amazonaws.com/freecycle-distribution-project-storeimg/";
 // Store routes:
 
 router.get("/store", isLoggedIn, function(req, res) {
@@ -24,25 +35,40 @@ router.get("/store/new", isLoggedIn, function(req, res) {
 });
 
 router.post("/store", isLoggedIn, function(req, res) {
+    var imgname=req.body.title + "_" + Date.now();
+    let uploadData = {
+    Key: imgname,
+    Body: req.files.upload.data,
+    ContentType: req.files.upload.mimetype,
+    ACL: 'public-read'
+    }
+
+    s3Bucket.putObject(uploadData, function(err, data){
+        if (err) {
+            console.log(err);
+            return;
+        }
+    });
     User.findById(req.user._id, function(err, user){
         if(err){
             console.log(err);
         } else {
-            var title = req.body.item.title;
-            var desc = req.body.item.desc;
+            var title = req.body.title;
+            var desc = req.body.desc;
             var author = {
                 id: req.user._id,
                 username: req.user.username
             }
-            var hourPrice = req.body.item.hourPrice;
-            var category = req.body.item.category;
-            var newItem = {title: title, desc: desc, author: author, hourPrice: hourPrice, category: category};
+            var hourPrice = req.body.hourPrice;
+            var category = req.body.category;
+            var condition = req.body.condition;
+            var newItem = {title: title, desc: desc, author: author, hourPrice: hourPrice, category: category, condition: condition, imgname:imgname};
             Store.create(newItem, function(err, newI) {
                 if(err){
                     console.log(err);
                     res.render("newStoreItem");
                 } else {
-                    res.redirect("/store");
+                    res.render("redirect");
                 }
             });
         }
