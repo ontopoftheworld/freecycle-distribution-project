@@ -27,7 +27,11 @@ var userSchema = new mongoose.Schema({
             ref: "OfferResponse"
         }
     ],
-    ipAddress: String
+    ipAddress: String,
+    hoursHistory: [ { date: {type: Date, default: Date.now},
+		      action: String,
+		      change: Number,
+		      newHours: Number } ]
 });
 
 userSchema.plugin(passportLocalMongoose);

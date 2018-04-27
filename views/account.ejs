@@ -24,11 +24,22 @@
 		<br><br>
 		<div class="listingBoxH" id="statement" >
 <h5>Statement History:</h5>
-<ul>
-<li>
-This is a placeholder.
-</li>
-</ul>
+<table id="userHistoryTable">
+       <tr>
+	<th>Date</th>
+	<th>Action</th>
+	<th>Change</th>
+	<th>Updated Hours</th>
+       </tr>
+        <% userHrsHistory.forEach(function(entry){ %>
+	   <tr>
+	    <td><%= entry.date %></td>
+	    <td><%= entry.action %></td>
+	    <td><%= entry.change %></td>
+	    <td><%= entry.newHours %></td>
+	   </tr>
+	<% }); %>
+</table>
 </div>
 </div>
 		</div>

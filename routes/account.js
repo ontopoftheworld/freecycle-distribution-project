@@ -12,7 +12,7 @@ var Offer = require("../models/offers"),
             if(err){
                 console.log(err);
             } else {
-                res.render("account", {user: user} );
+                res.render("account", {user: user, userHrsHistory: user.hoursHistory} );
             }
         });
     });

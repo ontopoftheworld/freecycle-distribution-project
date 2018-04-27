@@ -446,7 +446,15 @@ function handleAccept(req, foundResponse, foundOffer, res) {
 	    // transfer specified amt of responder's hours to holding.
 	    let finalHrs = responderInfo[0].userHours - foundResponse.hours;
 	    User.findByIdAndUpdate(
-		foundResponse.responder, {"userHours": finalHrs}, function(err, updatedResponder) {
+		foundResponse.responder, {"userHours": finalHrs,
+					  $push : { "hoursHistory": {
+					      "action" :
+					      "Your response to an offer was accepted. " +
+						  "Hours transferred to holding.",
+					      "change" : (-1 * foundResponse.hours),
+					      "newHours" : finalHrs
+					  } }},
+		function(err, updatedResponder) {
 		    var newEscrowEntry = {fromUser: foundResponse.responder,
 					  toUser: req.user._id,
 					  hours: foundResponse.hours,
@@ -507,10 +515,13 @@ router.post("/response/:id/closeIncomplete", isLoggedIn, function(req, res) {
 		req.flash("error", "This offer has already been closed.");
 		res.redirect("/offers");
 	    } else {
-		const messageUponSuccess = "The offer has been close." +
-		      " The hours have been returned to the responder."
+		const messageUponSuccess = "The offer has been closed." +
+		      " The hours have been returned to the responder.";
+		const logMessage = "An offer that you had requested " +
+		      " was closed without its completion. " +
+		      "The hours in holding were returned to you";
 		addHours(foundEscrow[0].fromUser, foundEscrow[0].hours,
-			 req, res, messageUponSuccess);
+			 req, res, messageUponSuccess, logMessage);
 	    }
 	}
     });
@@ -530,16 +541,18 @@ router.post("/response/:id/markCompleted", isLoggedIn, function(req, res) {
 		res.redirect("/offers");
 	    } else {
 		const messageUponSuccess = "The offer has been completed." +
-		      " The hours have been released to the poster."
+		      " The hours have been released to the poster.";
+		const logMessage = "You completed a request to your " +
+		      "posted offer and earned the hours for its completion.";
 		addHours(foundEscrow[0].toUser, foundEscrow[0].hours,
-			 req, res, messageUponSuccess);
+			 req, res, messageUponSuccess, logMessage);
 	    }
 	}
     });
 });
 
 // Adds a certain number of hours to a user's account
-function addHours(toUser, numHours, req, res, messageUponSuccess) {
+function addHours(toUser, numHours, req, res, messageUponSuccess, logMessage) {
     User.find({_id : toUser}, function(err, foundUser) {
 	if (err || foundUser.length <= 0) {
 	    req.flash("error", "Something went wrong.");
@@ -547,7 +560,12 @@ function addHours(toUser, numHours, req, res, messageUponSuccess) {
 	} else {
 	    User.findByIdAndUpdate(
 		toUser,
-		{"userHours": foundUser[0].userHours + numHours},
+		{"userHours": foundUser[0].userHours + numHours,
+		 $push : { "hoursHistory": {
+		     "action" : logMessage,
+		     "change" : numHours,
+		     "newHours" :  foundUser[0].userHours + numHours
+		 } }},
 		function(err, updatedUser) {
 		    if(err){
 			// in general, this should not occur
