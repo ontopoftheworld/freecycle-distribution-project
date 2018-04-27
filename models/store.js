@@ -13,6 +13,8 @@ var storeSchema = new mongoose.Schema({
     postDate: { type: Date, default: Date.now },
     hourPrice: Number,
     category: String,
+    condition: String,
+    imgname: String,
     status: {type: Boolean, default: false}
 });
 
