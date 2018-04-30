@@ -16,7 +16,13 @@
             </form>
         <% } %>
         <% if(!(currentUser && item.author.id.equals(currentUser._id))) { %>
-            <a href="/store/<%= item._id %>" class="btn btn-primary">Buy</a>
+            <form action="/store/buy" method="POST">
+                <input name="itemPrice" type="hidden" value="<%= item.hourPrice %>" >
+                <input name="buyerId" type="hidden" value="<%= currentUser._id %>" >
+                <input name="itemId" type="hidden" value="<%= item._id %>" >
+                <input name="sellerId" type="hidden" value="<%= item.author.id %>" >
+                <button type="submit" class="btn btn-primary">Buy</button>
+            </form>
         <% } %>
 
         <a href="/store%>">Go Back</a>
