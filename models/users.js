@@ -5,7 +5,7 @@ var userSchema = new mongoose.Schema({
     username: String,
     firstName: String,
     lastName: String,
-    userHours: {type: Number, default: 0},
+    userHours: {type: Number, default: 100},
     isAdmin: {type: Boolean, default: false},
     password: String,
     dateJoined: { type: Date, default: Date.now },
