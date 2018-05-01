@@ -4,7 +4,7 @@
         <h1>Your Account</h1>
 		<div>
 		<div id="editinfo">
-		<a href="/home%>">Edit your profile</a>
+		<a href="/account/<%= user._id %>/edit">Edit your profile</a>
 		</div>
 		<div>
 		<img  src="/static/images/noProfilePic" width="150px" height="150px">
@@ -13,11 +13,12 @@
         <h4><%= user.firstName %></h4>
         <h6><%= user.lastName %></h6>
 		<h6>Your Hours: <%= user.userHours %></h6>
-		<h6>Email:</h6>
-		<h6>Hometown:</h6>
+		<h6>Email:<%= user.username %></h6>
+		<h6>Hometown:<%= user.hometown %></h6>
+		<h6>Zipcode:<%= user.zipcode %></h6>
 		<h6>User's Bio:</h6>
 		<div id="userbio1">
-		
+		<%= user.userbio %>
 		</div>
         
 		

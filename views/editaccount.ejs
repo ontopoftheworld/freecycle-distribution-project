@@ -1,0 +1,27 @@
+<% include partials/header %>
+
+<div class="container">
+    <div id="editaccount">
+    	 <h1>Edit Account</h1>
+
+        <form action="/account?_method=PUT" method="POST">
+            <input type="text" placeholder="First Name" name="account[firstName]" value="<%= user.firstName %>" required><br><br>
+	<input type="text" placeholder="Last Name" name="account[lastName]" value="<%= user.lastName %>" required><br><br>
+        <input type="text" placeholder="Email" name="account[username]" value="<%= user.username %>" required><br><br>
+        <input type="password" placeholder="Password" name="account[password]" required><br><br>
+		<input type="text" placeholder="Hometown" name="account[hometown]" value="<%= user.hometown %>"><br><br>
+		<input type="text" placeholder="Zipcode" name="account[zipcode]" value="<%= user.zipcode %>"><br><br>
+		<input type="text" placeholder="Userbio" name="account[userbio]" value="<%= user.userbio %>"><br><br>
+            <button>Update</button>
+        </form>
+		
+		<a href="/account>">Go Back</a>
+    	
+    </div>
+    </div>
+
+    <script>
+      
+    </script>
+
+<% include partials/footer %>
