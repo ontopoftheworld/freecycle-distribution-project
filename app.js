@@ -14,7 +14,8 @@ var Offer           = require("./models/offers"),
     Request         = require("./models/requests"),
     User            = require("./models/users");
     Store           = require("./models/store");
-    OfferResponse   = require("./models/offerResponse");
+	OfferResponse   = require("./models/offerResponse");
+	RequestResponse   = require("./models/requestResponse");
 
 var indexRoutes =   require("./routes/index"),
     offerRoutes =   require("./routes/offers"),

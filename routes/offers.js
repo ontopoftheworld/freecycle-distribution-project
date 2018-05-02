@@ -10,7 +10,6 @@ var Offer = require("../models/offers"),
     OfferResponse = require("../models/offerResponse"),
     Escrow = require("../models/escrow");
 
-
 // Offers routes:
 router.get("/offers", isLoggedIn, function(req, res) {
     Offer.find({}, function(err, allOffers){
@@ -42,8 +41,6 @@ router.get("/offers/sort", isLoggedIn, function(req, res) {
     });
 });
 
-
-
 router.post("/offers", isLoggedIn, function(req, res) {
     if (req.body.offer.hoursOffered < 0) {
         req.flash("error", "Invalid input for hours offered");
@@ -70,7 +67,7 @@ router.post("/offers", isLoggedIn, function(req, res) {
                     } else {
 			user.offers.push(newO);
 			user.save();
-			req.flash("success", "You have successfully posted an offer");
+			req.flash("success", "You have successfully posted an Offer");
 			res.redirect("/offers");
                     }
 		});
@@ -239,7 +236,7 @@ router.post("/offers/:id/response", isLoggedIn, function(req, res) {
                                     user.save();
                                     foundOffer.offerResponse.push({responder: responder, responseID: newOR._id});
                                     foundOffer.save();
-				    createNewMessageWithOffer(req, foundOffer.author.id, foundOffer.author.username,
+				                    createNewMessageWithOffer(req, foundOffer.author.id, foundOffer.author.username,
 							      offerId, foundOffer, hours, message);
                                     req.flash("success", "Your response has been sent");
                                     res.redirect("/offers");

@@ -1,22 +1,23 @@
 <% include partials/header %>
-    <a href="/requests" class="btn btn-primary" id="backButton">Back</a>	
-    <div class="container">
-        <h1>Create a New Request</h1>
 
-	<div class="newPostForm">	
+    <a href="/requests" class="btn btn-primary" id="backButton">Back</a>
+    <div class="container">
+        <h1>Post a New Request</h1>
+	<div class="newPostForm">
         <form action="/requests" method="POST">
-            <input type="text" name="request[title]" placeholder="Enter title"><br><br>
-            <input type="text" name="request[desc]" placeholder="Enter description">
-			<p>category:</p>
-            <select name="offer[category]">
+            <input type="text" name="request[title]" placeholder="Enter title here." required><br><br>
+            <input type="text" name="request[desc]" placeholder="Enter description" required><br><br>
+            <input type="number" name="request[hoursOffered]" placeholder="Enter hours offered" required><br><br>
+            <p>category:</p>
+            <select name="request[category]">
                 <option value="categoryA">categoryA</option>
                 <option value="categoryB">categoryB</option>
                 <option value="categoryC">categoryC</option>
                 <option value="categoryD">categoryD</option>
                 <option value="categoryE">categoryE</option>
             </select>
-	    <br><br>
-	    <button>Submit</button>
+            <br><br>
+            <button>Submit</button>
         </form>
 	</div>
     </div>

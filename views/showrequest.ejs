@@ -5,14 +5,20 @@
 
         <h4><%= request.title %></h4>
         <h6><%= request.desc %></h6>
-        <span>
+        <h6>Hours offered: <%= request.hoursOffered %></h6>
+        <h6>Category: <%= request.category %></h6>
+        <h6>Date posted: <%= request.postDate.toDateString() %></h6>
+        <p>Submitted by: <a href="/users/<%= request.author.id %>"><%= request.author.username %></a></p>
+        <% if(currentUser && request.author.id.equals(currentUser._id)) { %>
             <a class="btn btn-secondary" href="/requests/<%= request._id %>/edit">Edit Request</a>
-
             <form action="/requests/<%= request._id %>?_method=DELETE" method="POST">
                 <button class="btn btn-danger">Delete Request</button>
             </form>
-        </span>
-
+        <% } %>
+        <% if(!(currentUser && request.author.id.equals(currentUser._id))) { %>
+            <a href="/requests/<%= request._id %>/response" class="btn btn-primary">Take on</a>
+        <% } %>
+		<br><br>
         <a href="/requests%>">Go Back</a>
     </div>
 

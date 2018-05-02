@@ -18,6 +18,12 @@ var userSchema = new mongoose.Schema({
            ref: "Request"
         }
     ],
+    requestResponse: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "RequestResponse"
+        }
+    ],
     offers: [
         {
             type: mongoose.Schema.Types.ObjectId,

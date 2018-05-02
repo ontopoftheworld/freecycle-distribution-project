@@ -1,19 +1,31 @@
 <% include partials/header %>
 
     <div class="container">
-        <h1>Edit Request</h1>
+    	 <h1>Edit Request</h1>
 
-        <form class="form-inline" action="/requests/<%= request._id %>?_method=PUT" method="POST">
+        <div class="newPostForm">
+        <form action="/requests/<%= request._id %>?_method=PUT" method="POST">
             <input type="text" name="request[title]" value="<%= request.title %>">
             <input type="text" name="request[desc]" value="<%= request.desc %>">
-            <button>Update</button>
+            <input type="number" name="request[hoursOffered]" value="<%= request.hoursOffered %>">
+            <p>category:</p>
+            <select name="request[category]" value="<%= request.category %>">
+                <option value="categoryA">categoryA</option>
+                <option value="categoryB">categoryB</option>
+                <option value="categoryC">categoryC</option>
+                <option value="categoryD">categoryD</option>
+                <option value="categoryE">categoryE</option>
+            </select>
+            <br><br>
+            <button>Submit</button>
         </form>
+        </div>
 
-    <a href="/requests/<%= request._id %>">Go Back</a>
-</div>
+    	<a href="/requests/<%= request._id %>">Go Back</a>
+    </div>
 
-<script>
-    $( "#requests" ).addClass( "selected" );
-</script>
+    <script>
+        $( "#requests" ).addClass( "selected" );
+    </script>
 
 <% include partials/footer %>

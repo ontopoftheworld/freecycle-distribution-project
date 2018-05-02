@@ -1,4 +1,6 @@
 var mongoose    = require("mongoose");
+var mongoose         = require('mongoose');
+var mongoosePaginate = require('mongoose-paginate');
 
 var requestSchema = new mongoose.Schema({
     title: String,
@@ -13,9 +15,21 @@ var requestSchema = new mongoose.Schema({
     postDate: { type: Date, default: Date.now },
     hoursOffered: Number,
     category: String,
-    status: {type: Boolean, default: false}
+    isActive: {type: Boolean, default: true},
+    requestResponse: [
+        {
+            responder: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User"
+            },
+            responseID: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "RequestResponse"
+            }
+        }
+    ]
 });
-
+    
+requestSchema.plugin(mongoosePaginate);
 requestSchema.index({title: 'text'});
-
 module.exports = mongoose.model("Request", requestSchema);

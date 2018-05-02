@@ -1,0 +1,40 @@
+<% include partials/header %>
+
+<div class="container" >
+
+        <h1>Responses to your Request:</h1>
+        <div class="indivPost">
+                <span>
+                        <% var i = 0; %>
+                        <% requestResponses.forEach(function(response){ %>
+                            <% if((response && response.requestId.equals(request._id))) { %>
+                                <h4><%= response.message %></h4>
+                                <h5>Response sent by:<%= response.responder.firstName %></h5>
+                                <a href="/response/<%=response._id%>" class="btn btn-primary">More Info</a>
+                                <% i++; %>
+                            <% } %>
+                        <% }); %>
+                        <% if (i == 0) { %>
+                            <p>You do not currently have any responses</p>
+                        <% } %>
+                </span>
+        </div>
+
+        <h3>Request Details</h3>
+        <h5>Title:<%= request.title %></h5>
+        <h5>Description:<%= request.desc %></h5>
+        <h5>Hours offered: <%= request.hoursOffered %></h5>
+        <h5>Category: <%= request.category %></h5>
+        <h5>Date posted: <%= request.postDate.toDateString() %></h5>
+        <a class="btn btn-secondary" href="/requests/<%= request._id %>/edit">Edit Request</a>
+        <form action="/requests/<%= request._id %>?_method=DELETE" method="POST">
+            <button class="btn btn-danger">Delete Request</button>
+        </form>
+		<a href="/requests ">Go Back</a>
+</div>
+
+<script>
+    $( "#requests" ).addClass( "selected" );
+</script>
+
+<% include partials/footer %>

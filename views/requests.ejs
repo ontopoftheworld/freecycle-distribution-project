@@ -1,17 +1,53 @@
 <% include partials/header %>
-
+<style>
+.ScrollStyleYou{
+    width:100%;
+    max-height: 400px;
+    overflow-y: scroll;
+}
+.ScrollStyleOthers{
+    width:100%;
+    max-height: 700px;
+    overflow-y: scroll;
+}
+</style>
     <div class="container">
-        <h1>Requests page</h1>
-		<div>
-            <a class="btn btn-success btn-large" style="background-color:#55DD71;" href="/requests/new">Make New Request</a>
+        <h1>Requests</h1><a class="btn btn-primary" style="background-color:#55DD71;" href="/requests/new">Make New Request</a>
+        <a href="/response" class="btn btn-primary">See Your Responses to Requests</a>
+		
+        <h3>Requests Posted By You:</h3>
+        <div class="ScrollStyleYou">
+        <div id="request">
+            <% var i = 0; %>
+            <% requests.forEach(function(request){ %>
+                <% if((currentUser && request.author.id.equals(currentUser._id))) { %>
+		            <div class="indivPost">
+                        <p>
+                            <span>
+                                <a href="/requests/<%= request._id %>" class="btn btn-primary"><%= request.title %></a>
+                                <a href="/requests/<%= request._id %>" class="btn btn-primary">More Info</a>
+                                <a href="/requests/<%= request._id %>/response" class="btn btn-primary">See Responses (<%= request.requestResponse.length %>)</a>
+                            </span>
+                        </p>
+                    </div>
+                    <% i++; %>
+                <% } %>
+            <% }); %>
+            <% if (i == 0) { %>
+                <p>You do not currently have any active request postings</p>
+            <% } %>
         </div>
+        </div>
+
+        <h3>Browse Requests Posted By Others:</h3>
         <form action="/requests/sort" method="GET">
+            <input name="userId" type="hidden" value="<%= currentUser._id %>" >
             <div style="margin: 0px auto -50px auto;
-    border-radius: 10px;
-    border: solid white;
-    padding: 0px;height:30px;width:100%;">
+                border-radius: 10px;
+                border: solid white;
+                padding: 0px;height:30px;width:100%;">
 			<div id="otitle" style="display:block;float:left;text-align:center;width:30%;">
-            <h5 style="font-weight:500;text-shadow: 0px 0px;">Filter:</h5>
+                <h5 style="font-weight:500;text-shadow: 0px 0px;">Filter:</h5>
 			</div>
 			<div id="oselect" style="display:block;float:left;width:30%;text-align:center;margin:-2px 0px 0px 0px">
 			<select name="category">
@@ -28,20 +64,29 @@
 			</div></div>
 			<br><br>
         </form>
-        
-            <div style="">
+        <div class="ScrollStyleOthers">
+            <div id="request">
                 <% requests.forEach(function(request){ %>
-		<div class="indivPost">	
+                    <% if(!(currentUser && request.author.id.equals(currentUser._id))) { %>
+		    <div class="indivPost">
                     <span>
                         <h4><%= request.title %></h4>
-                        <h6><%= request.desc %></h6>
+                        <p><%= request.desc %></p>
+                        <h6>Hours offered: <%= request.hoursOffered %></h6>
+                        <h6>Category: <%= request.category %></h6>
+                        <h6>Date posted: <%= request.postDate.toDateString() %></h6>
+                        <p>Submitted by: <a href="/users/<%= request.author.id %>"><%= request.author.username %></a></p>
                     </span>
                     <p>
                         <a href="/requests/<%= request._id %>" class="btn btn-primary">More Info</a>
+                        <a href="/requests/<%= request._id %>/response" class="btn btn-primary">Take on</a>
+                        
                     </p>
-		</div>	
-                <% }); %>
             </div>
+            <% } %>
+            <% }); %>
+        </div>
+        </div>
     </div>
 
     <script>

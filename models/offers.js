@@ -15,7 +15,7 @@ var offerSchema = new mongoose.Schema({
     postDate: { type: Date, default: Date.now },
     hoursOffered: Number,
     category: String,
-    isActive: {type: Boolean, default: false},
+    isActive: {type: Boolean, default: true},
     offerResponse: [
         {
             responder: {
