@@ -40,11 +40,11 @@ var Offer = require("../models/offers"),
     });
 });
     function isLoggedIn(req, res, next) {
-        if(req.isAuthenticated()) {
+        // if(req.isAuthenticated()) {
             return next();
-        }
-        req.flash("error", "Please Login First");
-        res.redirect("/login");
+        // }
+        // req.flash("error", "Please Login First");
+        // res.redirect("/login");
     }
     
     module.exports = router;

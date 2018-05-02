@@ -1,0 +1,56 @@
+<% include partials/header %>
+
+    <div class="container">
+        <h1>Response Details</h1>
+        <h4>Original Response Message:</h4> <p><%= response.message %></p>
+        <h4>Status: </h4>
+	<% if (response.isAccepted) { %>
+	    <% if (response.isComplete) { %>
+            <p> Completed </p>
+            <% } else if (!response.isComplete) { %>
+	    <p> In Progress <br>
+	    ( <%= request.hoursOffered %> hours in holding and will be released upon completion )
+	    </p>
+	    <% } %>
+            <% if (currentUser && (request.author.id.equals(currentUser._id) ||
+	          responderId.equals(currentUser._id))) { %>
+                <form action="request/response/<%= response._id %>/closeIncomplete" method="POST">
+                    <button class="btn btn-danger">Close Incomplete Request</button>
+                </form>
+            <% } %>
+	    <br>
+	    <% if (currentUser && responderId.equals(currentUser._id)) { %>
+		<form action="request/response/<%= response._id %>/markCompleted" method="POST">
+		    <button class="btn btn-danger" id="completionButton">
+		    Mark as Completed
+		    </button>
+		</form>
+            <% } %>
+        <% } else if (!response.isAccepted) { %>
+	    Awaiting approval </h5>
+	    <% if((currentUser && request.author.id.equals(currentUser._id))) { %>
+                <form action="request/response/<%= response._id %>" method="POST">
+                    <button class="btn btn-danger">
+		    Accept Request
+		    </button>
+                </form>
+            <% } %>
+	<% } %>
+	<br><hr><br>
+	<div class="requestDetails"> 
+	<h3>Request Details</h3>
+        <p>Title: <%= request.title %><br>
+        Description: <%= request.desc %><br>
+        Hours offered: <%= request.hoursOffered %><br>
+        Category: <%= request.category %><br>
+        Date posted: <%= request.postDate.toDateString() %></p>
+	<br>
+	</div>
+        <a href="/requests/<%= request._id %>/response " id="backButton2">Go Back</a>
+    </div>
+
+    <script>
+        $( "#requests" ).addClass( "selected" );
+    </script>
+
+<% include partials/footer %>

@@ -382,6 +382,212 @@ router.get("/response", isLoggedIn, function(req, res) {
     });
 });
 
+router.get("/requests/response/:id", isLoggedIn, function(req, res) {
+    RequestResponse.findById(req.params.id, function(err, foundResponse) {
+        if(err) {
+            console.log(err);
+        } else if (!foundResponse) {
+            res.redirect("back");
+        } else {
+            var requestId = foundResponse.requestId;
+            Request.findById(requestId, function(err, foundRequest){
+                if(err){
+                    console.log(err);
+                } if (foundRequest.length <= 0) {
+                    res.send("Request NOT FOUND");
+                } else if (!(foundRequest.author.id.equals(req.user._id)|| foundResponse.responder.equals(req.user._id))) {
+                    req.flash("error", "You do not have access to this page");
+                    res.redirect("back");
+                } else {
+		    res.render("showRequestResponse",
+			       {"currentUser": req.user,
+				"request": foundRequest,
+				"response": foundResponse,
+				"responderId": foundResponse.responder});
+                }
+            });
+        }
+    });
+});
+
+router.post("/requests/response/:id", isLoggedIn, function(req, res) {
+    RequestResponse.findById(req.params.id, function(err, foundResponse) {
+        if (err) {
+            console.log(err);
+        } else if (!foundResponse) {
+            res.redirect("back");
+        } else {
+            var requestId = foundResponse.requestId;
+            Request.findById(requestId, function(err, foundRequest){
+                if (err){
+                    console.log(err);
+                } else if (foundRequest.length <= 0) {
+                    res.send("Request NOT FOUND");
+                } else if (!(foundRequest.author.id.equals(req.user._id)||
+			     foundResponse.responder.equals(req.user._id))) {
+                    req.flash("error", "You do not have access to this page.");
+                    res.redirect("back");
+                } else if (foundRequest.author.id.equals(req.user._id)) {
+                    res.redirect("back"); //HANDLE ACCEPT HERE
+                }
+            });
+        }
+    });
+});
+
+// function handleAccept(req, foundResponse, foundOffer, res) {
+//     User.find({_id: foundResponse.responder}, function(err, responderInfo) {
+// 	// check if the responder has enough hours to request the user's offer.
+// 	if (responderInfo.length > 0 &&
+// 	    responderInfo[0].userHours >= foundResponse.hours) {
+// 	    // transfer specified amt of responder's hours to holding.
+// 	    let finalHrs = responderInfo[0].userHours - foundResponse.hours;
+// 	    User.findByIdAndUpdate(
+// 		foundResponse.responder, {"userHours": finalHrs,
+// 					  $push : { "hoursHistory": {
+// 					      "action" :
+// 					      "Your response to an offer was accepted. " +
+// 						  "Hours transferred to holding.",
+// 					      "change" : (-1 * foundResponse.hours),
+// 					      "newHours" : finalHrs
+// 					  } }},
+// 		function(err, updatedResponder) {
+// 		    var newEscrowEntry = {fromUser: foundResponse.responder,
+// 					  toUser: req.user._id,
+// 					  hours: foundResponse.hours,
+// 					  offerResponseId: foundResponse._id};
+// 		    Escrow.create(newEscrowEntry, function(err, newE) {
+// 			if(err){
+// 			    // in general, this should not occur
+// 			    req.flash("error", "Sorry, there was a " +
+// 				      "problem accepting the request.");
+// 			    res.redirect("/offers");
+// 			} else {
+// 			    // update status of request to accepted.
+// 			    OfferResponse.findByIdAndUpdate(
+// 				foundResponse._id,
+// 				{$set : {isAccepted: true}},
+// 				function(err, updatedResponse) {
+// 				    if(err){
+// 					// in general, this should not occur
+// 					req.flash("error", "Sorry, there was a problem " +
+// 						  "accepting the request.");
+// 					res.redirect("/offers");
+// 				    } else {
+// 					updatedResponse.isAccepted = true;
+// 					req.flash("success", "You have accepted this request.");
+// 					res.render("showOfferResponse",
+// 						   {"currentUser": req.user,
+// 						    "offer": foundOffer,
+// 						    "response": updatedResponse,
+// 						    "responderId": updatedResponder._id});
+// 				    }
+// 				});
+// 			}
+// 		    });
+// 		});
+// 	} else if (responderInfo.length > 0) {
+// 	    // if the responder does not have enough hours, notify the offer author.
+// 	    req.flash("error", "Unfortunately the responder does not have" +
+// 		      " enough hours to take on your offer.");
+// 	    res.redirect('back');
+
+// 	} else {
+// 	    req.flash("error", "Sorry, the responder has retracted their request.");
+// 	    res.redirect('back');
+// 	}
+//     });
+// }
+
+// // close an incomplete response to offer -->
+// // Hours get transferred from Escrow to responder.
+// router.post("requests/response/:id/closeIncomplete", isLoggedIn, function(req, res) {
+//     Escrow.find({"offerResponseId": req.params.id}, function(err, foundEscrow) {
+// 	if(err){
+// 	    // in general, this should not occur
+// 	    req.flash("error", "Sorry, an error occurred.");
+// 	    res.redirect("back");
+// 	} else {
+// 	    if (foundEscrow.length <= 0) {
+// 		req.flash("error", "This offer has already been closed.");
+// 		res.redirect("/offers");
+// 	    } else {
+// 		const messageUponSuccess = "The offer has been closed." +
+// 		      " The hours have been returned to the responder.";
+// 		const logMessage = "An offer that you had requested " +
+// 		      " was closed without its completion. " +
+// 		      "The hours in holding were returned to you";
+// 		addHours(foundEscrow[0].fromUser, foundEscrow[0].hours,
+// 			 req, res, messageUponSuccess, logMessage);
+// 	    }
+// 	}
+//     });
+// });
+
+// // close a completed response to offer -->
+// // Hours get transferred from Escrow to poster
+// router.post("/requests/response/:id/markCompleted", isLoggedIn, function(req, res) {
+//     Escrow.find({"offerResponseId": req.params.id}, function(err, foundEscrow) {
+// 	if(err){
+// 	    // in general, this should not occur
+// 	    req.flash("error", "Sorry, an error occurred.");
+// 	    res.redirect("back");
+// 	} else {
+// 	    if (foundEscrow.length <= 0) {
+// 		req.flash("error", "This offer has already been closed.");
+// 		res.redirect("/offers");
+// 	    } else {
+// 		const messageUponSuccess = "The offer has been completed." +
+// 		      " The hours have been released to the poster.";
+// 		const logMessage = "You completed a request to your " +
+// 		      "posted offer and earned the hours for its completion.";
+// 		addHours(foundEscrow[0].toUser, foundEscrow[0].hours,
+// 			 req, res, messageUponSuccess, logMessage);
+// 	    }
+// 	}
+//     });
+// });
+
+// // Adds a certain number of hours to a user's account
+// function addHours(toUser, numHours, req, res, messageUponSuccess, logMessage) {
+//     User.find({_id : toUser}, function(err, foundUser) {
+// 	if (err || foundUser.length <= 0) {
+// 	    req.flash("error", "Something went wrong.");
+// 	    res.redirect("back");
+// 	} else {
+// 	    User.findByIdAndUpdate(
+// 		toUser,
+// 		{"userHours": foundUser[0].userHours + numHours,
+// 		 $push : { "hoursHistory": {
+// 		     "action" : logMessage,
+// 		     "change" : numHours,
+// 		     "newHours" :  foundUser[0].userHours + numHours
+// 		 } }},
+// 		function(err, updatedUser) {
+// 		    if(err){
+// 			// in general, this should not occur
+// 			req.flash("error", "Something went wrong.");
+// 			res.redirect("/offers");
+// 		    } else {
+// 			Escrow.remove({"offerResponseId" : req.params.id}, function(err, result) {
+// 			    if (err) {
+// 				req.flash("error", "Something went wrong.");
+// 				res.redirect("/offers");
+// 			    } else {
+// 				req.flash("success", messageUponSuccess);
+// 				/*res.render("showOfferResponse",
+// 				  {"currentUser": req.user,
+// 				  "offer": foundOffer,
+// 				  "response": foundResponse,
+// 				  "responderId": updatedResponder._id});*/
+// 				res.redirect("/offers");
+// 			    }
+// 			});
+// 		    }
+// 		});
+// 	}
+//     });
+// }
 
 function isLoggedIn(req, res, next) {
     if(req.isAuthenticated()) {

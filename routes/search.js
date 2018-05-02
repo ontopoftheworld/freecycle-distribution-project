@@ -67,13 +67,13 @@ router.get("/search", isLoggedIn, function(req, res) {
         currentPage=1;
     }
     if (searchType==="requests") {
-        Request.find({$text: {$search: searchContent}} , function(err, allRequests){
+        Request.paginate({"author.id": {$ne: id}, $text: {$search: searchContent}} ,{page: currentPage, limit: 4}, function(err, result){
             if(err){
                 console.log(err);
             } else {
-                res.render("requestsSearch", {requests: allRequests} );
+                res.render("offersSearch", {offers: result.docs, pages: result.pages, searchContent: searchContent, sortCategory: null} );
             }
-        });
+            });
     }else if (searchType==="offers"){
         Offer.paginate({"author.id": {$ne: id}, $text: {$search: searchContent}} ,{page: currentPage, limit: 4}, function(err, result){
         if(err){
