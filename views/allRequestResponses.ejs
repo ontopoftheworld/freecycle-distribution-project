@@ -7,7 +7,7 @@
                                 <% var i = 0; %>
                                 <% responses.forEach(function(response){ %>
                                         <h4><%= response.message %></h4>
-                                        <a href="/response/<%= response._id %>" class="btn btn-primary">More Info</a>
+                                        <a href="requests/response/<%= response._id %>" class="btn btn-primary">More Info</a>
                                         <% i++; %>
                                 <% }); %>
                                 <% if (i == 0) { %>

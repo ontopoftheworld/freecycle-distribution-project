@@ -26,8 +26,9 @@ var indexRoutes =   require("./routes/index"),
     accountRoutes =   require("./routes/account"),
     searchRoutes = require("./routes/search")
 
-mongoose.connect("mongodb://localhost/timebank");
+//mongoose.connect("mongodb://localhost/timebank");
 //mongoose.connect("mongodb://fdpadmin:freecycle@127.0.0.1:27017/fdp");
+mongoose.connect('mongodb://cs132:cs132p@ds117749.mlab.com:17749/132project');
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(methodOverride("_method"));

@@ -2,28 +2,31 @@
 
     <div class="container">
         <h1>Your Account</h1>
-		<div>
-		<div id="editinfo">
-		<a href="/account/<%= user._id %>/edit">Edit your profile</a>
+		<div id="accountGeneral">
+		<div id="topSeg">
+		<div class="topSegPart">
+		<img src="/static/images/noProfilePic.png" id="profileImg">
 		</div>
-		<div>
-		<img  src="/static/images/noProfilePic" width="150px" height="150px">
+		<div id="userinfo" class="topSegPart">
+		     <h4><%= user.firstName %> <%= user.lastName %></h6>
+			<h6>Your Hours: <%= user.userHours %></h6>
+			<h6>Email:<%= user.username %></h6>
+			<h6>Hometown:<%= user.hometown %></h6>
+			<h6>Zipcode:<%= user.zipcode %></h6>
+			<h6>User's Bio:</h6>
+			<div id="userbio1">
+			<%= user.userbio %>
+			</div>
 		</div>
-		<div id="userinfo" >
-        <h4><%= user.firstName %></h4>
-        <h6><%= user.lastName %></h6>
-		<h6>Your Hours: <%= user.userHours %></h6>
-		<h6>Email:<%= user.username %></h6>
-		<h6>Hometown:<%= user.hometown %></h6>
-		<h6>Zipcode:<%= user.zipcode %></h6>
-		<h6>User's Bio:</h6>
-		<div id="userbio1">
-		<%= user.userbio %>
+		<div id="editinfo" class="topSegPart">
+		<a href="/account/<%= user._id %>/edit" id="editProfileLink">Edit your profile</a>
+		</div>
 		</div>
         
 		
 		<br><br>
 		<div class="listingBoxH" id="statement" >
+
 <h5>Statement History:</h5>
 <table id="userHistoryTable">
        <tr>
@@ -35,16 +38,16 @@
         <% userHrsHistory.forEach(function(entry){ %>
 	   <tr>
 	    <td><%= entry.date %></td>
-	    <td><%= entry.action %></td>
-	    <td><%= entry.change %></td>
-	    <td><%= entry.newHours %></td>
+	    <td id="entryAction"><%= entry.action %></td>
+	    <td id="entryChange"><%= entry.change %></td>
+	    <td id="entryNewHours"><%= entry.newHours %></td>
 	   </tr>
 	<% }); %>
 </table>
 </div>
 </div>
-		</div>
-        <a href="/home%>">Go Home</a>
+<br>
+        <a href="/home%>" id="linkHome">Go Home</a>
     </div>
 
 <% include partials/footer %>

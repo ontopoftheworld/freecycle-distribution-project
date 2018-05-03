@@ -5,9 +5,24 @@
     <div id="chatbox">
     <div id="messageList">
     <% messages.forEach(function(message){ %>
-       	<div class="indivMessage">
+       	<% if (message.sentBy === currentUser.firstName) { %>
+       	   <div class="indivMessage" style="background-color: dodgerblue; color: white; margin-left: 25%">
+	<% } else if (message.sentBy === "The Freecycle Distribution Project Admins") { %>
+       	   <div class="indivMessage" style="background-color: #FFFF66; margin-left: 15%">
+	<% } else { %>
+	   <div class="indivMessage">
+	<% } %>
+	
         <%= message.time %><br>
-	<b><%= message.sentBy %>: </b>
+	
+	<% if (message.sentBy === currentUser.firstName) { %>
+	   <b>You: </b>
+	<% } else if (message.sentBy === "The Freecycle Distribution Project Admins") { %>
+	   <br><b><u> Message from <%= message.sentBy %>: </u></b><br>
+	<% } else { %>
+	   <b><%= message.sentBy %>: </b>
+	<% } %>
+	
 	<%= message.info %>
    	</div>
     <% }); %>

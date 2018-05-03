@@ -2,14 +2,24 @@ var socket = io.connect();
 
 // fired when the page has loaded
 $(document).ready(function(){
+    $("#messageList").scrollTop(function() { return this.scrollHeight; });
+    
     // handle incoming messages
     socket.on('message', function(displayName, time, message){
 	// display a newly-arrived message
 	var newMessage = $('<div class="indivMessage"></div>');
-	newMessage.html(time + "<br><b>" + displayName + ": </b>" +
-			message + "<br>");
+	if (displayName === meta("userFirstName")) {
+	    newMessage.html(time + "<br><b> You: </b>" +
+			    message + "<br>");
+	    $(newMessage).css("background-color", "dodgerblue");
+	    $(newMessage).css("color", "white");
+	    $(newMessage).css("margin-left", "25%");
+	} else {
+	    newMessage.html(time + "<br><b>" + displayName + ": </b>" +
+			    message + "<br>");
+	}
 	$("#messageList").append(newMessage);
-	window.scrollTo(0, document.body.scrollHeight);
+	$("#messageList").scrollTop(function() { return this.scrollHeight; });
     });
 
     socket.on('error', function() {

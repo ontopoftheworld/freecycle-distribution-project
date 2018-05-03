@@ -13,6 +13,10 @@ var escrowSchema = new mongoose.Schema({
     offerResponseId: {
 	type: mongoose.Schema.Types.ObjectId,
 	ref: "OfferResponse"
+    },
+    requestResponseId: {
+	type: mongoose.Schema.Types.ObjectId,
+	ref: "RequestResponse"
     }
 });
 

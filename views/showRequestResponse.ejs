@@ -14,13 +14,13 @@
 	    <% } %>
             <% if (currentUser && (request.author.id.equals(currentUser._id) ||
 	          responderId.equals(currentUser._id))) { %>
-                <form action="request/response/<%= response._id %>/closeIncomplete" method="POST">
+                <form action="/requests/response/<%= response._id %>/closeIncomplete" method="POST">
                     <button class="btn btn-danger">Close Incomplete Request</button>
                 </form>
             <% } %>
 	    <br>
-	    <% if (currentUser && responderId.equals(currentUser._id)) { %>
-		<form action="request/response/<%= response._id %>/markCompleted" method="POST">
+	    <% if (currentUser && request.author.id.equals(currentUser._id)) { %>
+		<form action="/requests/response/<%= response._id %>/markCompleted" method="POST">
 		    <button class="btn btn-danger" id="completionButton">
 		    Mark as Completed
 		    </button>
@@ -29,7 +29,7 @@
         <% } else if (!response.isAccepted) { %>
 	    Awaiting approval </h5>
 	    <% if((currentUser && request.author.id.equals(currentUser._id))) { %>
-                <form action="request/response/<%= response._id %>" method="POST">
+                <form action="/requests/response/<%= response._id %>" method="POST">
                     <button class="btn btn-danger">
 		    Accept Request
 		    </button>

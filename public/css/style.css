@@ -1,5 +1,6 @@
 
 body {
+    margin-top: 70px;
     height: 100%;
     background-image: linear-gradient(to top, #287420, #298620, #29981f, #29ab1d, #28be19);
     background-repeat: no-repeat;
@@ -26,6 +27,14 @@ ul#bootstrap-overrides>li>a:hover {
 .navbar-custom {
     color: #FFFFFF;
     background-color: #CC3333;
+}
+
+.navbar {
+    position: fixed;
+    z-index: 9999;
+    left: 0px;
+    right: 0px;
+    top: 0px;
 }
 
 h1 {
@@ -428,6 +437,10 @@ h6 {
 }
 
 /* -------- messages ---------- */
+
+#messagesPage h4 {
+}
+
 #messagesPage {
     text-align: center;
     margin: 50px auto 50px auto;
@@ -435,10 +448,14 @@ h6 {
 
 #messageList {
     padding: 10px;
-    max-height: 420px;
+    max-height: 510px;
+    min-height: 510px;
+    background-color: #D3D3D3;
+    border: solid 1px darkgrey;
     overflow-y: auto;
     border-bottom: solid white;
     color: black;
+    border-radius: 3px;
 }
 
 .indivMessage {
@@ -448,15 +465,19 @@ h6 {
     margin-bottom: 10px;
     word-wrap: break-word;
     width: 70%;
+    margin-left: 5%;
 }
 
 #chatbox {
     text-align: left;
+    padding: 10px;
+    background-color: white;
     border: solid 2px white;
     margin: 50px auto 50px auto;
     width: 800px;
-    height: 500px;
+    height: 600px;
     position: relative;
+    border-radius: 3px;
 }
 
 #userTypingSection {
@@ -467,26 +488,40 @@ h6 {
 
 #message {
     width: 400px;
+    padding: 8px;
+    border: 1px solid grey;
 }
+
+#messagesPage #submitButton {
+    background-color: #29981f;
+    color: white;
+    border: none;
+    padding: 9px 12px;
+}
+
+#messagesPage #submitButton:hover{
+    background-color: #287420;
+}
+
 /* -------- account ---------- */
 
 #userbio{
     padding: 10px;
     background-color: white;
     border-radius: 5px;
-	width:200px;
+    width:200px;
     color: black;
 }
 
 #userinfo{
-	text-align:center;
-	position:relative;
-	margin-top:-120px;
+    text-align:center;
+    margin-top: 20px;
 }
 
 #editinfo{
 	float:right;
 }
+
 div.footer-navbar-wrapper {
     background-color: #494949;
     position: relative;
@@ -508,19 +543,75 @@ ul.list-unstyled>li>a {
 div.container {
     min-height:100%;
     position:relative;
- }
+}
 
+#statement {
+    background-color: white;
+}
 
- /* Search on nav bar */
- #searchForm {
-     padding-left: 10px;
-     padding-right: 10px;
- }
+#statement h5 {
+    color: green;
+    text-shadow: none;
+    text-decoration: underline;
+    font-size: 30px;
+    text-align: center;
+}
 
- #lbl{
-     padding-right: 3px;
-     padding-left: 1px;
- }
+#userHistoryTable {
+    color: black;
+}
+
+#userHistoryTable tr {
+    border-bottom: 1px solid lightgrey;
+}
+
+#userHistoryTable th {
+    color: green;
+    padding: 0px 18px 0px 18px;
+    text-align: left;
+}
+
+#userHistoryTable td {
+    padding: 0px 18px 0px 18px;
+    text-align: left;
+}
+
+#entryAction{
+    text-align: left;
+}
+
+#editProfileLink {
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px 20px;
+}
+
+#linkHome {
+    background-color: white;
+    border-radius: 10px;
+    margin-left: 10px;
+    padding: 5px 10px;
+}
+
+#profileImg {
+    width: 200px;
+    height: 200px;
+    margin-left: 50px;
+}
+
+#topSeg {
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    padding: 20px 0px;
+    text-align: center;
+}
+
+.topSegPart {
+    display: inline-block;
+    width: 32%;
+    padding: 10px;
+    vertical-align: top;
+}
 
  /*  ------ specs for showOfferResponse ----- */
 
@@ -549,4 +640,37 @@ div.container {
 
  .offerDetails p {
      
+ }
+
+ /* ----- Searchform part of navbar ---- */
+
+ #searchForm {
+     padding: 0px 20px 0px 20px;
+     border-left: 1px solid darkgrey;
+     border-right: 1px solid darkgrey;
+ }
+ 
+ #searchBtn {
+     margin-left: 10px;
+ }
+
+ #searchTypesBlock {
+     text-align: left;
+ }
+
+ #searchTypesBlock .searchTypes {
+     text-align: left;
+     display: block;
+ }
+
+ #searchTypesBlock .searchTypes .check {
+     text-align: left;
+ }
+
+ .navbar-nav:hover .dropdown-menu{
+     display: block;
+ }
+
+ .navbar-nav {
+     margin-left: 30px;
  }
