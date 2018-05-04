@@ -1,4 +1,5 @@
 var mongoose    = require("mongoose");
+var mongoosePaginate = require('mongoose-paginate');
 
 var storeSchema = new mongoose.Schema({
     title: String,
@@ -18,4 +19,7 @@ var storeSchema = new mongoose.Schema({
     status: {type: Boolean, default: false}
 });
 
+
+storeSchema.plugin(mongoosePaginate);
+storeSchema.index({title: 'text'});
 module.exports = mongoose.model("Store", storeSchema);

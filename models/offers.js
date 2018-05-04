@@ -1,5 +1,4 @@
 var mongoose    = require("mongoose");
-var mongoose         = require('mongoose');
 var mongoosePaginate = require('mongoose-paginate');
 
 var offerSchema = new mongoose.Schema({

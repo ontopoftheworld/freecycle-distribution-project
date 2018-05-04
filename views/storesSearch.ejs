@@ -1,8 +1,7 @@
 <% include partials/header %>
 
     <div class="container">
-        <h1>Store page</h1>
-
+        <h1>Store <%= type %> result for:  <%= searchContent %>  <%= sortCategory %></h1>
         <div class="searchStore">
             <form action="/search/stores" id="searchForm" method="GET">
                 <input name="userId" type="hidden" value="<%= currentUser._id %>" >
@@ -12,7 +11,7 @@
         </div>
 
         <div class="sortStore">
-            <form action="/sort/stores" method="GET">
+            <form action="/sortonsearch/stores" method="GET">
                 <div style="margin: 0px auto -50px auto;
                     border-radius: 10px;
                     border: solid white;
@@ -22,6 +21,7 @@
                 </div>
                 <div id="oselect" style="display:block;float:left;width:30%;text-align:center;margin:-2px 0px 0px 0px">
                 <input name="userId" type="hidden" value="<%= currentUser._id %>" >
+                <input name="searchContent" type="hidden" value="<%= searchContent %>" >
                 <select name="sortCategory">
                     <option value="">Choose Category</option>
                     <option value="categoryA">categoryA</option>
@@ -40,6 +40,9 @@
 
         <a class="btn btn-primary" href="/store/new">Post a New Item</a>
             <div id="item">
+                <% if (items=="") { %>
+                    <h2>No result!</h2>
+                <% } %>
                 <% items.forEach(function(item){ %>
 		   <div class="indivPost" style="column-count:3;max-height:200px;">
                     <img  src="https://s3.amazonaws.com/freecycle-distribution-project-storeimg/<%= item.imgname %>" width="150px" height="150px">
@@ -55,13 +58,18 @@
                     </span>
                     <p>
                         <a href="/store/<%= item._id %>" class="btn btn-primary">More Info</a>
-                        <% if(!(currentUser && item.author.id.equals(currentUser._id))) { %>
-                            <a href="/store/<%= item._id %>" class="btn btn-primary">Buy</a>
-                        <% } %>
+                        <a href="/store/<%= item._id %>" class="btn btn-primary">Buy</a>
                     </p>
 		    </div>
                 <% }); %>
             </div>
+            <% if (items!="") { %>
+                <div class="pagination">
+                <%  for (i = 1; i <= pages; i++) { %>
+                    <a href="/search/sort?searchType=offers&searchContent=<%= searchContent %>&category=<%= sortCategory %>&userId=<%= currentUser._id %>&pageChoose=<%= i %>"><%= i %></a>
+                <%  } %>
+            </div>
+            <% } %>
     </div>
 
     <script>

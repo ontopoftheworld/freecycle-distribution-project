@@ -4,7 +4,74 @@ var passport = require("passport");
 
 var Offer = require("../models/offers"),
     Request = require("../models/requests"),
+    Store = require("../models/store"),
     User = require("../models/users");
+
+router.get("/search/stores", isLoggedIn, function(req, res) {
+    var searchContent=req.query.searchContent;
+    var id = req.query.userId;
+    var sortCategory = req.query.sortCategory;
+    var currentPage = req.query.pageChoose;
+    if(currentPage === undefined){
+        currentPage=1;
+    }
+    Store.paginate({"author.id": {$ne: id}, $text: {$search: searchContent}, "status": false} ,{page: currentPage, limit: 4}, function(err, result){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("storesSearch", {type: "search", items: result.docs, pages: result.pages, searchContent: searchContent, sortCategory: sortCategory} );
+        }
+    });
+});
+
+router.get("/sort/stores", isLoggedIn, function(req, res) {
+    var searchContent=req.query.searchContent;
+    var id = req.query.userId;
+    var sortCategory = req.query.sortCategory;
+    var currentPage = req.query.pageChoose;
+    if(currentPage === undefined){
+        currentPage=1;
+    }
+    Store.paginate({"author.id": {$ne: id}, "category": sortCategory, "status": false} ,{page: currentPage, limit: 4}, function(err, result){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("storesSearch", {type: "sort", items: result.docs, pages: result.pages, searchContent: searchContent, sortCategory: sortCategory} );
+        }
+    });
+});
+
+router.get("/sortonsearch/stores", isLoggedIn, function(req, res) {
+    var searchContent=req.query.searchContent;
+    var id = req.query.userId;
+    var sortCategory = req.query.sortCategory;
+    var currentPage = req.query.pageChoose;
+    if(currentPage === undefined){
+        currentPage=1;
+    }
+    if (searchContent=="") {
+        Store.paginate({"author.id": {$ne: id}, "category": sortCategory, "status": false} ,{page: currentPage, limit: 4}, function(err, result){
+            if(err){
+                console.log(err);
+            } else {
+                res.render("storesSearch", {type: "sort", items: result.docs, pages: result.pages, searchContent: searchContent, sortCategory: sortCategory} );
+            }
+        });
+    }else{
+        Store.paginate({"author.id": {$ne: id}, $text: {$search: searchContent}, "category": sortCategory, "status": false} ,{page: currentPage, limit: 4}, function(err, result){
+            if(err){
+                console.log(err);
+            } else {
+                res.render("storesSearch", {type: "search and sort", items: result.docs, pages: result.pages, searchContent: searchContent, sortCategory: sortCategory} );
+            }
+    });
+
+
+
+
+    }
+});
+
 
 router.get("/search/sort", isLoggedIn, function(req, res) {
     var searchType=req.query.searchType;
@@ -60,7 +127,7 @@ router.get("/search/sort", isLoggedIn, function(req, res) {
 
 router.get("/search", isLoggedIn, function(req, res) {
     var searchType=req.query.searchType;
-    var searchContent=req.query.seachContent;
+    var searchContent=req.query.searchContent;
     var id = req.query.userId;
     var currentPage = req.query.pageChoose;
     if(currentPage === undefined){
