@@ -49,8 +49,8 @@ h3{
 }
 
 h4 {
-    font-family: 'Open Sans', sans-serif;
-    text-decoration: underline;
+    font-family: Arial, sans-serif;
+    
 }
 
 h5 {
@@ -645,13 +645,13 @@ div.container {
  /* ----- Searchform part of navbar ---- */
 
  #searchForm {
-     padding: 0px 20px 0px 20px;
+     padding: 0px 10px 0px 10px;
      border-left: 1px solid darkgrey;
      border-right: 1px solid darkgrey;
  }
  
  #searchBtn {
-     margin-left: 10px;
+     margin-left: 0px;
  }
 
  #searchTypesBlock {
