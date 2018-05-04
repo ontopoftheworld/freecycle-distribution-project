@@ -36,8 +36,6 @@ router.post("/store/buy",isLoggedIn, function(req,res){
     var itemId=req.body.itemId;
     var itemPrice=Number(req.body.itemPrice);
 
-
-
     User.findById(buyerId,function(err, buyer){
         if (err) {
             console.log(err);
@@ -50,30 +48,45 @@ router.post("/store/buy",isLoggedIn, function(req,res){
                         Store.findByIdAndUpdate(itemId,{"status": true},function(err){
                             if (err) {  
                                 console.error(err);  
-                                } else {  
-                                    User.findByIdAndUpdate(buyerId, {"userHours": buyerUpdateHour},function(err){
-                                        if (err) {  
-                                            console.error(err);  
-                                        }
-                                    });
-                                    User.findById(sellerId,function(err, seller){
-                                        if (err) {
-                                            console.log(err);
-                                        }else{
-                                            var sellerCurrentHour=Number(seller.userHours);
-                                            var sellerUpdateHour=sellerCurrentHour + itemPrice;
-                                            User.findByIdAndUpdate(sellerId, {"userHours": sellerUpdateHour},function(err){
-                                                if (err) {  
-                                                    console.error(err);  
-                                                }else{
-                                                    req.flash("success", "Trading success");
-                                                    res.render('pickupLocation');
-                                                }
-                                            });
-                                        }
-                                    });
-                                }
-                            });
+                            } else {  
+                                User.findByIdAndUpdate(
+				    buyerId, {"userHours": buyerUpdateHour,
+					      $push : { "hoursHistory": {
+						  "action" : "You bought an item (" + item.title + 
+						      ", id: " + item._id + ") from the store.",
+						  "change" : (-1 * itemPrice),
+						  "newHours" : buyerUpdateHour
+					      }}},function(err){
+						  if (err) {  
+						      console.error(err);  
+						  }
+					      });
+				User.findById(sellerId,function(err, seller){
+				    if (err) {
+                                        console.log(err);
+                                    }else{
+                                        var sellerCurrentHour=Number(seller.userHours);
+                                        var sellerUpdateHour=sellerCurrentHour + itemPrice;
+                                        User.findByIdAndUpdate(
+					    sellerId, {"userHours": sellerUpdateHour,
+						       $push : { "hoursHistory": {
+							   "action" : "You sold an item (" + item.title + 
+							       ", id: " + item._id + ") in the store.",
+							   "change" : itemPrice,
+							   "newHours" : sellerUpdateHour
+						       }}},
+					    function(err){
+						if (err) {  
+						    console.error(err);  
+						}else{
+						    req.flash("success", "Trading success");
+						    res.render('pickupLocation');
+						}
+					    });
+                                    }
+                                });
+                            }
+                        });
                     }else{
                         req.flash("error", "Unfortunately this item has already bought buy others.");
                         res.redirect('/store/'+itemId);
@@ -193,3 +206,13 @@ function isLoggedIn(req, res, next) {
 }
 
 module.exports = router;
+
+function updateTransactionHistory(req, storeItem, buyer, finalHrs, res) {
+    User.findByIdAndUpdate(
+	buyer, {$push : { "hoursHistory": {
+	    "action" : "You bought an item from the store.",
+	    "change" : (-1 * storeItem.hours),
+	    "newHours" : finalHrs
+	} }},
+	function(err, updatedBuyer) {});
+}
