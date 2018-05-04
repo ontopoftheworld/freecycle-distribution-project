@@ -1,7 +1,14 @@
 <% include partials/header %>
 
     <div class="container">
+
         <h1>Members</h1>
+        <div class="searchUser">
+            <form action="/search/users" id="searchForm" method="GET">
+                <input type="text" placeholder="Find Users" name="searchContent" value="" required>
+                <button class="btn btn-primary" type="submit">Search </button>
+            </form>
+        </div>
             <div style="">
                 <% users.forEach(function(user){ %>
 		            <div class="indivPost">	

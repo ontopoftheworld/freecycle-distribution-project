@@ -14,7 +14,13 @@
     <div class="container">
         <h1>Requests</h1><a class="btn btn-primary" style="background-color:#55DD71;" href="/requests/new">Make New Request</a>
         <a href="/requestsResponse" class="btn btn-primary">See Your Responses to Requests</a>
-		
+		<div class="searchStore">
+            <form action="/search/requests" id="searchForm" method="GET">
+                <input name="userId" type="hidden" value="<%= currentUser._id %>" >
+                <input type="text" placeholder="Find Requests" name="searchContent" value="" required>
+                <button class="btn btn-primary" type="submit">Search </button>
+            </form>
+        </div>
         <h3>Requests Posted By You:</h3>
         <div class="ScrollStyleYou">
         <div id="request">
@@ -40,7 +46,7 @@
         </div>
 
         <h3>Browse Requests Posted By Others:</h3>
-        <form action="/requests/sort" method="GET">
+        <form action="/sort/requests" method="GET">
             <input name="userId" type="hidden" value="<%= currentUser._id %>" >
             <div style="margin: 0px auto -50px auto;
                 border-radius: 10px;
@@ -50,7 +56,7 @@
                 <h5 style="font-weight:500;text-shadow: 0px 0px;">Filter:</h5>
 			</div>
 			<div id="oselect" style="display:block;float:left;width:30%;text-align:center;margin:-2px 0px 0px 0px">
-			<select name="category">
+			<select name="sortCategory">
                 <option value="">Choose Category</option>
                 <option value="categoryA">categoryA</option>
                 <option value="categoryB">categoryB</option>

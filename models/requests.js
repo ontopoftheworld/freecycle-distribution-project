@@ -31,5 +31,5 @@ var requestSchema = new mongoose.Schema({
 });
     
 requestSchema.plugin(mongoosePaginate);
-requestSchema.index({title: 'text'});
+requestSchema.index({title: 'text', desc: 'text'});
 module.exports = mongoose.model("Request", requestSchema);

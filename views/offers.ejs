@@ -14,7 +14,13 @@
     <div class="container">
         <h1>Offers</h1><a class="btn btn-success" style="background-color:#55DD71;" href="/offers/new">Make New Offer</a>
         <a href="/response" class="btn btn-primary">See responses you have submitted</a>
-		
+		<div class="searchStore">
+            <form action="/search/offers" id="searchForm" method="GET">
+                <input name="userId" type="hidden" value="<%= currentUser._id %>" >
+                <input type="text" placeholder="Find Offers" name="searchContent" value="" required>
+                <button class="btn btn-primary" type="submit">Search </button>
+            </form>
+        </div>
         <h3>Offers Posted By You:</h3>
         <div class="ScrollStyleYou">
         <div id="offer">
@@ -40,7 +46,7 @@
         </div>
 
         <h3>Browse Offers Posted By Others:</h3>
-        <form action="/offers/sort" method="GET">
+        <form action="/sort/offers" method="GET">
             <input name="userId" type="hidden" value="<%= currentUser._id %>" >
             <div style="margin: 0px auto -50px auto;
                 border-radius: 10px;
@@ -50,7 +56,7 @@
                 <h5 style="font-weight:500;text-shadow: 0px 0px;">Filter:</h5>
 			</div>
 			<div id="oselect" style="display:block;float:left;width:30%;text-align:center;margin:-2px 0px 0px 0px">
-			<select name="category" style="border:none">
+			<select name="sortCategory" style="border:none">
                 <option value="">Choose Category</option>
                 <option value="categoryA">categoryA</option>
                 <option value="categoryB">categoryB</option>

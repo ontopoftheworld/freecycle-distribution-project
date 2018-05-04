@@ -24,6 +24,52 @@ router.get("/search/stores", isLoggedIn, function(req, res) {
     });
 });
 
+router.get("/search/offers", isLoggedIn, function(req, res) {
+    var searchContent=req.query.searchContent;
+    var id = req.query.userId;
+    var sortCategory = req.query.sortCategory;
+    var currentPage = req.query.pageChoose;
+    if(currentPage === undefined){
+        currentPage=1;
+    }
+    Offer.paginate({"author.id": {$ne: id}, $text: {$search: searchContent}} ,{page: currentPage, limit: 4}, function(err, result){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("offersSearch", {type: "search", offers: result.docs, pages: result.pages, searchContent: searchContent, sortCategory: sortCategory} );
+        }
+    });
+});
+
+router.get("/search/requests", isLoggedIn, function(req, res) {
+    var searchContent=req.query.searchContent;
+    var id = req.query.userId;
+    var sortCategory = req.query.sortCategory;
+    var currentPage = req.query.pageChoose;
+    if(currentPage === undefined){
+        currentPage=1;
+    }
+    Request.paginate({"author.id": {$ne: id}, $text: {$search: searchContent}} ,{page: currentPage, limit: 4}, function(err, result){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("requestsSearch", {type: "search", requests: result.docs, pages: result.pages, searchContent: searchContent, sortCategory: sortCategory} );
+        }
+    });
+});
+
+router.get("/search/users", isLoggedIn, function(req, res) {
+    var searchContent=req.query.searchContent;
+    User.find({$text: {$search: searchContent}}, function(err, result){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("users", {users: result} );
+        }
+    });
+});
+
+
 router.get("/sort/stores", isLoggedIn, function(req, res) {
     var searchContent=req.query.searchContent;
     var id = req.query.userId;
@@ -41,6 +87,40 @@ router.get("/sort/stores", isLoggedIn, function(req, res) {
     });
 });
 
+router.get("/sort/offers", isLoggedIn, function(req, res) {
+    var searchContent=req.query.searchContent;
+    var id = req.query.userId;
+    var sortCategory = req.query.sortCategory;
+    var currentPage = req.query.pageChoose;
+    if(currentPage === undefined){
+        currentPage=1;
+    }
+    Offer.paginate({"author.id": {$ne: id}, "category": sortCategory} ,{page: currentPage, limit: 4}, function(err, result){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("offersSearch", {type: "sort", offers: result.docs, pages: result.pages, searchContent: searchContent, sortCategory: sortCategory} );
+        }
+    });
+});
+
+router.get("/sort/requests", isLoggedIn, function(req, res) {
+    var searchContent=req.query.searchContent;
+    var id = req.query.userId;
+    var sortCategory = req.query.sortCategory;
+    var currentPage = req.query.pageChoose;
+    if(currentPage === undefined){
+        currentPage=1;
+    }
+    Request.paginate({"author.id": {$ne: id}, "category": sortCategory} ,{page: currentPage, limit: 4}, function(err, result){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("requestsSearch", {type: "sort", requests: result.docs, pages: result.pages, searchContent: searchContent, sortCategory: sortCategory} );
+        }
+    });
+});
+
 router.get("/sortonsearch/stores", isLoggedIn, function(req, res) {
     var searchContent=req.query.searchContent;
     var id = req.query.userId;
@@ -50,7 +130,6 @@ router.get("/sortonsearch/stores", isLoggedIn, function(req, res) {
         currentPage=1;
     }
     if (sortCategory=="" || sortCategory==undefined) {
-        console.log("s1");
         Store.paginate({"author.id": {$ne: id}, $text: {$search: searchContent}, "status": false} ,{page: currentPage, limit: 4}, function(err, result){
             if(err){
                 console.log(err);
@@ -59,7 +138,6 @@ router.get("/sortonsearch/stores", isLoggedIn, function(req, res) {
             }
         });
     }else if (searchContent=="" || searchContent==undefined) {
-        console.log("s2");
         Store.paginate({"author.id": {$ne: id}, "category": sortCategory, "status": false} ,{page: currentPage, limit: 4}, function(err, result){
             if(err){
                 console.log(err);
@@ -68,7 +146,6 @@ router.get("/sortonsearch/stores", isLoggedIn, function(req, res) {
             }
         });
     }else{
-        console.log("s3");
         Store.paginate({"author.id": {$ne: id}, $text: {$search: searchContent}, "category": sortCategory, "status": false} ,{page: currentPage, limit: 4}, function(err, result){
             if(err){
                 console.log(err);
@@ -79,58 +156,76 @@ router.get("/sortonsearch/stores", isLoggedIn, function(req, res) {
     }
 });
 
-
-router.get("/search/sort", isLoggedIn, function(req, res) {
-    var searchType=req.query.searchType;
+router.get("/sortonsearch/offers", isLoggedIn, function(req, res) {
     var searchContent=req.query.searchContent;
-    var sortCategory=req.query.category;
     var id = req.query.userId;
+    var sortCategory = req.query.sortCategory;
     var currentPage = req.query.pageChoose;
     if(currentPage === undefined){
         currentPage=1;
     }
-    if (searchContent=== "") {
+    if (sortCategory=="" || sortCategory==undefined) {
+        Offer.paginate({"author.id": {$ne: id}, $text: {$search: searchContent}} ,{page: currentPage, limit: 4}, function(err, result){
+            if(err){
+                console.log(err);
+            } else {
+                res.render("offersSearch", {type: "search", offers: result.docs, pages: result.pages, searchContent: searchContent, sortCategory: sortCategory} );
+            }
+        });
+    }else if (searchContent=="" || searchContent==undefined) {
         Offer.paginate({"author.id": {$ne: id}, "category": sortCategory} ,{page: currentPage, limit: 4}, function(err, result){
-        if(err){
-            console.log(err);
-        } else {
-            res.render("offersSearch", {offers: result.docs, pages: result.pages, searchContent: null, sortCategory: sortCategory} );
-        }
+            if(err){
+                console.log(err);
+            } else {
+                res.render("offersSearch", {type: "sort", offers: result.docs, pages: result.pages, searchContent: searchContent, sortCategory: sortCategory} );
+            }
         });
     }else{
-        if (searchType==="requests") {
-            Request.find({$text: {$search: searchContent}} , function(err, allRequests){
-                if(err){
-                    console.log(err);
-                } else {
-                    res.render("requestsSearch", {requests: allRequests} );
-                }
-            });
-        }else if (searchType==="offers"){
-                if (sortCategory=="") {
-                Offer.paginate({"author.id": {$ne: id}, $text: {$search: searchContent}} ,{page: currentPage, limit: 4}, function(err, result){
-                if(err){
-                    console.log(err);
-                } else {
-                    res.render("offersSearch", {offers: result.docs, pages: result.pages, searchContent: searchContent, sortCategory: sortCategory} );
-                }
-                });
-            }else{
-                Offer.paginate({"author.id": {$ne: id}, "category": sortCategory, $text: {$search: searchContent}} ,{page: currentPage, limit: 4}, function(err, result){
-                if(err){
-                    console.log(err);
-                } else {
-                    res.render("offersSearch", {offers: result.docs, pages: result.pages, searchContent: searchContent, sortCategory: sortCategory} );
-                }
-                });
+        Offer.paginate({"author.id": {$ne: id}, $text: {$search: searchContent}, "category": sortCategory} ,{page: currentPage, limit: 4}, function(err, result){
+            if(err){
+                console.log(err);
+            } else {
+                res.render("offersSearch", {type: "search and sort", offers: result.docs, pages: result.pages, searchContent: searchContent, sortCategory: sortCategory} );
             }
-
-        }else{
-            res.render("home");
-        }
+    });
     }
-
 });
+
+router.get("/sortonsearch/requests", isLoggedIn, function(req, res) {
+    var searchContent=req.query.searchContent;
+    var id = req.query.userId;
+    var sortCategory = req.query.sortCategory;
+    var currentPage = req.query.pageChoose;
+    if(currentPage === undefined){
+        currentPage=1;
+    }
+    if (sortCategory=="" || sortCategory==undefined) {
+        Request.paginate({"author.id": {$ne: id}, $text: {$search: searchContent}} ,{page: currentPage, limit: 4}, function(err, result){
+            if(err){
+                console.log(err);
+            } else {
+                res.render("requestsSearch", {type: "search", requests: result.docs, pages: result.pages, searchContent: searchContent, sortCategory: sortCategory} );
+            }
+        });
+    }else if (searchContent=="" || searchContent==undefined) {
+        Request.paginate({"author.id": {$ne: id}, "category": sortCategory} ,{page: currentPage, limit: 4}, function(err, result){
+            if(err){
+                console.log(err);
+            } else {
+                res.render("requestsSearch", {type: "sort", requests: result.docs, pages: result.pages, searchContent: searchContent, sortCategory: sortCategory} );
+            }
+        });
+    }else{
+        Request.paginate({"author.id": {$ne: id}, $text: {$search: searchContent}, "category": sortCategory} ,{page: currentPage, limit: 4}, function(err, result){
+            if(err){
+                console.log(err);
+            } else {
+                res.render("requestsSearch", {type: "search and sort", requests: result.docs, pages: result.pages, searchContent: searchContent, sortCategory: sortCategory} );
+            }
+    });
+    }
+});
+
 
 router.get("/search", isLoggedIn, function(req, res) {
     var searchType=req.query.searchType;
@@ -145,7 +240,7 @@ router.get("/search", isLoggedIn, function(req, res) {
             if(err){
                 console.log(err);
             } else {
-                res.render("offersSearch", {offers: result.docs, pages: result.pages, searchContent: searchContent, sortCategory: null} );
+                res.render("requestsSearch", {type: "search", requests: result.docs, pages: result.pages, searchContent: searchContent, sortCategory: null} );
             }
             });
     }else if (searchType==="offers"){
@@ -153,41 +248,12 @@ router.get("/search", isLoggedIn, function(req, res) {
         if(err){
             console.log(err);
         } else {
-            res.render("offersSearch", {offers: result.docs, pages: result.pages, searchContent: searchContent, sortCategory: null} );
+            res.render("offersSearch", {type: "search", offers: result.docs, pages: result.pages, searchContent: searchContent, sortCategory: null} );
         }
         });
     }else{
         res.render("home");
     }
-
-
-
-
-    // if (searchType==="requests") {
-    //     Request.find({$text: {$search: searchContent}} , function(err, allRequests){
-    //         if(err){
-    //             console.log(err);
-    //         } else {
-    //             res.render("requestsSearch", {requests: allRequests} );
-    //         }
-    // });
-    // }else if (searchType==="offers"){
-
-
-
-
-
-
-    //     Offer.find({$text: {$search: searchContent}} , function(err, allOffers){
-    //         if(err){
-    //             console.log(err);
-    //         } else {
-    //             res.render("offersSearch", {offers: allOffers, searchType:searchType, searchContent:searchContent} );
-    //         }
-    // });
-    // }else{
-    //     res.render("home");
-    // }
 });
 
 

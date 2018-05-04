@@ -21,5 +21,5 @@ var storeSchema = new mongoose.Schema({
 
 
 storeSchema.plugin(mongoosePaginate);
-storeSchema.index({title: 'text'});
+storeSchema.index({title: 'text', desc: 'text'});
 module.exports = mongoose.model("Store", storeSchema);

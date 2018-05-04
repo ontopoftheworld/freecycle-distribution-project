@@ -1,12 +1,20 @@
 <% include partials/header %>
     <div class="container">
-        <h1>Offers search result page</h1>
-        <form action="/search/sort" method="GET">
-            <input name="searchType" type="hidden" value="offers">
+        <h1>Offers <%= type %> result for:  <%= searchContent %>  <%= sortCategory %></h1>
+        
+        <div class="searchOffers">
+            <form action="/search/offers" id="searchForm" method="GET">
+                <input name="userId" type="hidden" value="<%= currentUser._id %>" >
+                <input type="text" placeholder="Find Items" name="searchContent" value="" required>
+                <button class="btn btn-primary" type="submit">Search </button>
+            </form>
+        </div>
+        
+        <form action="/sortonsearch/offers" method="GET">
             <input name="searchContent" type="hidden" value="<%= searchContent %>">
-            <h5>filter:</h5>
             <input name="userId" type="hidden" value="<%= currentUser._id %>" >
-            <select name="category">
+            <h5>filter:</h5>
+            <select name="sortCategory">
                 <option value="">Choose Category</option>
                 <option value="categoryA">categoryA</option>
                 <option value="categoryB">categoryB</option>
@@ -19,8 +27,10 @@
 
         <a class="btn btn-primary" href="/offers/new">Make New Offer</a>
         <div id="offer">
+                <% if (offers=="") { %>
+                    <h2>No result!</h2>
+                <% } %>
             <% offers.forEach(function(offer){ %>
-                <% if(!(currentUser && offer.author.id.equals(currentUser._id))) { %>
 	              <div class="indivPost">
                     <span>
                         <h4><%= offer.title %></h4>
@@ -35,23 +45,13 @@
                         <a href="/offers/<%= offer._id %>/response" class="btn btn-primary">Take on</a>
                     </p>
 	              </div>
-                <% } %>
             <% }); %>
         </div>
-        <div class="pagination">
-            <%  for (i = 1; i <= pages; i++) { %>
-                <a href="/search/sort?searchType=offers&searchContent=<%= searchContent %>&category=<%= sortCategory %>&userId=<%= currentUser._id %>&pageChoose=<%= i %>"><%= i %></a>
-            <%  } %>
-        </div>
-        <% if(sortCategory!=null && sortCategory!=""){ %>
-            <div class="searchOnSort">
-                <form action="/search/sort" method="GET">
-                    <input name="searchType" type="hidden" value="offers" >
-                    <input name="category" type="hidden" value="<%= sortCategory %>" >
-                    <input name="userId" type="hidden" value="<%= currentUser._id %>" >
-                    <input name="searchContent" type="text" placeholder="Search on sort result" value="">
-                    <button type="submit">Search </button>
-                </form>
+        <% if (offers!="") { %>
+            <div class="pagination">
+                <%  for (i = 1; i <= pages; i++) { %>
+                    <a href="/sortonsearch/offers?searchContent=<%= searchContent %>&sortCategory=<%= sortCategory %>&userId=<%= currentUser._id %>&pageChoose=<%= i %>"><%= i %></a>
+                <%  } %>
             </div>
         <% } %>
     </div>

@@ -30,5 +30,5 @@ var offerSchema = new mongoose.Schema({
 });
 
 offerSchema.plugin(mongoosePaginate);
-offerSchema.index({title: 'text'});
+offerSchema.index({title: 'text', desc: 'text'});
 module.exports = mongoose.model("Offer", offerSchema);
