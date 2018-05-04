@@ -36,14 +36,15 @@
                 </form>
             <% } %>
 	<% } %>
-	<br><hr><br>
-	<div class="offerDetails"> 
-	<h3>Offer Details</h3>
-        <p>Title: <%= offer.title %><br>
-        Description: <%= offer.desc %><br>
-        Hours offered: <%= offer.hoursOffered %><br>
-        Category: <%= offer.category %><br>
-        Date posted: <%= offer.postDate.toDateString() %></p>
+	<br><br><br>
+	
+	<div class="offerDetails" style="text-align:center"> 
+		<h3>Offer Details</h3>
+        <h5>Title: <%= offer.title %></h5><br>
+        <h5>Description: <%= offer.desc %></h5><br>
+        <h5>Hours offered: <%= offer.hoursOffered %></h5><br>
+        <h5>Category: <%= offer.category %></h5><br>
+        <h5>Date posted: <%= offer.postDate.toDateString() %></h5>
 	<br>
 	</div>
         <a href="/offers/<%= offer._id %>/response " id="backButton2">Go Back</a>

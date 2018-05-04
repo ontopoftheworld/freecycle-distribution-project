@@ -3,7 +3,7 @@
 <div class="container">
     <div id="editaccount">
     	 <h1>Edit Account</h1>
-
+		<div class="newPostForm">
         <form action="/account?_method=PUT" method="POST">
             <input type="text" placeholder="First Name" name="account[firstName]" value="<%= user.firstName %>" required><br><br>
 	<input type="text" placeholder="Last Name" name="account[lastName]" value="<%= user.lastName %>" required><br><br>
@@ -14,8 +14,8 @@
 		<input type="text" placeholder="Userbio" name="account[userbio]" value="<%= user.userbio %>"><br><br>
             <button>Update</button>
         </form>
-		
-		<a href="/account>">Go Back</a>
+		</div>
+		<a href="/account" class="btn btn-primary">Go Back</a>
     	
     </div>
     </div>

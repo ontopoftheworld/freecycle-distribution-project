@@ -39,14 +39,14 @@
 	<br><hr><br>
 	<div class="requestDetails"> 
 	<h3>Request Details</h3>
-        <p>Title: <%= request.title %><br>
-        Description: <%= request.desc %><br>
-        Hours offered: <%= request.hoursOffered %><br>
-        Category: <%= request.category %><br>
-        Date posted: <%= request.postDate.toDateString() %></p>
+        <h5>Title: <%= request.title %></h5><br>
+        <h5>Description: <%= request.desc %></h5><br>
+        <h5>Hours offered: <%= request.hoursOffered %></h5><br>
+        <h5>Category: <%= request.category %></h5><br>
+        <h5>Date posted: <%= request.postDate.toDateString() %></h5>
 	<br>
 	</div>
-        <a href="/requests/<%= request._id %>/response " id="backButton2">Go Back</a>
+        <a href="/requests/<%= request._id %>/response " class="btn btn-primary" >Go Back</a>
     </div>
 
     <script>
