@@ -49,7 +49,17 @@ router.get("/sortonsearch/stores", isLoggedIn, function(req, res) {
     if(currentPage === undefined){
         currentPage=1;
     }
-    if (searchContent=="") {
+    if (sortCategory=="" || sortCategory==undefined) {
+        console.log("s1");
+        Store.paginate({"author.id": {$ne: id}, $text: {$search: searchContent}, "status": false} ,{page: currentPage, limit: 4}, function(err, result){
+            if(err){
+                console.log(err);
+            } else {
+                res.render("storesSearch", {type: "search", items: result.docs, pages: result.pages, searchContent: searchContent, sortCategory: sortCategory} );
+            }
+        });
+    }else if (searchContent=="" || searchContent==undefined) {
+        console.log("s2");
         Store.paginate({"author.id": {$ne: id}, "category": sortCategory, "status": false} ,{page: currentPage, limit: 4}, function(err, result){
             if(err){
                 console.log(err);
@@ -58,6 +68,7 @@ router.get("/sortonsearch/stores", isLoggedIn, function(req, res) {
             }
         });
     }else{
+        console.log("s3");
         Store.paginate({"author.id": {$ne: id}, $text: {$search: searchContent}, "category": sortCategory, "status": false} ,{page: currentPage, limit: 4}, function(err, result){
             if(err){
                 console.log(err);
@@ -65,10 +76,6 @@ router.get("/sortonsearch/stores", isLoggedIn, function(req, res) {
                 res.render("storesSearch", {type: "search and sort", items: result.docs, pages: result.pages, searchContent: searchContent, sortCategory: sortCategory} );
             }
     });
-
-
-
-
     }
 });
 

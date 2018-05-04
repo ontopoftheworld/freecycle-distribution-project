@@ -66,7 +66,7 @@
             <% if (items!="") { %>
                 <div class="pagination">
                 <%  for (i = 1; i <= pages; i++) { %>
-                    <a href="/search/sort?searchType=offers&searchContent=<%= searchContent %>&category=<%= sortCategory %>&userId=<%= currentUser._id %>&pageChoose=<%= i %>"><%= i %></a>
+                    <a href="/sortonsearch/stores?searchContent=<%= searchContent %>&sortCategory=<%= sortCategory %>&userId=<%= currentUser._id %>&pageChoose=<%= i %>"><%= i %></a>
                 <%  } %>
             </div>
             <% } %>
