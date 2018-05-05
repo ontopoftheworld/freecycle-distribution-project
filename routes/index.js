@@ -18,7 +18,25 @@ router.get("/", isLoggedOut, function(req, res){
 
 // Home page
 router.get("/home", isLoggedIn, function(req, res){
-    res.render("home");
+    User.findById(req.user._id, function(err, foundUser) {
+        if(err) {
+            console.log(err);
+        } else {
+            Offer.find({}, function(err, allOffers){
+                if(err){
+                    console.log(err);
+                } else {
+                    Request.find({}, function(err, allRequests){
+                        if(err){
+                            console.log(err);
+                        } else {
+                            res.render("home", {offers: allOffers, requests: allRequests, user: foundUser} );
+                        }
+                    });
+                }
+            });
+        }
+    });
 });
 
 // *** Authentication Routes ***
