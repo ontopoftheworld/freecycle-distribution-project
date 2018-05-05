@@ -19,13 +19,26 @@
       <div id="backButton">
         <a href="/" class="btn btn-primary">Back</a>
       </div>
+      <div class="container">
+            <% if(error && error.length > 0) { %>
+                <div class="alert alert-danger" role="alert">
+                    <%= error %>
+                </div>
+            <% } %>
+            <% if(success && success.length > 0) { %>
+                <div class="alert alert-success" role="alert">
+                    <%= success %>
+                </div>
+            <% } %>
+        </div>
       <div id="signupBox">
 	<h2> Register </h2>
 	<hr>
         <form action="/register" method="POST">
 	<input type="text" placeholder="First Name" name="firstName" required>
 	<input type="text" placeholder="Last Name" name="lastName" required>
-        <input type="text" placeholder="Email" name="username" required><br><br>
+        <input type="text" placeholder="Username" name="username" required>
+        <input type="text" placeholder="Email" name="email" required>
         <input type="password" placeholder="Password" name="password" required><br>
         <button type="submit">Sign Up</button>
         </form>

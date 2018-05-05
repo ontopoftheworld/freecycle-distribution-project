@@ -31,73 +31,73 @@ router.get("/store", isLoggedIn, function(req, res) {
 });
 
 router.post("/store/buy",isLoggedIn, function(req,res){
-    var buyerId=req.body.buyerId;
-    var sellerId=req.body.sellerId;
-    var itemId=req.body.itemId;
-    var itemPrice=Number(req.body.itemPrice);
+        var buyerId=req.body.buyerId;
+        var sellerId=req.body.sellerId;
+        var itemId=req.body.itemId;
+        var itemPrice=Number(req.body.itemPrice);
 
-    User.findById(buyerId,function(err, buyer){
-        if (err) {
-            console.log(err);
-        }else{
-            var buyerCurrentHour=Number(buyer.userHours);
-            if (buyerCurrentHour>=itemPrice) {
-                var buyerUpdateHour=buyerCurrentHour - itemPrice;
-                Store.findById(itemId,function(err, item){
-                    if (item.status==false) {
-                        Store.findByIdAndUpdate(itemId,{"status": true},function(err){
+        User.findById(buyerId,function(err, buyer){
+            if (err) {
+                console.log(err);
+            }else{
+                var buyerCurrentHour=Number(buyer.userHours);
+                if (buyerCurrentHour>=itemPrice) {
+                    var buyerUpdateHour=buyerCurrentHour - itemPrice;
+                    Store.findById(itemId,function(err, item){
+                        if (item.status==false) {
+                            Store.findByIdAndUpdate(itemId,{"status": true},function(err){
+                                if (err) {  
+                                    console.error(err);  
+                                } else {  
+                                    User.findByIdAndUpdate(
+                        buyerId, {"userHours": buyerUpdateHour,
+                            $push : { "hoursHistory": {
+                            "action" : "You bought an item (" + item.title + 
+                                ", id: " + item._id + ") from the store.",
+                            "change" : (-1 * itemPrice),
+                            "newHours" : buyerUpdateHour
+                            }}},function(err){
                             if (err) {  
                                 console.error(err);  
-                            } else {  
-                                User.findByIdAndUpdate(
-				    buyerId, {"userHours": buyerUpdateHour,
-					      $push : { "hoursHistory": {
-						  "action" : "You bought an item (" + item.title + 
-						      ", id: " + item._id + ") from the store.",
-						  "change" : (-1 * itemPrice),
-						  "newHours" : buyerUpdateHour
-					      }}},function(err){
-						  if (err) {  
-						      console.error(err);  
-						  }
-					      });
-				User.findById(sellerId,function(err, seller){
-				    if (err) {
-                                        console.log(err);
-                                    }else{
-                                        var sellerCurrentHour=Number(seller.userHours);
-                                        var sellerUpdateHour=sellerCurrentHour + itemPrice;
-                                        User.findByIdAndUpdate(
-					    sellerId, {"userHours": sellerUpdateHour,
-						       $push : { "hoursHistory": {
-							   "action" : "You sold an item (" + item.title + 
-							       ", id: " + item._id + ") in the store.",
-							   "change" : itemPrice,
-							   "newHours" : sellerUpdateHour
-						       }}},
-					    function(err){
-						if (err) {  
-						    console.error(err);  
-						}else{
-						    req.flash("success", "Trading success");
-						    res.render('pickupLocation');
-						}
-					    });
-                                    }
-                                });
                             }
-                        });
-                    }else{
-                        req.flash("error", "Unfortunately this item has already bought buy others.");
-                        res.redirect('/store/'+itemId);
-                    }
-                });
-            }else{
-                req.flash("error", "Unfortunately you do not have enough hours to buy this item.");
-                res.redirect('/store/'+itemId);
+                            });
+                    User.findById(sellerId,function(err, seller){
+                        if (err) {
+                                            console.log(err);
+                                        }else{
+                                            var sellerCurrentHour=Number(seller.userHours);
+                                            var sellerUpdateHour=sellerCurrentHour + itemPrice;
+                                            User.findByIdAndUpdate(
+                            sellerId, {"userHours": sellerUpdateHour,
+                                $push : { "hoursHistory": {
+                                "action" : "You sold an item (" + item.title + 
+                                    ", id: " + item._id + ") in the store.",
+                                "change" : itemPrice,
+                                "newHours" : sellerUpdateHour
+                                }}},
+                            function(err){
+                            if (err) {  
+                                console.error(err);  
+                            }else{
+                                req.flash("success", "Trading success");
+                                res.render('pickupLocation');
+                            }
+                            });
+                                        }
+                                    });
+                                }
+                            });
+                        }else{
+                            req.flash("error", "Unfortunately this item has already bought buy others.");
+                            res.redirect('/store/'+itemId);
+                        }
+                    });
+                }else{
+                    req.flash("error", "Unfortunately you do not have enough hours to buy this item.");
+                    res.redirect('/store/'+itemId);
+                }
             }
-        }
-    });
+        });
 });
 
 router.get("/store/new", isLoggedIn, function(req, res) {
@@ -105,44 +105,48 @@ router.get("/store/new", isLoggedIn, function(req, res) {
 });
 
 router.post("/store", isLoggedIn, function(req, res) {
-    var imgname=req.body.title + "_" + Date.now();
-    let uploadData = {
-    Key: imgname,
-    Body: req.files.upload.data,
-    ContentType: req.files.upload.mimetype,
-    ACL: 'public-read'
-    }
+    if (req.user.isAdmin || req.user.isSAdmin) {
+        var imgname=req.body.title + "_" + Date.now();
+        let uploadData = {
+        Key: imgname,
+        Body: req.files.upload.data,
+        ContentType: req.files.upload.mimetype,
+        ACL: 'public-read'
+        }
 
-    s3Bucket.putObject(uploadData, function(err, data){
-        if (err) {
-            console.log(err);
-            return;
-        }
-    });
-    User.findById(req.user._id, function(err, user){
-        if(err){
-            console.log(err);
-        } else {
-            var title = req.body.title;
-            var desc = req.body.desc;
-            var author = {
-                id: req.user._id,
-                username: req.user.username
+        s3Bucket.putObject(uploadData, function(err, data){
+            if (err) {
+                console.log(err);
+                return;
             }
-            var hourPrice = req.body.hourPrice;
-            var category = req.body.category;
-            var condition = req.body.condition;
-            var newItem = {title: title, desc: desc, author: author, hourPrice: hourPrice, category: category, condition: condition, imgname:imgname};
-            Store.create(newItem, function(err, newI) {
-                if(err){
-                    console.log(err);
-                    res.render("newStoreItem");
-                } else {
-                    res.render("redirect");
+        });
+        User.findById(req.user._id, function(err, user){
+            if(err){
+                console.log(err);
+            } else {
+                var title = req.body.title;
+                var desc = req.body.desc;
+                var author = {
+                    id: req.user._id,
+                    username: req.user.username
                 }
-            });
-        }
-    });
+                var hourPrice = req.body.hourPrice;
+                var category = req.body.category;
+                var condition = req.body.condition;
+                var newItem = {title: title, desc: desc, author: author, hourPrice: hourPrice, category: category, condition: condition, imgname:imgname};
+                Store.create(newItem, function(err, newI) {
+                    if(err){
+                        console.log(err);
+                        res.render("newStoreItem");
+                    } else {
+                        res.render("redirect");
+                    }
+                });
+            }
+        });
+    } else {
+        res.redirect("back");
+    }
 });
 
 router.get("/store/:id", isLoggedIn, function(req, res) {

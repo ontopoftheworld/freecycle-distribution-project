@@ -2,6 +2,9 @@
 
     <div class="container">
         <h1>Store page</h1>
+        <% if(currentUser.isAdmin || currentUser.isSAdmin) { %>
+            <a class="btn btn-primary" href="/store/new">Post a New Item</a>
+        <% } %>
 
         <div class="searchStore">
             <form action="/search/stores" id="searchForm" method="GET">
@@ -37,8 +40,6 @@
                 <br><br>
             </form>
         </div>
-
-        <a class="btn btn-primary" href="/store/new">Post a New Item</a>
             <div id="item">
                 <% items.forEach(function(item){ %>
 		   <div class="indivPost" style="column-count:3;max-height:200px;">

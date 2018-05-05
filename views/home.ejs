@@ -2,48 +2,65 @@
 
 <div class="container">
 <div id="homepage">
-<h1> Welcome to your time bank, <%= currentUser.username %>! </h1>
-
+<h1> Welcome to the FDP Time Exchange, <%= currentUser.username %>! </h1>
+<div class="container">
+    <% if(currentUser.isAdmin) { %>
+        <a class="btn btn-primary">You Are an Admin</a>
+     <% } %>
+    <h5>Your Hours: <%= user.userHours %></h5>
+</div>
 <!-- <div><a href="/requests">See all requests</a></div>
 <div><a href="/offers">See all offers</a></div> -->
 
-<h3>My Accepted Offers</h3>
-<div class="listingBoxV" id="acceptedAssignments">
-<h5>Current Accepted Services:</h5>
-<ul>
-<li>
-This is a placeholder.
-</li>
-</ul>
+<div class="listingBoxV" id="acceptedAssignments" style="overflow-y: scroll; height:400px;">
+        <a class="btn btn-success" style="background-color:rgb(18, 116, 37);" href="/offers/new">Post a New Offer</a>
+    <h5>Browse Newest Offer Posts:</h5>
+    <ul>
+        <li>
+                <% var i = 0; %>
+                <% offers.forEach(function(offer){ %>
+                        <div class="indivPost">
+                            <p>
+                                <span>
+                                    <a href="/offers/<%= offer._id %>" class="btn btn-primary"><%= offer.title %></a>
+                                </span>
+                            </p>
+                        </div>
+                        <% i++; %>
+                <% }); %>
+                <% if (i == 0) { %>
+                    <p>There are currently no offer postings</p>
+                <% } %>            
+
+        </li>
+    </ul>
 </div>
-<div class="listingBoxV" id="pastAssignments">
-<h5>Past Fulfilled/Closed Services:</h5>
-<ul>
-<li>
-This is a placeholder.
-</li>
-</ul>
+
+<div class="listingBoxV" id="pastAssignments" style="overflow-y: scroll; height:400px;">
+        <a class="btn btn-success" style="background-color:rgb(18, 116, 37);" href="/requests/new">Post a New Request</a>
+    <h5>Browse Newest Requests Posts:</h5>
+    <ul>
+            <li>
+                    <% var i = 0; %>
+                    <% requests.forEach(function(request){ %>
+                            <div class="indivPost">
+                                <p>
+                                    <span>
+                                        <a href="/requests/<%= request._id %>" class="btn btn-primary"><%= request.title %></a>
+                                    </span>
+                                </p>
+                            </div>
+                            <% i++; %>
+                    <% }); %>
+                    <% if (i == 0) { %>
+                        <p>There are currently no request postings</p>
+                    <% } %>            
+    
+            </li>
+    </ul>
 </div>
 <br><br>
-<h3>My Accepted Requests</h3>
-<div class="listingBoxV" id="userRequests">
-<h5> Current Accepted Requests: </h5>
-<ul>
-<li>
-This is a placeholder.
-</li>
-</ul>
-</div>
-<div class="listingBoxV" id="userOffers">
-<h5>Past Fulfilled/Closed Requests: </h5>
-<ul>
-<li>
-This is a placeholder.
-</li>
-</ul>
-</div>
-<br><br>
-<h4><a href="/response" >See responses you have submitted</a></h4>
+
 </div>
 </div>
 <br><br><br><br>
