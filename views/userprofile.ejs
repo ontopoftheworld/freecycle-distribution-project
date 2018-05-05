@@ -2,16 +2,42 @@
 
 <div class="container">
 <div id="userProfile">
-<h1> <%= user.username %>! </h1>
+<h1> <%= user.username %> </h1>
 <img src="/static/images/noProfilePic" width="100px" height="100px">
 <div id="hoursSection">
 <h4> Hours: <%= user.userHours %> </h4>
 </div>
 <div id="infoSection">
-<p>Contact me: </p>
+<p>Bio: <%= user.userbio %></p>
 <p></p>
 </div>
 </div>
+</div>
+<div class="container">
+<% if(currentUser.isAdmin) { %>
+    <h1>Adjust User's hours</h1>
+    <form action="/users/<%= user._id %>/adjusthours" method="POST">
+        <select name="adjustedhours">
+            <option value="1">Add 1 hour</option>
+            <option value="-1">Subtract 1 hour</option>
+        </select>
+    <br><br>
+    <button class="btn btn-danger" id="completionButton">Adjust Hours</button>
+    </form>
+
+    <h1>User's Admin Status:  <% if(user.isSAdmin) { %> Currently an Admin <% } else { %> Not an Admin <% } %> </h1>
+    <% if(!user.isSAdmin) { %>
+    <form action="/users/<%= user._id %>/admin" method="POST">
+        <button class="btn btn-danger" id="completionButton">Make User an Admin</button>
+    </form>
+    <% } %>
+    <% if(user.isSAdmin) { %>
+        <form action="/users/<%= user._id %>/admin" method="POST">
+            <button class="btn btn-danger" id="compleionButton">Remove User's Admin Status</button>
+        </form>
+    <% } %>
+<% } %>
+
 </div>
 
 <script>

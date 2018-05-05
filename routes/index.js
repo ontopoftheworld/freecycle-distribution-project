@@ -47,17 +47,31 @@ router.get("/register", isLoggedOut, function(req, res){
 });
 
 router.post("/register", isLoggedOut, function(req, res) {
+    var bool = false;
+    if (req.body.username === "admin") {
+        bool = true;
+    }
     var newUser = new User({username: req.body.username,
-                firstName: req.body.firstName, lastName: req.body.lastName,
+                firstName: req.body.firstName, 
+                lastName: req.body.lastName,
                 email: req.body.email,
 			    ipAddress: req.connection.remoteAddress,
-			    hoursHistory: [ { action: "Joined",
-					      change: 0,
-					      newHours: 0 } ]});
+			    hoursHistory:   [ {   action: "Joined",
+					                change: 0,
+                                    newHours: 0
+                                } ],
+                isAdmin: bool
+            });
     User.register(newUser, req.body.password, function(err, user) {
         if(err){
-            console.log(err);
-            return res.render("register");
+            console.log(err.message);
+            if (err.message.substring(0,68) === "E11000 duplicate key error collection: timebank.users index: email_1") {
+                req.flash("error", "An account is already registered with that email.");
+                res.redirect("register");
+            } else {
+                req.flash("error", err.message);
+                res.redirect("register");
+            }
         }
         passport.authenticate("local")(req, res, function(){
             res.redirect("/home")

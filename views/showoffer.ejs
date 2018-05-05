@@ -9,13 +9,13 @@
         <h6>Category: <%= offer.category %></h6>
         <h6>Date posted: <%= offer.postDate.toDateString() %></h6>
         <p>Submitted by: <a href="/users/<%= offer.author.id %>"><%= offer.author.username %></a></p>
-        <% if(currentUser && offer.author.id.equals(currentUser._id)) { %>
+        <% if(currentUser && offer.author.id.equals(currentUser._id) || currentUser.isAdmin) { %>
             <a class="btn btn-secondary" href="/offers/<%= offer._id %>/edit">Edit Offer</a>
             <form action="/offers/<%= offer._id %>?_method=DELETE" method="POST">
                 <button class="btn btn-danger">Delete Offer</button>
             </form>
         <% } %>
-        <% if(!(currentUser && offer.author.id.equals(currentUser._id))) { %>
+        <% if(!(currentUser && offer.author.id.equals(currentUser._id) || currentUser.isAdmin)) { %>
             <a href="/offers/<%= offer._id %>/response" class="btn btn-primary">Take on</a>
         <% } %>
 		<br><br>

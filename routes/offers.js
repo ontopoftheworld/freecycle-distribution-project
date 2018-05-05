@@ -80,6 +80,8 @@ router.get("/offers/:id", isLoggedIn, function(req, res) {
     Offer.findById(req.params.id, function(err, foundOffer) {
         if(err) {
             console.log(err);
+		} if (!foundOffer) {
+            res.redirect("back");
         } else {
             res.render("showoffer", {offer: foundOffer});
         }
@@ -90,8 +92,10 @@ router.get("/offers/:id/edit", isLoggedIn, function(req, res) {
     Offer.findById(req.params.id, function(err, foundOffer) {
         if(err) {
             res.redirect("/offers");
+		} if (!foundOffer) {
+            res.redirect("back");
         } else {
-            if (foundOffer.author.id.equals(req.user._id)) {
+            if (foundOffer.author.id.equals(req.user._id) || req.user.isAdmin) {
                 res.render("editoffer", {offer: foundOffer});
             } else {
                 res.redirect("back");
@@ -101,12 +105,22 @@ router.get("/offers/:id/edit", isLoggedIn, function(req, res) {
 });
 
 router.put("/offers/:id", isLoggedIn, function(req, res) {
-    Offer.findByIdAndUpdate(req.params.id, req.body.offer, function(err, updatedOffer) {
-        if(err){
+	Offer.findById(req.params.id, function(err, foundOffer) {
+        if(err) {
             res.redirect("/offers");
-        } else {
-            res.redirect("/offers/" + req.params.id);
-        }
+        } else {	
+			if (foundOffer.author.id.equals(req.user._id) || req.user.isAdmin) {
+				Offer.findByIdAndUpdate(req.params.id, req.body.offer, function(err, updatedOffer) {
+					if(err){
+						res.redirect("/offers");
+					} else {
+						res.redirect("/offers/" + req.params.id);
+					}
+				});
+			} else {
+				res.redirect("back");
+			}
+		}
     });
 });
 
@@ -117,19 +131,21 @@ router.delete("/offers/:id", isLoggedIn, function(req, res) {
         } if (!foundOffer) {
             res.redirect("back");
         } else {
-            if (foundOffer.offerResponse.length > 0) {
-                req.flash("error", "You can no longer delete this offer. However, you may close it.");
-                res.redirect("back");
-            } else {
-                Offer.findByIdAndRemove(req.params.id, function(err, updatedOffer) {
-                    if(err){
-                        res.redirect("/offers");
-                    } else {
-                        res.redirect("/offers");
-                    }
-                });
-            }
-        }
+			if (foundOffer.author.id.equals(req.user._id) || req.user.isAdmin) {
+				if (foundOffer.offerResponse.length > 0) {
+					req.flash("error", "You can no longer delete this offer. However, you may close it.");
+					res.redirect("back");
+				} else {
+					Offer.findByIdAndRemove(req.params.id, function(err, updatedOffer) {
+						if(err){
+							res.redirect("/offers");
+						} else {
+							res.redirect("/offers");
+						}
+					});
+				}
+			}
+		}
     });
 });
 

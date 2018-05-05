@@ -3,6 +3,31 @@
     <div class="container">
 
         <h1>Members</h1>
+
+        <h3>Current Admins:</h3>
+        <div class="ScrollStyleYou">
+        <div id="offer">
+            <% var i = 0; %>
+            <% users.forEach(function(user){ %>
+                <% if(user.isSAdmin) { %>
+		            <div class="indivPost">
+                        <p>
+                            <span>
+                                <a href="/users/<%= user._id %>" class="btn btn-primary"><%= user.username %></a>
+                                <a href="" class="btn btn-primary">Admin</a>
+                            </span>
+                        </p>
+                    </div>
+                    <% i++; %>
+                <% } %>
+            <% }); %>
+            <% if (i == 0) { %>
+                <p>There are currently no Admins</p>
+            <% } %>
+        </div>
+        </div>
+
+        <h3>Browse All Users:</h3>
         <div class="searchUser">
             <form action="/search/users" id="searchForm" method="GET">
                 <input type="text" placeholder="Find Users" name="searchContent" value="" required>
@@ -13,12 +38,13 @@
                 <% users.forEach(function(user){ %>
 		            <div class="indivPost">	
                     <span>
-                        <h4><%= user.firstName %></h4>
-                        <h4><%= user.username %></h4>
+                        <h4>Name: <%= user.firstName %></h4>
+                        <h4>Username: <%= user.username %></h4>
                     </span>
                     <p>
                         <a href="/users/<%= user._id %>" class="btn btn-primary">More Info</a>
-                        <a href="/users/<%= user._id %>" class="btn btn-primary">Message</a>
+                        <a href="/messages" class="btn btn-primary">Message</a>
+                        <% if(user.isSAdmin) { %> <a class="btn btn-primary" href="">Admin</a> <% } %>
                     </p>
 		            </div>	
                 <% }); %>
