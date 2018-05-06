@@ -2,41 +2,6 @@
 
     <div class="container">
         <h1>Item's Users Have Bought</h1>
-
-        <div class="filterform">
-        <div class="searchStore">
-            <form action="/search/stores" id="searchForm" method="GET">
-			<div class="stitle">
-                <h5 id="searchbartext" style="font-weight:500;text-shadow: 0px 0px;color:white;">Search:</h5>
-			</div>
-                <input name="userId" type="hidden" value="<%= currentUser._id %>" >
-                <input class="sinput" type="text" placeholder="Find Items" name="searchContent" value="" required>
-                <button id="sbutton" class="btn btn-dark" type="submit">Go </button>
-            </form>
-        </div>
-
- 
-            <form action="/sort/stores" method="GET">
-			<input name="userId" type="hidden" value="<%= currentUser._id %>" >
-                <div class="otitle">
-                    <h5 id="selecttext" style="font-weight:500;text-shadow: 0px 0px;">Sort by category:</h5>
-                </div>
-                <div class="oselect">
-				<select name="sortCategory" style="border:none">
-                    <option value="">Choose Category</option>
-                    <option value="categoryA">categoryA</option>
-                    <option value="categoryB">categoryB</option>
-                    <option value="categoryC">categoryC</option>
-                    <option value="categoryD">categoryD</option>
-                    <option value="categoryE">categoryE</option>
-                </select>
-                </div>
-                <div class="obutton">
-                <button id="obu" class="btn btn-dark">Apply</button>
-                </div>
-                <br><br>
-            </form></div>
-        </div>
         <div class="container">
             <div id="itemnotpickup">
             <h4>Item not picked up yet:</h4>
