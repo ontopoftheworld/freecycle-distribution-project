@@ -29,6 +29,17 @@ router.get("/store", isLoggedIn, function(req, res) {
         }
     });
 });
+router.post("/store/soldItems", isLoggedIn, function(req, res) {
+	console.log("pickup");
+	var itemId=req.body.itemId;
+	Store.findByIdAndUpdate(itemId, {"isPickedUp": true}, function(err){
+                                if (err) {  
+                                    console.error(err);  
+                                }else{
+                                	res.redirect("/store/soldItems");
+                                }
+});
+});
 
 router.get("/store/soldItems", isLoggedIn, function(req, res) {
     Store.find({"status":true}, function(err, allItems){
@@ -226,6 +237,8 @@ function createNewMessageForSeller(req, res, toUserId, toUserName, buyerId, buye
 router.get("/store/new", isLoggedIn, function(req, res) {
     res.render("newStoreItem");
 });
+
+
 
 router.post("/store", isLoggedIn, function(req, res) {
     if (req.user.isAdmin || req.user.isSAdmin) {
