@@ -17,7 +17,12 @@ var storeSchema = new mongoose.Schema({
     condition: String,
     imgname: String,
     status: {type: Boolean, default: false},
-    location: String
+    location: String,
+    buyerId: {
+	    type: mongoose.Schema.Types.ObjectId,
+	    ref: "User"
+    },
+    isPickedUp: {type: Boolean, default: false}
 });
 
 

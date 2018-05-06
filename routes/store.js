@@ -30,6 +30,16 @@ router.get("/store", isLoggedIn, function(req, res) {
     });
 });
 
+router.get("/store/soldItems", isLoggedIn, function(req, res) {
+    Store.find({"status":true}, function(err, allItems){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("storePastPurchases", {items: allItems} );
+        }
+    });
+});
+
 router.post("/store/buy",isLoggedIn, function(req,res){
         var buyerId=req.body.buyerId;
         var sellerId=req.body.sellerId;
