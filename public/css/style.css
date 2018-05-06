@@ -87,9 +87,10 @@ h6 {
 
 #landingHeader {
     margin-right: 200px;
-    width: 500px;
+    width: 530px;
     display: inline-block;
     color: white;
+	padding:-50px 0 0 0;    
 }
 
 #landingHeader h1 {
@@ -98,7 +99,10 @@ h6 {
     font-size: 96px;
     /*text-shadow: 0px 10px 90px grey;*/
     text-align: left;
-    text-shadow: 0px 0px 15px grey;
+    text-shadow: 0px 10px 15px black;
+	background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.3));
+	border:none;
+	border-radius:50px;
 }
 
 #landingLoginBox h2 {
@@ -359,6 +363,7 @@ h6 {
 #signupBox {
     margin: 0px auto;
     text-align: center;
+	
 }
 
 #signupBox h2 {
@@ -403,7 +408,7 @@ h6 {
 }
 
 #signupBox {
-    margin-top: 140px;
+    margin-top: 90px;
     border-radius: 10px;
     padding: 30px 0 50px 0;
     width: 310px;
@@ -413,6 +418,13 @@ h6 {
 #backButton {
     margin: 10px;
     font-family: 'Open Sans', sans-serif;
+}
+#introbox{
+	margin-top: 40px;margin-left: 140px;
+    border-radius: 10px;
+    padding: 30px 30px 50px 30px;
+    width: 610px;height:600px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.2));display:block;float:left
 }
 
 /* --- new Posts ---  */
