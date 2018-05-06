@@ -21,7 +21,7 @@
             <% var i = 0; %>
             <% offers.forEach(function(offer){ %>
                 <% if((currentUser && offer.author.id.equals(currentUser._id))) { %>
-		            <div class="indivPost" style="margin: 0 0 0px 0px;">
+		            <div class="indivPost1" style="margin: 0 0 0px 0px;">
                         <p>
                             <span>
                                 <a href="/offers/<%= offer._id %>" class="btn btn-primary"><%= offer.title %></a>
@@ -79,7 +79,7 @@
             <div id="offer" style="margin:0 0 0 0;">
                 <% offers.forEach(function(offer){ %>
                     <% if(!(currentUser && offer.author.id.equals(currentUser._id))) { %>
-		    <div class="indivPost" style="column-count:3">
+		    <div class="indivPost1" style="column-count:3">
                     <span>
                         <h4 style="line-height:40px;"><%= offer.title %></h4>
                         
