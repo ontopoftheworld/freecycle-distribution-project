@@ -37,7 +37,7 @@
                 <br><br>
             </form></div>
         </div>
-		
+        <div class="container">
             <div id="item">
                 <% items.forEach(function(item){ %>
 		   <div class="indivPost" style="column-count:3;max-height:200px;">
@@ -50,7 +50,7 @@
                         <h6>Item Condition: <%= item.condition %></h6>
                         <h6>Date posted: <%= item.postDate.toDateString() %></h6>
 						<br><br>
-                        <p>Submitted by: <a href="/users/<%= item.author.id %>"><%= item.author.username %></a></p>
+                        <a href="/users/<%= item.buyerID %>">See Buyer's Profile</a>
                     </span>
                     <p>
                         <a href="/store/<%= item._id %>" class="btn btn-primary">More Info</a>
@@ -59,6 +59,7 @@
                 <% }); %>
             </div>
     </div>
+</div>
 
     <script>
         $( "#store" ).addClass( "selected" );
