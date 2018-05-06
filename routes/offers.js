@@ -12,7 +12,7 @@ var Offer = require("../models/offers"),
 
 // Offers routes:
 router.get("/offers", isLoggedIn, function(req, res) {
-	Offer.find({"isAccepted": false}, function(err, allOffers){
+	Offer.find({"isAccepted": false, "isActive": true}, function(err, allOffers){
         if(err){
             console.log(err);
         } else {
