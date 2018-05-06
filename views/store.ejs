@@ -7,6 +7,9 @@
             <a class="btn btn-primary" href="/store/soldItems">Items User's Have Bought</a>
         <% } %>
 		<br><br>
+        <div id="history">
+            <a href="/store/history/<%= currentUser._id %>" class="btn btn-primary">Purchase History</a>
+        </div>
         <div class="filterform">
         <div class="searchStore">
             <form action="/search/stores" id="searchForm" method="GET">
@@ -41,7 +44,6 @@
                 <br><br>
             </form>
         </div>
-		
             <div id="item">
                 <% items.forEach(function(item){ %>
 		   <div class="indivPost1" style="column-count:3;max-height:200px;">

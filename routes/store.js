@@ -29,6 +29,16 @@ router.get("/store", isLoggedIn, function(req, res) {
         }
     });
 });
+router.post("/store/soldItems", isLoggedIn, function(req, res) {
+	var itemId=req.body.itemId;
+	Store.findByIdAndUpdate(itemId, {"isPickedUp": true}, function(err){
+                                if (err) {  
+                                    console.error(err);  
+                                }else{
+                                	res.redirect("/store/soldItems");
+                                }
+});
+});
 
 router.get("/store/soldItems", isLoggedIn, function(req, res) {
     Store.find({"status":true}, function(err, allItems){
@@ -38,6 +48,18 @@ router.get("/store/soldItems", isLoggedIn, function(req, res) {
             res.render("storePastPurchases", {items: allItems} );
         }
     });
+});
+
+router.get("/store/history/:id", isLoggedIn, function(req, res) {
+	userId=req.params.id;
+    Store.find({"buyerId":userId}, function(err, allItems){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("purchasesHistory", {items: allItems} );
+        }
+    });
+
 });
 
 router.post("/store/buy",isLoggedIn, function(req,res){
@@ -226,6 +248,8 @@ function createNewMessageForSeller(req, res, toUserId, toUserName, buyerId, buye
 router.get("/store/new", isLoggedIn, function(req, res) {
     res.render("newStoreItem");
 });
+
+
 
 router.post("/store", isLoggedIn, function(req, res) {
     if (req.user.isAdmin || req.user.isSAdmin) {

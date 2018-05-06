@@ -1,7 +1,7 @@
 <% include partials/header %>
 
     <div class="container">
-        <h1>Item's Users Have Bought</h1>
+        <h1>My Purchase History</h1>
         <div class="container">
             <div id="itemnotpickup">
             <h4>Item not picked up yet:</h4>
@@ -17,14 +17,7 @@
                         <h6>Item Condition: <%= item.condition %></h6>
                         <h6>Date posted: <%= item.postDate.toDateString() %></h6>
 						<br><br>
-                        <a href="/users/<%= item.buyerId %>">See Buyer's Profile</a>
                     </span>
-                    <p>
-                        <form action="/store/soldItems" method="POST">
-                            <input name="itemId" type="hidden" value="<%= item._id %>" >
-                            <button class="btn btn-primary">Picked Up</button>
-                        </form>
-                    </p>
 		          </div>
             <% } %>
         <% }); %>
@@ -44,7 +37,6 @@
                         <h6>Item Condition: <%= item.condition %></h6>
                         <h6>Date posted: <%= item.postDate.toDateString() %></h6>
                         <br><br>
-                        <a href="/users/<%= item.buyerID %>">See Buyer's Profile</a>
                     </span>
                   </div>
             <% } %>
