@@ -493,12 +493,17 @@ function handleAccept(req, foundResponse, foundOffer, res) {
 					res.redirect("/offers");
 				    } else {
 					updatedResponse.isAccepted = true;
-					req.flash("success", "You have accepted this request.");
-					res.render("showOfferResponse",
-						   {"currentUser": req.user,
-						    "offer": foundOffer,
-						    "response": updatedResponse,
-						    "responderId": updatedResponder._id});
+					Offer.findByIdAndUpdate(
+					    foundOffer._id,
+					    {$set : {isAccepted: true}},
+					    function() {
+						req.flash("success", "You have accepted this request.");
+						res.render("showOfferResponse",
+							   {"currentUser": req.user,
+							    "offer": foundOffer,
+							    "response": updatedResponse,
+							    "responderId": updatedResponder._id});
+					    });
 				    }
 				});
 			}
