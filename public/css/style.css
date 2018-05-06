@@ -703,6 +703,16 @@ div.container {
      margin-left: 0px;
  }
 
+ #searchFormNavbar {
+    padding: 0px 10px 0px 10px;
+    border-left: 1px solid darkgrey;
+    border-right: 1px solid darkgrey;
+}
+ 
+ #searchBtnNavbar {
+     margin-left: 8px;
+ }
+
  #searchTypesBlock {
      text-align: left;
  }
