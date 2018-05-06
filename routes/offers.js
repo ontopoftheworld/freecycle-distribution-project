@@ -535,25 +535,15 @@ router.post("/response/:id/closeIncomplete", isLoggedIn, function(req, res) {
 		req.flash("error", "This offer has already been closed.");
 		res.redirect("/offers");
 	    } else {
-		OfferResponse.findById(
-		    foundEscrow.offerResponseId, function(err, foundOfferResponse) {
-			Offer.findByIdAndUpdate(
-			    foundOfferResponse.offerId,
-			    { $set : { "isActive" : false }},
-			    { upsert : false, multi : true },
-			    function() {
-				const messageUponSuccess = "The offer has been closed." +
-				      " The hours have been returned to the responder.";
-				const logMessage = "An offer that you had requested " +
-				      " was closed without its completion. " +
-				      "The hours in holding were returned to you";
-				addHours(foundEscrow[0].fromUser, foundEscrow[0].hours,
-					 req, res, messageUponSuccess, logMessage);
-			    });
-		    }
-		});
+		const messageUponSuccess = "The offer has been closed." +
+		      " The hours have been returned to the responder.";
+		const logMessage = "An offer that you had requested " +
+		      " was closed without its completion. " +
+		      "The hours in holding were returned to you";
+		addHours(foundEscrow[0].fromUser, foundEscrow[0].hours,
+			 req, res, messageUponSuccess, logMessage);
+	    }
 	}
-    }
     });
 });
 
