@@ -570,12 +570,23 @@ router.post("/response/:id/markCompleted", isLoggedIn, function(req, res) {
 		req.flash("error", "This offer has already been closed.");
 		res.redirect("/offers");
 	    } else {
-		const messageUponSuccess = "The offer has been completed." +
-		      " The hours have been released to the poster.";
-		const logMessage = "You completed a request to your " +
-		      "posted offer and earned the hours for its completion.";
-		addHours(foundEscrow[0].toUser, foundEscrow[0].hours,
-			 req, res, messageUponSuccess, logMessage);
+		OfferResponse.findByIdAndUpdate(
+		    foundEscrow.offerResponseId,
+		    { $set : { "isComplete" : true }},
+		    function(err, foundOfferResponse) {
+			Offer.findByIdAndUpdate(
+			    foundOfferResponse.offerId,
+			    { $set : { "isActive" : false, "isCompleted": true }},
+			    { upsert : false, multi : true },
+			    function() {
+				const messageUponSuccess = "The offer has been completed." +
+				      " The hours have been released to the poster.";
+				const logMessage = "You completed a request to your " +
+				      "posted offer and earned the hours for its completion.";
+				addHours(foundEscrow[0].toUser, foundEscrow[0].hours,
+					 req, res, messageUponSuccess, logMessage);
+			    });
+		    });
 	    }
 	}
     });
