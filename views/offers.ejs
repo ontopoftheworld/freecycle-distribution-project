@@ -12,22 +12,16 @@
 }
 </style>
     <div class="container">
-        <h1>Offers</h1><a class="btn btn-success" style="background-color:#55DD71;" href="/offers/new">Make New Offer</a>
+        <h1>Offers</h1><a class="btn btn-success" style="background-color:#8DB6CD" href="/offers/new">Make New Offer</a>
         <a href="/response" class="btn btn-primary">See responses you have submitted</a>
-		<div class="searchStore">
-            <form action="/search/offers" id="searchForm" method="GET">
-                <input name="userId" type="hidden" value="<%= currentUser._id %>" >
-                <input type="text" placeholder="Find Offers" name="searchContent" value="" required>
-                <button class="btn btn-primary" type="submit">Search </button>
-            </form>
-        </div>
+		
         <h3>Offers Posted By You:</h3>
         <div class="ScrollStyleYou">
         <div id="offer">
             <% var i = 0; %>
             <% offers.forEach(function(offer){ %>
                 <% if((currentUser && offer.author.id.equals(currentUser._id))) { %>
-		            <div class="indivPost">
+		            <div class="indivPost" style="margin: 0 0 0px 0px;">
                         <p>
                             <span>
                                 <a href="/offers/<%= offer._id %>" class="btn btn-primary"><%= offer.title %></a>
@@ -46,16 +40,25 @@
         </div>
 
         <h3>Browse Offers Posted By Others:</h3>
+		
+		
+		<div class="filterform" >
+		<div class="searchStore" >
+            <form action="/search/offers" id="searchForm" method="GET">
+			<div class="stitle">
+                <h5 style="font-weight:500;text-shadow: 0px 0px;color:white;">Search:</h5>
+			</div>
+                <input name="userId" type="hidden" value="<%= currentUser._id %>" >
+                <input class="sinput" type="text" placeholder="Find Offers" name="searchContent" value="" required>
+                <button class="sbutton" type="submit">Go </button>
+            </form>
+        </div>
         <form action="/sort/offers" method="GET">
             <input name="userId" type="hidden" value="<%= currentUser._id %>" >
-            <div style="margin: 0px auto -50px auto;
-                border-radius: 10px;
-                border: solid white;
-                padding: 0px;height:30px;width:100%;">
-			<div id="otitle" style="display:block;float:left;text-align:center;width:30%;">
-                <h5 style="font-weight:500;text-shadow: 0px 0px;">Filter:</h5>
+            <div class="otitle">
+                <h5 style="font-weight:500;text-shadow: 0px 0px;">Sort by category:</h5>
 			</div>
-			<div id="oselect" style="display:block;float:left;width:30%;text-align:center;margin:-2px 0px 0px 0px">
+			<div class="oselect">
 			<select name="sortCategory" style="border:none">
                 <option value="">Choose Category</option>
                 <option value="categoryA">categoryA</option>
@@ -65,23 +68,25 @@
                 <option value="categoryE">categoryE</option>
             </select>
 			</div>
-			<div id="obutton" style="display:block;float:left;width:30%;text-align:center;color:blue;">
-            <button class="btn btn-primary" style="height:30px;font-size:17px;color:blue;background-color:white;font-weight:bold;border:none;margin:-3px 0px 0px 0px;text-align:center;">Apply</button>
-			</div></div>
+			<div class="obutton">
+            <button class="obu" style="">Apply</button>
+			</div>
 			<br><br>
-        </form>
-        <div class="ScrollStyleOthers">
-            <div id="offer">
+        </form></div>
+		
+		
+        <div class="ScrollStyleOthers" style="margin:0 0 0 0;">
+            <div id="offer" style="margin:0 0 0 0;">
                 <% offers.forEach(function(offer){ %>
                     <% if(!(currentUser && offer.author.id.equals(currentUser._id))) { %>
-		    <div class="indivPost">
+		    <div class="indivPost" style="column-count:3">
                     <span>
-                        <h4><%= offer.title %></h4>
-                        <p><%= offer.desc %></p>
-                        <h6>Hours offered: <%= offer.hoursOffered %></h6>
+                        <h4 style="line-height:40px;"><%= offer.title %></h4>
+                        
+                       
                         <h6>Category: <%= offer.category %></h6>
-                        <h6>Date posted: <%= offer.postDate.toDateString() %></h6>
-                        <p>Submitted by: <a href="/users/<%= offer.author.id %>"><%= offer.author.username %></a></p>
+                      
+                        <p>Submitted by: <a href="/users/<%= offer.author.id %>" class="btn btn-primary"><%= offer.author.username %></a></p>
                     </span>
                     <p>
                         <a href="/offers/<%= offer._id %>" class="btn btn-primary">More Info</a>

@@ -10,13 +10,16 @@
 <div><a href="/offers">See all offers</a></div> -->
 
 <div class="listingBoxV" id="acceptedAssignments" style="overflow-y: scroll; height:400px;">
-        <a class="btn btn-success" style="background-color:rgb(18, 116, 37);" href="/offers/new">Post a New Offer</a>
+        <a class="btn btn-success"  href="/offers/new">Post a New Offer</a>
     <h5>Browse Newest Offer Posts:</h5>
     <ul>
         <li>
                 <% var i = 0; %>
                 <% offers.forEach(function(offer){ %>
-                        <div class="indivPost">
+                        <div class="indivPost" style="margin: 0px auto;
+    border-radius: 10px;
+    border: solid white;
+    padding: 0px 50px 0px 50px;">
                             <p>
                                 <span>
                                     <a href="/offers/<%= offer._id %>" class="btn btn-primary"><%= offer.title %></a>

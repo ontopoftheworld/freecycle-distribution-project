@@ -12,22 +12,16 @@
 }
 </style>
     <div class="container">
-        <h1>Requests</h1><a class="btn btn-primary" style="background-color:#55DD71;" href="/requests/new">Make New Request</a>
+        <h1>Requests</h1><a class="btn btn-success"  href="/requests/new">Make New Request</a>
         <a href="/requestsResponse" class="btn btn-primary">See Your Responses to Requests</a>
-		<div class="searchStore">
-            <form action="/search/requests" id="searchForm" method="GET">
-                <input name="userId" type="hidden" value="<%= currentUser._id %>" >
-                <input type="text" placeholder="Find Requests" name="searchContent" value="" required>
-                <button class="btn btn-primary" type="submit">Search </button>
-            </form>
-        </div>
+		
         <h3>Requests Posted By You:</h3>
         <div class="ScrollStyleYou">
         <div id="request">
             <% var i = 0; %>
             <% requests.forEach(function(request){ %>
                 <% if((currentUser && request.author.id.equals(currentUser._id))) { %>
-		            <div class="indivPost">
+		            <div class="indivPost" style="margin: 0 0 0px 0px;">
                         <p>
                             <span>
                                 <a href="/requests/<%= request._id %>" class="btn btn-primary"><%= request.title %></a>
@@ -46,17 +40,25 @@
         </div>
 
         <h3>Browse Requests Posted By Others:</h3>
+		<div class="filterform">
+		<div class="searchStore">
+		
+            <form action="/search/requests" id="searchForm" method="GET">
+			<div class="stitle">
+                <h5 style="font-weight:500;text-shadow: 0px 0px;color:white;">Search:</h5>
+			</div>
+                <input name="userId" type="hidden" value="<%= currentUser._id %>" >
+                <input class="sinput" type="text" placeholder="Find Requests" name="searchContent" value="" required>
+                <button class="sbutton" type="submit">Go </button>
+            </form>
+        </div>
         <form action="/sort/requests" method="GET">
             <input name="userId" type="hidden" value="<%= currentUser._id %>" >
-            <div style="margin: 0px auto -50px auto;
-                border-radius: 10px;
-                border: solid white;
-                padding: 0px;height:30px;width:100%;">
-			<div id="otitle" style="display:block;float:left;text-align:center;width:30%;">
-                <h5 style="font-weight:500;text-shadow: 0px 0px;">Filter:</h5>
+			<div class="otitle">
+                <h5 style="font-weight:500;text-shadow: 0px 0px;">Sort by category:</h5>
 			</div>
-			<div id="oselect" style="display:block;float:left;width:30%;text-align:center;margin:-2px 0px 0px 0px">
-			<select name="sortCategory">
+			<div class="oselect">
+			<select name="sortCategory" style="border:none">
                 <option value="">Choose Category</option>
                 <option value="categoryA">categoryA</option>
                 <option value="categoryB">categoryB</option>
@@ -65,11 +67,11 @@
                 <option value="categoryE">categoryE</option>
             </select>
 			</div>
-			<div id="obutton" style="display:block;float:left;width:30%;text-align:center;color:blue;">
-            <button class="btn btn-primary" style="height:30px;font-size:17px;color:blue;background-color:white;font-weight:bold;border:none;margin:-3px 0px 0px 0px;text-align:center;">Apply</button>
-			</div></div>
+			<div class="obutton">
+            <button class="obu">Apply</button>
+			</div>
 			<br><br>
-        </form>
+        </form></div>
         <div class="ScrollStyleOthers">
             <div id="request">
                 <% requests.forEach(function(request){ %>
