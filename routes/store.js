@@ -30,7 +30,6 @@ router.get("/store", isLoggedIn, function(req, res) {
     });
 });
 router.post("/store/soldItems", isLoggedIn, function(req, res) {
-	console.log("pickup");
 	var itemId=req.body.itemId;
 	Store.findByIdAndUpdate(itemId, {"isPickedUp": true}, function(err){
                                 if (err) {  
