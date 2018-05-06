@@ -12,14 +12,7 @@
         <label style="   font-family: 'Open Sans', sans-serif">Total&nbsp</label><label style="font-size:30px;font-family: Arial, sans-serif;"><%= offer.hoursOffered %></label><label style="font-family: 'Open Sans', sans-serif">&nbsphour(s)</label><br><br>
         
         
-		 <% if(currentUser && offer.author.id.equals(currentUser._id)) { %>
 
-        <h4><%= offer.title %></h4>
-        <h6><%= offer.desc %></h6>
-        <h6>Hours offered: <%= offer.hoursOffered %></h6>
-        <h6>Category: <%= offer.category %></h6>
-        <h6>Date posted: <%= offer.postDate.toDateString() %></h6>
-        <p>Submitted by: <a href="/users/<%= offer.author.id %>"><%= offer.author.username %></a></p>
         <% if(currentUser && offer.author.id.equals(currentUser._id) || currentUser.isAdmin) { %>
 
             <a class="btn btn-secondary" href="/offers/<%= offer._id %>/edit">Edit Offer</a>
