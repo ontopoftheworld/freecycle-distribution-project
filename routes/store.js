@@ -171,8 +171,8 @@ function createNewMessageForSeller(req, res, toUserId, toUserName, buyerId, buye
 				  if (err) {
 				      console.log("ERROR: problems updating message");
 				  } else {
-				      req.flash("success", "Trading success");
-				      res.render('pickupLocation');
+				  		req.flash("success", "Trading success");
+                        res.render('pickupLocation', {location:item.location});
 				  }
 			      }
 			  );
