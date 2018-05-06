@@ -43,7 +43,10 @@
                     </span>
                     <p>
                         <a href="/users/<%= user._id %>" class="btn btn-primary">More Info</a>
-                        <a href="/messages" class="btn btn-primary">Message</a>
+			<form action="/messages" method="POST">
+   			<input type="text" id="toUser" name="message[toUser]" placeholder="Member's username" style="display:none" value="<%=user.username%>">
+                        <input type="submit" id="submitButton" class="btn btn-primary" value="Message">
+			</form>
                         <% if(user.isSAdmin) { %> <a class="btn btn-primary" href="">Admin</a> <% } %>
                     </p>
 		            </div>	

@@ -12,7 +12,7 @@ var Offer = require("../models/offers"),
 
 // Offers routes:
 router.get("/offers", isLoggedIn, function(req, res) {
-    Offer.find({}, function(err, allOffers){
+	Offer.find({"isAccepted": false}, function(err, allOffers){
         if(err){
             console.log(err);
         } else {
@@ -58,8 +58,10 @@ router.post("/offers", isLoggedIn, function(req, res) {
 		}
 		var hoursOffered = req.body.offer.hoursOffered;
 		var category = req.body.offer.category;
+		var type = req.body.offer.type;
+		var location = req.body.offer.location;
 		var newOffer = {title: title, desc: desc, author: author,
-				hoursOffered: hoursOffered, category: category};
+				hoursOffered: hoursOffered, category: category, location: location, type: type};
 		Offer.create(newOffer, function(err, newO) {
                     if(err){
 			console.log(err);
@@ -284,7 +286,7 @@ function createNewMessageWithOffer(req, toUserId, toUserName, offerId, foundOffe
 
 			  // change the current user's seen status to true, so that the message
 			  // can be marked as read, and the other user's seen status as false
-			  if (foundChat[0].senderA.displayName === req.user.firstName) {
+			  if (foundChat[0].senderA.displayName === req.user.username) {
 			      Messages.update(
 				  { "chatGroup" : cGrp },
 				  { $set : { "senderA.seenMessages" : true, "senderB.seenMessages" : false }},
@@ -322,12 +324,12 @@ function createNewMessageWithOffer(req, toUserId, toUserName, offerId, foundOffe
 				  "info" : toUserName + ", you have a new response " +
 				      "to your offer (" + foundOffer.title +
 				      ") from " +
-				      req.user.firstName + "! " +
+				      req.user.username + "! " +
 				      "They are offering " + hours + " hours in exchange " +
 				      "for its completion." +
 				      ' Here is their message: "' +  message +
 				      '". Feel free to use this chat to further discuss this with ' +
-				      req.user.firstName + ". You may accept this offer from the " +
+				      req.user.username + ". You may accept this offer from the " +
 				      '"Responses to Your Offer" page or at this link: ' +
 				      "/offers/" + offerId + "/response"}}},
 			      { upsert : false, multi : true },
@@ -344,7 +346,7 @@ function createNewMessageWithOffer(req, toUserId, toUserName, offerId, foundOffe
 			  var newChat = {message: [],
 					 chatGroup: cGrp,
 					 senderA: { id : req.user._id,
-						    displayName : req.user.firstName,
+						    displayName : req.user.username,
 						    seenMessages : true},
 					 senderB: { id : toUserId,
 						    displayName : toUserName,
@@ -367,12 +369,12 @@ function createNewMessageWithOffer(req, toUserId, toUserName, offerId, foundOffe
 					  "info" : toUserName + ", you have a new response " +
 					      "to your offer (" + foundOffer.title +
 					      ") from " +
-					      req.user.firstName + "! " +
+					      req.user.username + "! " +
 					      "They are offering " + hours + " hours in exchange " +
 					      "for its completion." +
 					      ' Here is their message: "' +  message +
 					      '". Feel free to use this chat to further discuss this with ' +
-					      req.user.firstName + ". You may accept this offer from the " +
+					      req.user.username + ". You may accept this offer from the " +
 					      '"Responses to Your Offer" page or at this link: ' +
 					      "/offers/" + offerId + "/response"}}},
 				      { upsert : false, multi : true },

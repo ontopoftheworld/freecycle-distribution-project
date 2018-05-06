@@ -26,7 +26,9 @@ var offerSchema = new mongoose.Schema({
                 ref: "OfferResponse"
             }
         }
-    ]
+    ],
+    location: String,
+    type: String
 });
 
 offerSchema.plugin(mongoosePaginate);

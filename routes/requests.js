@@ -268,7 +268,7 @@ function createNewMessageWithRequest(req, toUserId, toUserName, requestId, found
 
  			  // change the current user's seen status to true, so that the message
  			  // can be marked as read, and the other user's seen status as false
- 			  if (foundChat[0].senderA.displayName === req.user.firstName) {
+ 			  if (foundChat[0].senderA.displayName === req.user.username) {
 			      Messages.update(
  				  { "chatGroup" : cGrp },
  				  { $set : { "senderA.seenMessages" : true, "senderB.seenMessages" : false }},
@@ -306,12 +306,12 @@ function createNewMessageWithRequest(req, toUserId, toUserName, requestId, found
 				  "info" : toUserName + ", you have a new response " +
 				      "to your request (" + foundRequest.title +
 				      ") from " +
-				      req.user.firstName + "! " +
+				      req.user.username + "! " +
 				      "They are asking for " + hours + " hours in exchange " +
 				      "for its completion." +
 				      ' Here is their message: "' +  message +
 				      '". Feel free to use this chat to further discuss this with ' +
-				      req.user.firstName + ". You may accept this offer from the " +
+				      req.user.username + ". You may accept this offer from the " +
 				      '"Responses to Your Request" page or at this link: ' +
 				      "/requests/" + requestId + "/response"}}},
 			      { upsert : false, multi : true },
@@ -328,7 +328,7 @@ function createNewMessageWithRequest(req, toUserId, toUserName, requestId, found
  			  var newChat = {message: [],
 					 chatGroup: cGrp,
 					 senderA: { id : req.user._id,
-						    displayName : req.user.firstName,
+						    displayName : req.user.username,
 						    seenMessages : true},
 					 senderB: { id : toUserId,
 						    displayName : toUserName,
@@ -351,12 +351,12 @@ function createNewMessageWithRequest(req, toUserId, toUserName, requestId, found
  					  "info" : toUserName + ", you have a new response " +
  					      "to your request (" + foundRequest.title +
  					      ") from " +
- 					      req.user.firstName + "! " +
+ 					      req.user.username + "! " +
  					      "They are asking for " + hours + " hours in exchange " +
 					      "for its completion." +
  					      ' Here is their message: "' +  message +
 					      '". Feel free to use this chat to further discuss this with ' +
-					      req.user.firstName + ". You may accept this offer from the " +
+					      req.user.username + ". You may accept this offer from the " +
 					      '"Responses to Your Request" page or at this link: ' +
 					      "/requests/" + requestId + "/response"}}},
 				      { upsert : false, multi : true },

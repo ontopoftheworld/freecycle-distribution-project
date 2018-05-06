@@ -3,9 +3,9 @@
    <hr>
    <br>
    <div id="startNewChat">
-   <form action="/messages" method="POST">
-   	 Search for Member: <input type="text" id="toUser" name="message[toUser]" placeholder="Member's email">
-   	 <input type="submit" id="submitButton" value="Open">
+   <form action="/search/users" id="searchForm" method="GET">
+         <input type="text" placeholder="Find a user" name="searchContent" value="" required>
+         <button class="btn btn-primary" type="submit">Search</button>
    </form>
    </div>
    <br>
@@ -16,7 +16,8 @@
         <% allMessages.forEach(function(message){ %>
 	   <a href="/messages/<%= message.chatGroup %>">
 	   <div class="indivChat">
-	   	<% if (message.senderA.displayName == thisUserDisplayName) { %>
+	   	<% if (message.senderA.displayName == thisUserDisplayName &&
+		       message.message.length != 0) { %>
 	      		<%= message.senderB.displayName %> :
 			<% if (message.senderA.seenMessages) { %>
 			      No new Messages.
@@ -24,7 +25,7 @@
 			      ALERT: New Message!
 			<% } %>
 			</a>
-		<% } else { %>
+		<% } else if (message.message.length != 0) { %>
 	   		<%= message.senderA.displayName %> :
 			<% if (message.senderB.seenMessages) { %>
 			      No new Messages.
