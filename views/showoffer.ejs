@@ -4,6 +4,7 @@
         <h1>Offer Details</h1>
 <div class="newPostForm">
 
+
         <h3><%= offer.title %></h3><br><br>
 		
         <label style="font-size:30px;font-family: Arial, sans-serif;"><%= offer.desc %></label><br><br>
@@ -12,12 +13,21 @@
         
         
 		 <% if(currentUser && offer.author.id.equals(currentUser._id)) { %>
+
+        <h4><%= offer.title %></h4>
+        <h6><%= offer.desc %></h6>
+        <h6>Hours offered: <%= offer.hoursOffered %></h6>
+        <h6>Category: <%= offer.category %></h6>
+        <h6>Date posted: <%= offer.postDate.toDateString() %></h6>
+        <p>Submitted by: <a href="/users/<%= offer.author.id %>"><%= offer.author.username %></a></p>
+        <% if(currentUser && offer.author.id.equals(currentUser._id) || currentUser.isAdmin) { %>
+
             <a class="btn btn-secondary" href="/offers/<%= offer._id %>/edit">Edit Offer</a>
             <form action="/offers/<%= offer._id %>?_method=DELETE" method="POST">
                 <button class="btn btn-danger">Delete Offer</button>
             </form>
         <% } %>
-        <% if(!(currentUser && offer.author.id.equals(currentUser._id))) { %>
+        <% if(!(currentUser && offer.author.id.equals(currentUser._id) || currentUser.isAdmin)) { %>
             <a href="/offers/<%= offer._id %>/response" class="btn btn-primary">Take on</a>
         <% } %><br><br>
 		<div style="float:right"><h5>Date posted: <%= offer.postDate.toDateString() %></h5></div><br><br>

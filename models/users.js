@@ -13,6 +13,7 @@ var userSchema = new mongoose.Schema({
 	userbio: {type: String, default: "Incomplete"},
     userHours: {type: Number, default: 100},
     isAdmin: {type: Boolean, default: false},
+    isSAdmin:{type: Boolean, default: false}, 
     password: String,
     dateJoined: { type: Date, default: Date.now },
     requests: [
