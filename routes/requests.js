@@ -533,7 +533,7 @@ router.post("/requests/response/:id/closeIncomplete", isLoggedIn, function(req, 
 				addHours(foundEscrow[0].fromUser, foundEscrow[0].hours,
 					 req, res, messageUponSuccess, logMessage);
 			    });
-		    }
+		    });
 
 		}
 	}
