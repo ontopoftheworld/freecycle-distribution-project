@@ -16,7 +16,7 @@ router.get("/messages", isLoggedIn, function(req, res) {
             console.log(err);
         } else {
 	    // If there is an existing chat
-            res.render("messagesHome", {thisUserDisplayName: req.user.firstName,
+            res.render("messagesHome", {thisUserDisplayName: req.user.username,
 					allMessages: foundMessages} );
         }
     });
@@ -46,10 +46,10 @@ router.post("/messages", isLoggedIn, function(req, res) {
 				      var newChat = {message: [],
 						     chatGroup: chatGrpHashed,
 						     senderA: { id : req.user._id,
-								displayName : req.user.firstName,
+								displayName : req.user.username,
 							        seenMessages : true},
 						     senderB: { id : toUserId,
-							        displayName : foundUser[0].firstName,
+							        displayName : foundUser[0].username,
 							        seenMessages : false}};
 				      Messages.create(newChat, function(err, newM) {
 					  if(err){
@@ -78,13 +78,13 @@ router.get("/messages/:chatGroup", isLoggedIn, function(req, res) {
 	} else {
 	    // If there is an existing chat
 	    let toUser = foundGrp[0].senderA.displayName;
-	    if (toUser === req.user.firstName) {
+	    if (toUser === req.user.username) {
 		toUser = foundGrp[0].senderB.displayName;
 	    }
 
 	    // change the current user's seen status to true, so that the message
 	    // can be marked as read. 
-	    if (foundGrp[0].senderA.displayName === req.user.firstName) {
+	    if (foundGrp[0].senderA.displayName === req.user.username) {
 		Messages.update(
 		    { "chatGroup" : cGrp },
 		    { $set : { "senderA.seenMessages" : true }},

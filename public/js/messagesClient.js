@@ -8,7 +8,7 @@ $(document).ready(function(){
     socket.on('message', function(displayName, time, message){
 	// display a newly-arrived message
 	var newMessage = $('<div class="indivMessage"></div>');
-	if (displayName === meta("userFirstName")) {
+	if (displayName === meta("username")) {
 	    newMessage.html(time + "<br><b> You: </b>" +
 			    message + "<br>");
 	    $(newMessage).css("background-color", "dodgerblue");
@@ -25,7 +25,7 @@ $(document).ready(function(){
     socket.on('error', function() {
     });
 
-    socket.emit('join', $("#chatId").html(), meta("userFirstName"));
+    socket.emit('join', $("#chatId").html(), meta("username"));
 
     // user submits a new message
     $("#message").keypress(function(e) {
