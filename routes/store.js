@@ -50,6 +50,18 @@ router.get("/store/soldItems", isLoggedIn, function(req, res) {
     });
 });
 
+router.get("/store/history/:id", isLoggedIn, function(req, res) {
+	userId=req.params.id;
+    Store.find({"buyerId":userId}, function(err, allItems){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("purchasesHistory", {items: allItems} );
+        }
+    });
+
+});
+
 router.post("/store/buy",isLoggedIn, function(req,res){
         var buyerId=req.body.buyerId;
         var sellerId=req.body.sellerId;
