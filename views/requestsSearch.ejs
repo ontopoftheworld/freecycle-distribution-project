@@ -1,20 +1,28 @@
 <% include partials/header %>
     <div class="container">
         <h1>Requests <%= type %> result for:  <%= searchContent %>  <%= sortCategory %></h1>
-        
-        <div class="searchRequests">
+        <a class="btn btn-success"  style="background-color:#001B88" href="/requests/new">Make New Request</a>
+        <a href="/requestsResponse" class="btn btn-primary" style="background-color:rgb(18, 116, 37);">See Your Responses to Requests</a>
+		<br><br>
+       <div class="filterform">
+		<div class="searchStore">
+		
             <form action="/search/requests" id="searchForm" method="GET">
+			<div class="stitle">
+                <h5 id="searchbartext" style="font-weight:500;text-shadow: 0px 0px;color:white;">Search:</h5>
+			</div>
                 <input name="userId" type="hidden" value="<%= currentUser._id %>" >
-                <input type="text" placeholder="Find Items" name="searchContent" value="" required>
-                <button class="btn btn-primary" type="submit">Search </button>
+                <input class="sinput" type="text" placeholder="Find Requests" name="searchContent" value="" required>
+                <button id="sbutton" class="btn btn-dark" type="submit">Go </button>
             </form>
         </div>
-        
-        <form action="/sortonsearch/requests" method="GET">
-            <input name="searchContent" type="hidden" value="<%= searchContent %>">
+        <form action="/sort/requests" method="GET">
             <input name="userId" type="hidden" value="<%= currentUser._id %>" >
-            <h5>filter:</h5>
-            <select name="sortCategory">
+			<div class="otitle">
+                <h5 id="selecttext" style="font-weight:500;text-shadow: 0px 0px;">Sort by category:</h5>
+			</div>
+			<div class="oselect">
+			<select name="sortCategory" style="border:none">
                 <option value="">Choose Category</option>
                 <option value="categoryA">categoryA</option>
                 <option value="categoryB">categoryB</option>
@@ -22,23 +30,27 @@
                 <option value="categoryD">categoryD</option>
                 <option value="categoryE">categoryE</option>
             </select>
-            <button class="btn btn-primary">Apply</button>
-        </form>
+			</div>
+			<div class="obutton">
+            <button id="obu" class="btn btn-dark">Apply</button>
+			</div>
+			<br><br>
+        </form></div>
 
-        <h1>Requests</h1><a class="btn btn-primary" style="background-color:#55DD71;" href="/requests/new">Make New Request</a>
         <div id="request">
                 <% if (requests=="") { %>
                     <h2>No result!</h2>
                 <% } %>
             <% requests.forEach(function(request){ %>
-                  <div class="indivPost">
+                  <div class="indivPost1" style="column-count:3">
                     <span>
-                        <h4><%= request.title %></h4>
-                        <p><%= request.desc %></p>
-                        <h6>Hours offered: <%= request.hoursOffered %></h6>
+                        <h4 style="line-height:40px;"><%= request.title %></h4>
+                        
+                       
                         <h6>Category: <%= request.category %></h6>
-                        <h6>Date posted: <%= request.postDate.toDateString() %></h6>
-                        <p>Submitted by: <a href="/users/<%= request.author.id %>"><%= request.author.username %></a></p>
+                      
+                        <p>Submitted by: <a href="/users/<%= request.author.id %>" class="btn btn-primary"><%= request.author.username %></a></p>
+					
                     </span>
                     <p>
                         <a href="/requests/<%= request._id %>" class="btn btn-primary">More Info</a>
@@ -54,6 +66,7 @@
                 <%  } %>
             </div>
         <% } %>
+		<a href="/requests%>" class="btn btn-primary">Go Back</a>
     </div>
 
     <script>

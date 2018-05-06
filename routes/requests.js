@@ -476,12 +476,17 @@ function handleAccept(req, foundResponse, foundRequest, res) {
 					res.redirect("/requests");
 				    } else {
 					updatedResponse.isAccepted = true;
-					req.flash("success", "You have accepted this response to your request.");
-					res.render("showRequestResponse",
-						   {"currentUser": req.user,
-						    "request": foundRequest,
-						    "response": updatedResponse,
-						    "responderId": updatedResponder._id});
+					Request.findByIdAndUpdate(
+					    foundRequest._id,
+					    {$set : {isAccepted: true}},
+					    function() {
+						req.flash("success", "You have accepted this response to your request.");
+						res.render("showRequestResponse",
+							   {"currentUser": req.user,
+							    "request": foundRequest,
+							    "response": updatedResponse,
+							    "responderId": updatedResponder._id});
+					    });
 				    }
 				});
 			}
