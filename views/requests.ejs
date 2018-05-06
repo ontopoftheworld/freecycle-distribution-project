@@ -21,7 +21,7 @@
             <% var i = 0; %>
             <% requests.forEach(function(request){ %>
                 <% if((currentUser && request.author.id.equals(currentUser._id))) { %>
-		            <div class="indivPost" style="margin: 0 0 0px 0px;">
+		            <div class="indivPost1" style="margin: 0 0 0px 0px;">
                         <p>
                             <span>
                                 <a href="/requests/<%= request._id %>" class="btn btn-primary"><%= request.title %></a>
@@ -76,15 +76,16 @@
             <div id="request">
                 <% requests.forEach(function(request){ %>
                     <% if(!(currentUser && request.author.id.equals(currentUser._id))) { %>
-		    <div class="indivPost">
+		    <div class="indivPost1" style="column-count:3">
                     <span>
-                        <h4><%= request.title %></h4>
-                        <p><%= request.desc %></p>
-                        <h6>Hours offered: <%= request.hoursOffered %></h6>
+					
+					<h4 style="line-height:40px;"><%= request.title %></h4>
+                        
+                       
                         <h6>Category: <%= request.category %></h6>
-                        <h6>Date posted: <%= request.postDate.toDateString() %></h6>
-                        <p>Submitted by: <a href="/users/<%= request.author.id %>"><%= request.author.username %></a></p>
-                    </span>
+                      
+                        <p>Submitted by: <a href="/users/<%= request.author.id %>" class="btn btn-primary"><%= request.author.username %></a></p>
+					</span>
                     <p>
                         <a href="/requests/<%= request._id %>" class="btn btn-primary">More Info</a>
                         <a href="/requests/<%= request._id %>/response" class="btn btn-primary">Take on</a>

@@ -2,27 +2,28 @@
 
     <div class="container">
         <h1>Store <%= type %> result for:  <%= searchContent %>  <%= sortCategory %></h1>
+		<a class="btn btn-primary" href="/store/new">Post a New Item</a>
+          <br><br>
+       <div class="filterform">
         <div class="searchStore">
             <form action="/search/stores" id="searchForm" method="GET">
+			<div class="stitle">
+                <h5 id="searchbartext" style="font-weight:500;text-shadow: 0px 0px;color:white;">Search:</h5>
+			</div>
                 <input name="userId" type="hidden" value="<%= currentUser._id %>" >
-                <input type="text" placeholder="Find Items" name="searchContent" value="" required>
-                <button class="btn btn-primary" type="submit">Search </button>
+                <input class="sinput" type="text" placeholder="Find Items" name="searchContent" value="" required>
+                <button id="sbutton" class="btn btn-dark" type="submit">Go </button>
             </form>
         </div>
 
-        <div class="sortStore">
-            <form action="/sortonsearch/stores" method="GET">
-                <div style="margin: 0px auto -50px auto;
-                    border-radius: 10px;
-                    border: solid white;
-                    padding: 0px;height:30px;width:100%;">
-                <div id="otitle" style="display:block;float:left;text-align:center;width:30%;">
-                    <h5 style="font-weight:500;text-shadow: 0px 0px;">Filter:</h5>
+ 
+            <form action="/sort/stores" method="GET">
+			<input name="userId" type="hidden" value="<%= currentUser._id %>" >
+                <div class="otitle">
+                    <h5 id="selecttext" style="font-weight:500;text-shadow: 0px 0px;">Sort by category:</h5>
                 </div>
-                <div id="oselect" style="display:block;float:left;width:30%;text-align:center;margin:-2px 0px 0px 0px">
-                <input name="userId" type="hidden" value="<%= currentUser._id %>" >
-                <input name="searchContent" type="hidden" value="<%= searchContent %>" >
-                <select name="sortCategory">
+                <div class="oselect">
+				<select name="sortCategory" style="border:none">
                     <option value="">Choose Category</option>
                     <option value="categoryA">categoryA</option>
                     <option value="categoryB">categoryB</option>
@@ -31,20 +32,19 @@
                     <option value="categoryE">categoryE</option>
                 </select>
                 </div>
-                <div id="obutton" style="display:block;float:left;width:30%;text-align:center;color:blue;">
-                <button class="btn btn-primary" style="height:30px;font-size:17px;color:blue;background-color:white;font-weight:bold;border:none;margin:-3px 0px 0px 0px;text-align:center;">Apply</button>
-                </div></div>
+                <div class="obutton">
+                <button id="obu" class="btn btn-dark">Apply</button>
+                </div>
                 <br><br>
             </form>
         </div>
 
-        <a class="btn btn-primary" href="/store/new">Post a New Item</a>
-            <div id="item">
+          <div id="item">
                 <% if (items=="") { %>
                     <h2>No result!</h2>
                 <% } %>
                 <% items.forEach(function(item){ %>
-		   <div class="indivPost" style="column-count:3;max-height:200px;">
+		   <div class="indivPost1" style="column-count:3;max-height:200px;">
                     <img  src="https://s3.amazonaws.com/freecycle-distribution-project-storeimg/<%= item.imgname %>" width="150px" height="150px">
 					<span>
                         <h4><%= item.title %></h4>
@@ -70,6 +70,7 @@
                 <%  } %>
             </div>
             <% } %>
+			<a href="/store%>" class="btn btn-primary">Go Back</a>
     </div>
 
     <script>
