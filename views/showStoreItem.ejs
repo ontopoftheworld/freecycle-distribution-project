@@ -2,13 +2,16 @@
 
     <div class="container">
         <h1>Item Details</h1>
-
-        <h4><%= item.title %></h4>
-        <h6><%= item.desc %></h6>
-        <h6>Hours price: <%= item.hourPrice %></h6>
-        <h6>Category: <%= item.category %></h6>
-        <h6>Date posted: <%= item.postDate.toDateString() %></h6>
-        <p>Submitted by: <a href="/users/<%= item.author.id %>"><%= item.author.username %></a></p>
+		<div class="newPostForm">
+		
+		<h3><%= item.title %></h3><br><br>
+		
+        <label style="font-size:30px;font-family: Arial, sans-serif;"><%= item.desc %></label><br><br>
+		
+        <label style="   font-family: 'Open Sans', sans-serif">Total&nbsp</label><label style="font-size:30px;font-family: Arial, sans-serif;"><%= item.hourPrice %></label><label style="font-family: 'Open Sans', sans-serif">&nbsphour(s)</label><br><br>
+        
+		
+        
         <% if(currentUser && item.author.id.equals(currentUser._id)) { %>
             <a class="btn btn-secondary" href="/store/<%= item._id %>/edit">Edit Item</a>
             <form action="/store/<%= item._id %>?_method=DELETE" method="POST">
@@ -23,8 +26,11 @@
                 <input name="sellerId" type="hidden" value="<%= item.author.id %>" >
                 <button type="submit" class="btn btn-primary">Buy</button>
             </form>
-        <% } %>
-
+        <% } %><br><br>
+		<div style="float:right"><h5>Date posted: <%= item.postDate.toDateString() %></h5></div><br><br>
+       <div style="float:right;"> <h5>Submitted by: <a href="/users/<%= item.author.id %>"><%= item.author.username %></a></h5></div>
+		</div>
+		<br><br>
         <a href="/store%>" class="btn btn-primary">Go Back</a>
     </div>
 

@@ -6,26 +6,26 @@
             <a class="btn btn-primary" href="/store/new">Post a New Item</a>
         <% } %>
 
+        <div class="filterform">
         <div class="searchStore">
             <form action="/search/stores" id="searchForm" method="GET">
+			<div class="stitle">
+                <h5 style="font-weight:500;text-shadow: 0px 0px;color:white;">Search:</h5>
+			</div>
                 <input name="userId" type="hidden" value="<%= currentUser._id %>" >
-                <input type="text" placeholder="Find Items" name="searchContent" value="" required>
-                <button class="btn btn-primary" type="submit">Search </button>
+                <input class="sinput" type="text" placeholder="Find Items" name="searchContent" value="" required>
+                <button class="sbutton" type="submit">Go </button>
             </form>
         </div>
 
-        <div class="sortStore">
+ 
             <form action="/sort/stores" method="GET">
-                <div style="margin: 0px auto -50px auto;
-                    border-radius: 10px;
-                    border: solid white;
-                    padding: 0px;height:30px;width:100%;">
-                <div id="otitle" style="display:block;float:left;text-align:center;width:30%;">
-                    <h5 style="font-weight:500;text-shadow: 0px 0px;">Filter:</h5>
+			<input name="userId" type="hidden" value="<%= currentUser._id %>" >
+                <div class="otitle">
+                    <h5 style="font-weight:500;text-shadow: 0px 0px;">Sort by category:</h5>
                 </div>
-                <div id="oselect" style="display:block;float:left;width:30%;text-align:center;margin:-2px 0px 0px 0px">
-                <input name="userId" type="hidden" value="<%= currentUser._id %>" >
-                <select name="sortCategory">
+                <div class="oselect">
+				<select name="sortCategory" style="border:none">
                     <option value="">Choose Category</option>
                     <option value="categoryA">categoryA</option>
                     <option value="categoryB">categoryB</option>
@@ -34,12 +34,13 @@
                     <option value="categoryE">categoryE</option>
                 </select>
                 </div>
-                <div id="obutton" style="display:block;float:left;width:30%;text-align:center;color:blue;">
-                <button class="btn btn-primary" style="height:30px;font-size:17px;color:blue;background-color:white;font-weight:bold;border:none;margin:-3px 0px 0px 0px;text-align:center;">Apply</button>
-                </div></div>
+                <div class="obutton">
+                <button class="obu">Apply</button>
+                </div>
                 <br><br>
-            </form>
+            </form></div>
         </div>
+		
             <div id="item">
                 <% items.forEach(function(item){ %>
 		   <div class="indivPost" style="column-count:3;max-height:200px;">
