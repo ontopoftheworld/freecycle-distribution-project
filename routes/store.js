@@ -55,7 +55,7 @@ router.post("/store/buy",isLoggedIn, function(req,res){
                     var buyerUpdateHour=buyerCurrentHour - itemPrice;
                     Store.findById(itemId,function(err, item){
                         if (item.status==false) {
-                            Store.findByIdAndUpdate(itemId,{"status": true},function(err){
+                            Store.findByIdAndUpdate(itemId, {"status": true, "buyerId": buyerId}, function(err){
                                 if (err) {  
                                     console.error(err);  
                                 } else {  
