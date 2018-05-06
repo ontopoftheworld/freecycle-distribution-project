@@ -645,13 +645,11 @@ div.container {
  /* ----- Searchform part of navbar ---- */
 
  #searchForm {
-     padding: 0px 10px 0px 10px;
-     border-left: 1px solid darkgrey;
-     border-right: 1px solid darkgrey;
+     padding: 0px 0px 0px 0px;
  }
  
  #searchBtn {
-     margin-left: 8px;
+     margin-left: 0px;
  }
 
  #searchTypesBlock {
@@ -663,6 +661,11 @@ div.container {
      display: block;
  }
 
+ #searchbartext {
+     margin-top: 8px;
+     margin-left: 60%;
+ }
+
  #searchTypesBlock .searchTypes .check {
      text-align: left;
  }
@@ -670,31 +673,52 @@ div.container {
 	 display:block;float:left;width:40%;height:20px;text-align:center;
  }
  .filterform{
-	 margin: 0px 0 0 0;
-                border-radius: 10px;
-                border: solid white;
-                padding: 0px;height:30px;width:100%;
+	 margin: 0px 0 20px 0;
+                height:40px;width:100%;
+                background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.2));
+
  }
  .stitle{
 	 display:block;float:left;text-align:center;width:10%;margin:0px 0px 0px 20px;color:#444444;
  }
+ #selecttext {
+    margin-top: 8px;
+    margin-left: 29%;
+}
  .sinput{
-	 height:30px;border:none;margin:-5px 0px 0px 30px;border-radius:5px;
+     height:30px;
+     border:none;
+     margin: 5px 0px 0px 0px;
+     border-radius:5px;
  }
- .sbutton{
-	 height:30px;font-size:17px;color:blue;background-color:white;font-family: Arial;font-weight:bold;border:none;border-radius:5px;margin:-5px 0px 0px 40px;text-align:center;
+ #sbutton{
+     margin:-3px 0px 0px 0px;
+     text-align:center;
  }
  .otitle{
-	 display:block;float:left;text-align:center;width:20%;
+     display:block;
+     float:left;
+     width:20%;
  }
  .oselect{
-	 display:block;float:left;width:20%;text-align:center;margin:-2px 0px 0px 0px;border-radius:5px;
+     display:block;
+     float:left;
+     width:16%;
+     text-align:center;
+     margin:8px -30px 0px 0px;
+     border-radius:5px;
  }
  .obutton{
-	 display:block;float:left;width:20%;text-align:center;color:blue;
+     display:block;
+     float:left;
+     width:20%;
+     margin-left: -50px;
+     text-align:center;
+     color:blue;
  }
-.obu{
-	height:30px;font-size:17px;color:blue;background-color:white;font-weight:bold;font-family: Arial;border:none;border-radius:5px;margin:-3px 0px 0px 0px;text-align:center;
+#obu{
+    margin:0px 0px 0px 0px;
+    text-align:center;
 }
  .navbar-nav:hover .dropdown-menu{
      display: block;
