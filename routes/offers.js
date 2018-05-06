@@ -58,8 +58,10 @@ router.post("/offers", isLoggedIn, function(req, res) {
 		}
 		var hoursOffered = req.body.offer.hoursOffered;
 		var category = req.body.offer.category;
+		var type = req.body.offer.type;
+		var location = req.body.offer.location;
 		var newOffer = {title: title, desc: desc, author: author,
-				hoursOffered: hoursOffered, category: category};
+				hoursOffered: hoursOffered, category: category, location: location, type: type};
 		Offer.create(newOffer, function(err, newO) {
                     if(err){
 			console.log(err);
