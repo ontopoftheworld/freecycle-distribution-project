@@ -16,9 +16,16 @@
         <% if(currentUser && offer.author.id.equals(currentUser._id) || currentUser.isAdmin) { %>
 
             <a class="btn btn-secondary" href="/offers/<%= offer._id %>/edit">Edit Offer</a>
+            <% if(currentUser && offer.author.id.equals(currentUser._id) || currentUser.isAdmin) { %>
             <form action="/offers/<%= offer._id %>?_method=DELETE" method="POST">
                 <button class="btn btn-danger">Delete Offer</button>
             </form>
+            <% } %>
+            <% if(currentUser && offer.author.id.equals(currentUser._id) || currentUser.isAdmin) { %>
+                <form action="/offers/<%= offer._id %>?_method=DELETE" method="POST">
+                    <button class="btn btn-danger">Delete Offer</button>
+                </form>
+            <% } %>
         <% } %>
         <% if(!(currentUser && offer.author.id.equals(currentUser._id) || currentUser.isAdmin)) { %>
             <a href="/offers/<%= offer._id %>/response" class="btn btn-primary">Take on</a>

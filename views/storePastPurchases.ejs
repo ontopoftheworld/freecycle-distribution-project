@@ -52,7 +52,7 @@
                         <h6>Item Condition: <%= item.condition %></h6>
                         <h6>Date posted: <%= item.postDate.toDateString() %></h6>
 						<br><br>
-                        <a href="/users/<%= item.buyerID %>">See Buyer's Profile</a>
+                        <a href="/users/<%= item.buyerId %>">See Buyer's Profile</a>
                     </span>
                     <p>
                         <form action="/store/soldItems" method="POST">

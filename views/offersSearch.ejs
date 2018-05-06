@@ -1,20 +1,28 @@
 <% include partials/header %>
     <div class="container">
         <h1>Offers <%= type %> result for:  <%= searchContent %>  <%= sortCategory %></h1>
-        
-        <div class="searchOffers">
+        <a class="btn btn-success" style="background-color:#001B88" href="/offers/new">Make New Offer</a>
+        <a href="/response" class="btn btn-success" style="background-color:rgb(18, 116, 37);">See responses you have submitted</a>
+        <br><br>
+
+        <div class="filterform" >
+		<div class="searchStore" >
             <form action="/search/offers" id="searchForm" method="GET">
+			<div class="stitle">
+                <h5 id="searchbartext" style="font-weight:500;text-shadow: 0px 0px;color:white; align-content: center;">Search:</h5>
+			    </div>
                 <input name="userId" type="hidden" value="<%= currentUser._id %>" >
-                <input type="text" placeholder="Find Items" name="searchContent" value="" required>
-                <button class="btn btn-primary" type="submit">Search </button>
+                <input class="sinput" type="text" placeholder=" Find Offers" name="searchContent" value="" required>
+                <button id="sbutton" class="btn btn-dark" type="submit">Go </button>
             </form>
         </div>
-        
-        <form action="/sortonsearch/offers" method="GET">
-            <input name="searchContent" type="hidden" value="<%= searchContent %>">
+        <form action="/sort/offers" method="GET">
             <input name="userId" type="hidden" value="<%= currentUser._id %>" >
-            <h5>filter:</h5>
-            <select name="sortCategory">
+            <div class="otitle">
+                <h5 id="selecttext" style="font-weight:500;text-shadow: 0px 0px;">Sort by category:</h5>
+			</div>
+			<div class="oselect">
+			<select name="sortCategory" style="border:none">
                 <option value="">Choose Category</option>
                 <option value="categoryA">categoryA</option>
                 <option value="categoryB">categoryB</option>
@@ -22,23 +30,25 @@
                 <option value="categoryD">categoryD</option>
                 <option value="categoryE">categoryE</option>
             </select>
-            <button class="btn btn-primary">Apply</button>
-        </form>
-
-        <a class="btn btn-primary" href="/offers/new">Make New Offer</a>
+			</div>
+			<div class="obutton">
+            <button id="obu" class="btn btn-dark">Apply</button>
+			</div>
+			<br><br>
+        </form></div>
         <div id="offer">
                 <% if (offers=="") { %>
                     <h2>No result!</h2>
                 <% } %>
             <% offers.forEach(function(offer){ %>
-	              <div class="indivPost">
+	              <div class="indivPost1" style="column-count:3">
                     <span>
-                        <h4><%= offer.title %></h4>
-                        <p><%= offer.desc %></p>
-                        <h6>Hours offered: <%= offer.hoursOffered %></h6>
+                        <h4 style="line-height:40px;"><%= offer.title %></h4>
+                        
+                       
                         <h6>Category: <%= offer.category %></h6>
-                        <h6>Date posted: <%= offer.postDate.toDateString() %></h6>
-                        <p>Submitted by: <a href="/users/<%= offer.author.id %>"><%= offer.author.username %></a></p>
+                      
+                        <p>Submitted by: <a href="/users/<%= offer.author.id %>" class="btn btn-primary"><%= offer.author.username %></a></p>
                     </span>
                     <p>
                         <a href="/offers/<%= offer._id %>" class="btn btn-primary">More Info</a>
@@ -54,6 +64,7 @@
                 <%  } %>
             </div>
         <% } %>
+		<a href="/offers%>" class="btn btn-primary">Go Back</a>
     </div>
 
     <script>

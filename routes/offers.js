@@ -12,7 +12,7 @@ var Offer = require("../models/offers"),
 
 // Offers routes:
 router.get("/offers", isLoggedIn, function(req, res) {
-    Offer.find({}, function(err, allOffers){
+	Offer.find({"isAccepted": false, "isActive": true}, function(err, allOffers){
         if(err){
             console.log(err);
         } else {
@@ -493,12 +493,17 @@ function handleAccept(req, foundResponse, foundOffer, res) {
 					res.redirect("/offers");
 				    } else {
 					updatedResponse.isAccepted = true;
-					req.flash("success", "You have accepted this request.");
-					res.render("showOfferResponse",
-						   {"currentUser": req.user,
-						    "offer": foundOffer,
-						    "response": updatedResponse,
-						    "responderId": updatedResponder._id});
+					Offer.findByIdAndUpdate(
+					    foundOffer._id,
+					    {$set : {isAccepted: true}},
+					    function() {
+						req.flash("success", "You have accepted this request.");
+						res.render("showOfferResponse",
+							   {"currentUser": req.user,
+							    "offer": foundOffer,
+							    "response": updatedResponse,
+							    "responderId": updatedResponder._id});
+					    });
 				    }
 				});
 			}
@@ -530,15 +535,25 @@ router.post("/response/:id/closeIncomplete", isLoggedIn, function(req, res) {
 		req.flash("error", "This offer has already been closed.");
 		res.redirect("/offers");
 	    } else {
-		const messageUponSuccess = "The offer has been closed." +
-		      " The hours have been returned to the responder.";
-		const logMessage = "An offer that you had requested " +
-		      " was closed without its completion. " +
-		      "The hours in holding were returned to you";
-		addHours(foundEscrow[0].fromUser, foundEscrow[0].hours,
-			 req, res, messageUponSuccess, logMessage);
-	    }
+		OfferResponse.findById(
+		    foundEscrow.offerResponseId, function(err, foundOfferResponse) {
+			Offer.findByIdAndUpdate(
+			    foundOfferResponse.offerId,
+			    { $set : { "isActive" : false }},
+			    { upsert : false, multi : true },
+			    function() {
+				const messageUponSuccess = "The offer has been closed." +
+				      " The hours have been returned to the responder.";
+				const logMessage = "An offer that you had requested " +
+				      " was closed without its completion. " +
+				      "The hours in holding were returned to you";
+				addHours(foundEscrow[0].fromUser, foundEscrow[0].hours,
+					 req, res, messageUponSuccess, logMessage);
+			    });
+		    }
+		});
 	}
+    }
     });
 });
 
