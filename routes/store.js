@@ -130,10 +130,11 @@ router.post("/store", isLoggedIn, function(req, res) {
                     id: req.user._id,
                     username: req.user.username
                 }
+                var location = req.body.location;
                 var hourPrice = req.body.hourPrice;
                 var category = req.body.category;
                 var condition = req.body.condition;
-                var newItem = {title: title, desc: desc, author: author, hourPrice: hourPrice, category: category, condition: condition, imgname:imgname};
+                var newItem = {title: title, desc: desc, author: author, location: location, hourPrice: hourPrice, category: category, condition: condition, imgname:imgname};
                 Store.create(newItem, function(err, newI) {
                     if(err){
                         console.log(err);

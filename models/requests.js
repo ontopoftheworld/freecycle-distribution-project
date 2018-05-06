@@ -27,7 +27,8 @@ var requestSchema = new mongoose.Schema({
                 ref: "RequestResponse"
             }
         }
-    ]
+    ],
+    location: String
 });
     
 requestSchema.plugin(mongoosePaginate);
