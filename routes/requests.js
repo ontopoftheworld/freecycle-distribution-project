@@ -522,23 +522,31 @@ router.post("/requests/response/:id/closeIncomplete", isLoggedIn, function(req, 
 		req.flash("error", "This response to the request has already been closed.");
 		res.redirect("/requests");
 	    } else {
-		RequestReponse.findById(
+		/*RequestReponse.findById(
 		    foundEscrow[0].requestResponseId, function(err, foundRequestResponse) {
 			Request.findByIdAndUpdate(
 			    foundRequestResponse[0].requestId,
 			    { $set : { "isActive" : false }},
 			    { upsert : false, multi : true, new: true },
 			    function() {
-				const messageUponSuccess = "This response to the request has been closed " +
-				      "without completion." +
-				      " The hours have been returned to the author of this request.";
-				const logMessage = "The response to your request " +
-				      " was closed without its completion. " +
-				      "The hours in holding were returned to you.";
-				addHours(foundEscrow[0].fromUser, foundEscrow[0].hours,
-					 req, res, messageUponSuccess, logMessage);
+			    const messageUponSuccess = "This response to the request has been closed " +
+			    "without completion." +
+			    " The hours have been returned to the author of this request.";
+			    const logMessage = "The response to your request " +
+			    " was closed without its completion. " +
+			    "The hours in holding were returned to you.";
+			    addHours(foundEscrow[0].fromUser, foundEscrow[0].hours,
+			    req, res, messageUponSuccess, logMessage);
 			    });
-		    });
+			    });*/
+		const messageUponSuccess = "This response to the request has been closed " +
+		      "without completion." +
+		      " The hours have been returned to the author of this request.";
+		const logMessage = "The response to your request " +
+		      " was closed without its completion. " +
+		      "The hours in holding were returned to you.";
+		addHours(foundEscrow[0].fromUser, foundEscrow[0].hours,
+			 req, res, messageUponSuccess, logMessage);
 	    }
 	}
     });
@@ -557,11 +565,10 @@ router.post("/requests/response/:id/markCompleted", isLoggedIn, function(req, re
 		req.flash("error", "This response to the request has already been closed.");
 		res.redirect("/requests");
 	    } else {
-		console.log(foundEscrow[0].requestResponseId);
+		/*console.log(foundEscrow[0].requestResponseId);
 		RequestReponse.findByIdAndUpdate(
 		    foundEscrow[0].requestResponseId,
-		    { $set : { "isComplete" : true }},
-		    { new: true },
+		    { "isComplete" : true },
 		    function(err, foundRequestResponse) {
 			console.log(foundRequestResponse.requestId);
 			Request.findByIdAndUpdate(
@@ -577,7 +584,13 @@ router.post("/requests/response/:id/markCompleted", isLoggedIn, function(req, re
 				addHours(foundEscrow[0].toUser, foundEscrow[0].hours,
 					 req, res, messageUponSuccess, logMessage);
 			    });
-		    });
+		    });*/
+		const messageUponSuccess = "The request has been completed." +
+		      " The hours have been released to the responder.";
+		const logMessage = "You completed a " +
+		      "posted request and earned the hours for its completion.";
+		addHours(foundEscrow[0].toUser, foundEscrow[0].hours,
+			 req, res, messageUponSuccess, logMessage);
 	    }
 	}
     });
