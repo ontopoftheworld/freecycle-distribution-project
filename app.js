@@ -25,6 +25,7 @@ var indexRoutes =   require("./routes/index"),
     userRoutes = require("./routes/users");
     accountRoutes =   require("./routes/account"),
     searchRoutes = require("./routes/search")
+	footerRoutes = require("./routes/footer")
 
 //mongoose.connect("mongodb://localhost/timebank");
 //mongoose.connect("mongodb://fdpadmin:freecycle@127.0.0.1:27017/fdp");
@@ -62,6 +63,7 @@ app.use(messagesRoutes);
 app.use(userRoutes);
 app.use(accountRoutes);
 app.use(searchRoutes);
+app.use(footerRoutes);
 
 server.listen(8080, function(){
     console.log('- Server listening on port 8080');
