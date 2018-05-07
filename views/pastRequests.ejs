@@ -7,7 +7,7 @@
                                 <% var i = 0; %>
                                 <% requests.forEach(function(request){ %>
                                         <h4><%= request.title %></h4>
-                                        <a href="/request/<%= request._id %>" class="btn btn-primary">More Info</a>
+                                        <a href="/requests/<%= request._id %>" class="btn btn-primary">More Info</a>
                                         <% i++; %>
                                 <% }); %>
                                 <% if (i == 0) { %>

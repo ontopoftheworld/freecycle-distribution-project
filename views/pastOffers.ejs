@@ -7,7 +7,7 @@
                                 <% var i = 0; %>
                                 <% offers.forEach(function(offer){ %>
                                         <h4><%= offer.title %></h4>
-                                        <a href="/offer/<%= offer._id %>" class="btn btn-primary">More Info</a>
+                                        <a href="/offers/<%= offer._id %>" class="btn btn-primary">More Info</a>
                                         <% i++; %>
                                 <% }); %>
                                 <% if (i == 0) { %>

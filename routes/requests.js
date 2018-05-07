@@ -442,7 +442,7 @@ router.post("/requests/response/:id", isLoggedIn, function(req, res) {
 });
 
 router.get("/pastRequests", isLoggedIn, function(req, res) {
-    Request.find({"author.id": req.user._id}, function(err, foundRequests){
+    Request.find({"author.id": req.user._id, isActive: false}, function(err, foundRequests){
         if(err){
             console.log(err);
         } else {
