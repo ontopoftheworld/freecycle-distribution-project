@@ -194,7 +194,7 @@ function createNewMessageForSeller(req, res, toUserId, toUserName, buyerId, buye
 				      console.log("ERROR: problems updating message");
 				  } else {
 				  		req.flash("success", "Trading success");
-                        res.render('pickupLocation', {location:item.location});
+                        res.render('pickupLocation', {location: item.location});
 				  }
 			      }
 			  );

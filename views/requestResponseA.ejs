@@ -9,7 +9,7 @@
                         <% requestResponses.forEach(function(response){ %>
                             <% if((response && response.requestId.equals(request._id))) { %>
                                 <h4><%= response.message %></h4>
-                                <h5>Response sent by:<%= response.responder.firstName %></h5>
+                                <a href="/users/<%= response.responder %>" class="btn btn-primary">Responder's Profile</a>
                                 <a href="/requests/response/<%=response._id%>" class="btn btn-primary">More Info</a>
                                 <% i++; %>
                             <% } %>
