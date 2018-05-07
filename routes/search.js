@@ -8,6 +8,10 @@ var Offer = require("../models/offers"),
     User = require("../models/users");
 
 router.get("/search/stores", isLoggedIn, function(req, res) {
+    if (!req.query.searchContent) {
+        req.flash("error", "Invalid Search Query");
+        res.redirect("back");
+    }
     var searchContent=req.query.searchContent;
     var id = req.query.userId;
     var sortCategory = req.query.sortCategory;
@@ -25,6 +29,10 @@ router.get("/search/stores", isLoggedIn, function(req, res) {
 });
 
 router.get("/search/offers", isLoggedIn, function(req, res) {
+    if (!req.query.searchContent) {
+        req.flash("error", "Invalid Search Query");
+        res.redirect("back");
+    }
     var searchContent=req.query.searchContent;
     var id = req.query.userId;
     var sortCategory = req.query.sortCategory;
@@ -42,6 +50,10 @@ router.get("/search/offers", isLoggedIn, function(req, res) {
 });
 
 router.get("/search/requests", isLoggedIn, function(req, res) {
+    if (!req.query.searchContent) {
+        req.flash("error", "Invalid Search Query");
+        res.redirect("back");
+    }
     var searchContent=req.query.searchContent;
     var id = req.query.userId;
     var sortCategory = req.query.sortCategory;
@@ -59,6 +71,10 @@ router.get("/search/requests", isLoggedIn, function(req, res) {
 });
 
 router.get("/search/users", isLoggedIn, function(req, res) {
+    if (!req.query.searchContent) {
+        req.flash("error", "Invalid Search Query");
+        res.redirect("back");
+    }
     var searchContent=req.query.searchContent;
     User.find({$text: {$search: searchContent}}, function(err, result){
         if(err){
@@ -71,6 +87,10 @@ router.get("/search/users", isLoggedIn, function(req, res) {
 
 
 router.get("/sort/stores", isLoggedIn, function(req, res) {
+    if (!req.query.sortCategory) {
+        req.flash("error", "Invalid Search Query");
+        res.redirect("back");
+    }
     var searchContent=req.query.searchContent;
     var id = req.query.userId;
     var sortCategory = req.query.sortCategory;
@@ -88,6 +108,10 @@ router.get("/sort/stores", isLoggedIn, function(req, res) {
 });
 
 router.get("/sort/offers", isLoggedIn, function(req, res) {
+    if (!req.query.sortCategory) {
+        req.flash("error", "Invalid Search Query");
+        res.redirect("back");
+    }
     var searchContent=req.query.searchContent;
     var id = req.query.userId;
     var sortCategory = req.query.sortCategory;
@@ -105,6 +129,10 @@ router.get("/sort/offers", isLoggedIn, function(req, res) {
 });
 
 router.get("/sort/requests", isLoggedIn, function(req, res) {
+    if (!req.query.sortCategory) {
+        req.flash("error", "Invalid Search Query");
+        res.redirect("back");
+    }
     var searchContent=req.query.searchContent;
     var id = req.query.userId;
     var sortCategory = req.query.sortCategory;
@@ -122,6 +150,10 @@ router.get("/sort/requests", isLoggedIn, function(req, res) {
 });
 
 router.get("/sortonsearch/stores", isLoggedIn, function(req, res) {
+    if (!req.query.sortCategory) {
+        req.flash("error", "Invalid Search Query");
+        res.redirect("back");
+    }
     var searchContent=req.query.searchContent;
     var id = req.query.userId;
     var sortCategory = req.query.sortCategory;
@@ -157,6 +189,10 @@ router.get("/sortonsearch/stores", isLoggedIn, function(req, res) {
 });
 
 router.get("/sortonsearch/offers", isLoggedIn, function(req, res) {
+    if (!req.query.sortCategory) {
+        req.flash("error", "Invalid Search Query");
+        res.redirect("back");
+    }
     var searchContent=req.query.searchContent;
     var id = req.query.userId;
     var sortCategory = req.query.sortCategory;
@@ -192,6 +228,10 @@ router.get("/sortonsearch/offers", isLoggedIn, function(req, res) {
 });
 
 router.get("/sortonsearch/requests", isLoggedIn, function(req, res) {
+    if (!req.query.sortCategory) {
+        req.flash("error", "Invalid Search Query");
+        res.redirect("back");
+    }
     var searchContent=req.query.searchContent;
     var id = req.query.userId;
     var sortCategory = req.query.sortCategory;
@@ -228,6 +268,10 @@ router.get("/sortonsearch/requests", isLoggedIn, function(req, res) {
 
 
 router.get("/search", isLoggedIn, function(req, res) {
+    if (!req.query.searchContent) {
+        req.flash("error", "Invalid Search Query");
+        res.redirect("back");
+    }
     var searchType=req.query.searchType;
     var searchContent=req.query.searchContent;
     var id = req.query.userId;

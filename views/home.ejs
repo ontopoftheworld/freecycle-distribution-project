@@ -2,30 +2,40 @@
 
 <div class="container">
 <div id="homepage">
-<h1> Welcome to the FDP Time Exchange, <%= currentUser.username %>! </h1>
-<div class="container">
-    <% if(currentUser.isAdmin) { %>
-        <a class="btn btn-primary">You Are an Admin</a>
-     <% } %>
-    <h5>Your Hours: <%= user.userHours %></h5>
-</div>
-<!-- <div><a href="/requests">See all requests</a></div>
-<div><a href="/offers">See all offers</a></div> -->
 
-<div class="listingBoxV" id="acceptedAssignments" style="overflow-y: scroll; height:400px;">
-        <a class="btn btn-success"  href="/offers/new">Post a New Offer</a><br><br>
-    <h5>Browse Newest Offer Posts:</h5>
+    
+<h1> Welcome to the FDP Time Exchange, <%= currentUser.username %>! </h1>
+<% if(currentUser.isAdmin) { %>
+    <div style="width: 100%; height: 10%; background-color: red"><p style="text-align: center;
+        line-height: 40px; font-size: 200%; padding-top: 1%">You Are The Main Website Administrator</p></div>
+ <% } %>
+
+ <% if(currentUser.isSAdmin) { %>
+    <div style="width: 100%; height: 10%; background-color: goldenrod"><p style="text-align: center;
+        line-height: 40px; font-size: 200%; padding-top: 1%">You are an Administrator</p></div>
+ <% } %>
+<div class="container">
+    <h3 style="margin-top: 25px; font-weight: bold;">Your Hours <span class="fa fa-bank"></span>:  <%= user.userHours %></h3>
+</div>
+
+
+<div class="listingBoxHo" id="acceptedAssignments" style="overflow-y: scroll; height:400px;">
+        <a class="btn btn-success"  href="/offers/new">Post a New Offer</a>
+        <a href="/response" class="btn btn-info">Offers You Responded To</a>
+    <h5 style="margin:10px">Browse Newest Offer Posts:</h5>
     <ul>
         <li>
                 <% var i = 0; %>
                 <% offers.forEach(function(offer){ %>
-                        <div class="indivPost" style="margin: 0px auto;
-    border-radius: 10px;
-    border: solid white;
-    padding: 0px 50px 0px 50px;">
-                            <p>
+                        <div class="indivPost" style="margin: 0px auto; 
+                            border-radius: 10px;
+                            border-color: white;
+                            padding: 0px 10px 0px 10px;
+                            width: 100%;
+                            margin-top: 10px;">
+                            <p style="text-align: left; margin-top:13px;">
                                 <span>
-                                    <a href="/offers/<%= offer._id %>" class="btn btn-primary"><%= offer.title %></a>
+                                    <a href="/offers/<%= offer._id %>" class="btn btn-primary"><%= offer.title.substring(0,41); %></a>
                                 </span>
                             </p>
                         </div>
@@ -39,17 +49,24 @@
     </ul>
 </div>
 
-<div class="listingBoxV" id="pastAssignments" style="overflow-y: scroll; height:400px;">
-        <a class="btn btn-success"  href="/requests/new">Post a New Request</a><br><br>
-    <h5>Browse Newest Requests Posts:</h5>
+
+<div class="listingBoxHo" id="pastAssignments" style="overflow-y: scroll; height:400px;">
+        <a class="btn btn-success"  href="/requests/new">Post a New Request</a>
+        <a href="/requestsResponse" class="btn btn-info">Requests You Responded To</a>
+    <h5  style="margin:10px">Browse Newest Request Posts:</h5>
     <ul>
             <li>
                     <% var i = 0; %>
                     <% requests.forEach(function(request){ %>
-                            <div class="indivPost">
-                                <p>
+                        <div class="indivPost" style="margin: 0px auto; 
+                        border-radius: 10px;
+                        border-color: white;
+                        padding: 0px 10px 0px 10px;
+                        width: 100%;
+                        margin-top: 10px;">
+                                <p style="text-align: left; margin-top:13px;">
                                     <span>
-                                        <a href="/requests/<%= request._id %>" class="btn btn-primary"><%= request.title %></a>
+                                        <a href="/requests/<%= request._id %>" class="btn btn-primary"><%= request.title.substring(0,41) %></a>
                                     </span>
                                 </p>
                             </div>
@@ -63,7 +80,8 @@
     </ul>
 </div>
 <br><br>
-
+<a class="btn btn-dark"  href="/messages">Check Inbox</a>
+<a class="btn btn-dark"  href="/store/history/<%= currentUser._id %>">See Your Past Store Purchases</a>
 </div>
 </div>
 <br><br><br><br>
