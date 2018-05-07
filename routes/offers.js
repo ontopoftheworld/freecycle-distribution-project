@@ -452,6 +452,16 @@ router.post("/response/:id", isLoggedIn, function(req, res) {
     });
 });
 
+router.get("/pastOffers", isLoggedIn, function(req, res) {
+    Offer.find({"author.id": req.user._id, isActive: false}, function(err, foundOffers){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("pastOffers", {offers: foundOffers} );
+        }
+    });
+});
+
 function handleAccept(req, foundResponse, foundOffer, res) {
     User.find({_id: foundResponse.responder}, function(err, responderInfo) {
 	// check if the responder has enough hours to request the user's offer.

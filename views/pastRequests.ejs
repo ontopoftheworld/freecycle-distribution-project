@@ -1,0 +1,25 @@
+<% include partials/header %>
+
+    <div class="container">
+        <h1>All Your Past Requests:</h1>
+                <div class="indivPost">
+                        <span>
+                                <% var i = 0; %>
+                                <% requests.forEach(function(request){ %>
+                                        <h4><%= request.title %></h4>
+                                        <a href="/requests/<%= request._id %>" class="btn btn-primary">More Info</a>
+                                        <% i++; %>
+                                <% }); %>
+                                <% if (i == 0) { %>
+                                    <p>You do not have any past requests</p>
+                                <% } %>
+                        </span>
+                    </div>
+    </div>
+
+        <script>
+            $( "#requests" ).addClass( "selected" );
+        </script>
+        
+        <% include partials/footer %>
+        
