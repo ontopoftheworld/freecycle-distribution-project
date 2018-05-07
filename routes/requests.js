@@ -81,6 +81,8 @@ router.get("/requests/:id", isLoggedIn, function(req, res) {
     Request.findById(req.params.id, function(err, foundRequest) {
         if(err) {
             console.log(err);
+        } if (!foundRequest) {
+            res.redirect("back");
         } else {
             res.render("showrequest", {request: foundRequest});
         }
@@ -91,6 +93,8 @@ router.get("/requests/:id/edit", isLoggedIn, function(req, res) {
     Request.findById(req.params.id, function(err, foundRequest) {
         if(err) {
             res.redirect("/requests");
+        } if (!foundRequest) {
+            res.redirect("back");
         } else {
             if (foundRequest.author.id.equals(req.user._id)) {
                 res.render("editrequest", {request: foundRequest});

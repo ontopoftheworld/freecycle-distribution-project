@@ -1,7 +1,7 @@
 <% include partials/header %>
 
     <div class="container">
-        <h1>Store page</h1>
+        <h1>Store</h1>
         <% if(currentUser.isAdmin || currentUser.isSAdmin) { %>
            <a class="btn btn-primary" style="background-color:#001B88" href="/store/new">Post a New Item</a>
             <a class="btn btn-success" style="background-color:rgb(18, 116, 37);" href="/store/soldItems">Items User's Have Bought</a>
