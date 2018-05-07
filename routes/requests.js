@@ -441,6 +441,17 @@ router.post("/requests/response/:id", isLoggedIn, function(req, res) {
     });
 });
 
+router.get("/pastRequests", isLoggedIn, function(req, res) {
+    Request.find({"author.id": req.user._id}, function(err, foundRequests){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("pastRequests", {requests: foundRequests} );
+        }
+    });
+});
+
+
 function handleAccept(req, foundResponse, foundRequest, res) {
     User.find({_id: foundRequest.author.id}, function(err, authorInfo) {
 	// check if the author has enough hours to accept the responder's offer.
