@@ -21,6 +21,10 @@
                 <button class="btn btn-danger">Delete Offer</button>
             </form>
             <% } %>
+<<<<<<< HEAD
+=======
+           
+>>>>>>> c68af7be0cb132506f02d227eea7c0156613cb37
         <% } %>
         <% if(!(currentUser && offer.author.id.equals(currentUser._id) || currentUser.isAdmin)) { %>
             <a href="/offers/<%= offer._id %>/response" class="btn btn-primary">Take on</a>

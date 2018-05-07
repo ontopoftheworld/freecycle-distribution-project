@@ -2,7 +2,7 @@
 
     <div class="container">
         <h1>Store <%= type %> result for:  <%= searchContent %>  <%= sortCategory %></h1>
-		<a class="btn btn-primary" href="/store/new">Post a New Item</a>
+		<a class="btn btn-success" style="background-color:#001B88" href="/store/new">Post a New Item</a>
           <br><br>
        <div class="filterform">
         <div class="searchStore">
@@ -43,7 +43,7 @@
                 <br><br>
             </form>
         </div>
-
+		
           <div id="item">
                 <% if (items=="") { %>
                     <h2>No result!</h2>
@@ -71,7 +71,7 @@
             <% if (items!="") { %>
                 <div class="pagination">
                 <%  for (i = 1; i <= pages; i++) { %>
-                    <a href="/sortonsearch/stores?searchContent=<%= searchContent %>&sortCategory=<%= sortCategory %>&userId=<%= currentUser._id %>&pageChoose=<%= i %>"><%= i %></a>
+                    <a style="color:white" href="/sortonsearch/stores?searchContent=<%= searchContent %>&sortCategory=<%= sortCategory %>&userId=<%= currentUser._id %>&pageChoose=<%= i %>"><%= i %></a>
                 <%  } %>
             </div>
             <% } %>

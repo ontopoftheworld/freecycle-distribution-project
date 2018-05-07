@@ -68,7 +68,7 @@
         <% if (requests!="") { %>
             <div class="pagination">
                 <%  for (i = 1; i <= pages; i++) { %>
-                    <a href="/sortonsearch/requests?searchContent=<%= searchContent %>&sortCategory=<%= sortCategory %>&userId=<%= currentUser._id %>&pageChoose=<%= i %>"><%= i %></a>
+                    <a style="color:white" href="/sortonsearch/requests?searchContent=<%= searchContent %>&sortCategory=<%= sortCategory %>&userId=<%= currentUser._id %>&pageChoose=<%= i %>"><%= i %></a>
                 <%  } %>
             </div>
         <% } %>

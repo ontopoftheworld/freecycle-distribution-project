@@ -830,6 +830,16 @@ div.container {
     margin:0px 0px 0px 0px;
     text-align:center;
 }
+.requestDetails{
+	background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.2));
+	border-radius:15px;
+	text-align:center
+}
+.offerDetails{
+	background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.2));
+	border-radius:15px;
+	text-align:center
+}
  .navbar-nav:hover .dropdown-menu{
      display: block;
  }
