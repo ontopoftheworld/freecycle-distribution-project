@@ -22,7 +22,7 @@ router.get("/home", isLoggedIn, function(req, res){
         if(err) {
             console.log(err);
         } else {
-            Offer.find({}, function(err, allOffers){
+            Offer.find({"isAccepted": false, "isActive": true}, function(err, allOffers){
                 if(err){
                     console.log(err);
                 } else {

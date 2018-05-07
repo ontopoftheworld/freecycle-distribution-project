@@ -7,7 +7,7 @@
         <h3><%= request.title %></h3><br><br>
 		
 		<label style="font-size:30px;font-family: Arial, sans-serif;"><%= request.desc %></label><br><br>
-		
+		<label style="font-size:30px;font-family: Arial, sans-serif;"><%= request.location %></label><br><br>
         <label style="   font-family: 'Open Sans', sans-serif">Total&nbsp</label><label style="font-size:30px;font-family: Arial, sans-serif;"><%= request.hoursOffered %></label><label style="font-family: 'Open Sans', sans-serif">&nbsphour(s)</label><br><br>
         
         
@@ -20,8 +20,8 @@
         <% if(!(currentUser && request.author.id.equals(currentUser._id))) { %>
             <a href="/requests/<%= request._id %>/response" class="btn btn-primary">Take on</a>
         <% } %><br><br>
-		<div style="float:right"><h5>Date posted: <%= request.postDate.toDateString() %></h5></div><br><br>
-       <div style="float:right;"> <h5>Submitted by: <a href="/users/<%= request.author.id %>"><%= request.author.username %></a></h5></div>
+		<div style="float:right; margin-right:15px"><h5>Date posted: <%= request.postDate.toDateString() %></h5></div><br><br>
+       <div style="float:right; margin-right:15px"> <h5>Submitted by: <a href="/users/<%= request.author.id %>"><%= request.author.username %></a></h5></div>
 		</div>
 		<br><br>
         <a href="/requests%>" class="btn btn-primary">Go Back</a>

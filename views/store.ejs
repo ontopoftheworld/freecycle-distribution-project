@@ -4,12 +4,11 @@
         <h1>Store page</h1>
         <% if(currentUser.isAdmin || currentUser.isSAdmin) { %>
             <a class="btn btn-primary" href="/store/new">Post a New Item</a>
-            <a class="btn btn-primary" href="/store/soldItems">Items User's Have Bought</a>
+            <a class="btn btn-primary" href="/store/soldItems">Items Users Have Bought</a>
         <% } %>
+        <a href="/store/history/<%= currentUser._id %>" class="btn btn-primary">Your Purchase History</a>
 		<br><br>
-        <div id="history">
-            <a href="/store/history/<%= currentUser._id %>" class="btn btn-primary">Purchase History</a>
-        </div>
+
         <div class="filterform">
         <div class="searchStore">
             <form action="/search/stores" id="searchForm" method="GET">
