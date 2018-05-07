@@ -518,9 +518,9 @@ router.post("/requests/response/:id/closeIncomplete", isLoggedIn, function(req, 
 		res.redirect("/requests");
 	    } else {
 		RequestReponse.findById(
-		    foundEscrow.requestResponseId, function(err, foundRequestResponse) {
+		    foundEscrow[0].requestResponseId, function(err, foundRequestResponse) {
 			Request.findByIdAndUpdate(
-			    foundRequestResponse.requestId,
+			    foundRequestResponse[0].requestId,
 			    { $set : { "isActive" : false }},
 			    { upsert : false, multi : true },
 			    function() {
@@ -553,7 +553,7 @@ router.post("/requests/response/:id/markCompleted", isLoggedIn, function(req, re
 		res.redirect("/requests");
 	    } else {
 		RequestReponse.findByIdAndUpdate(
-		    foundEscrow.requestResponseId,
+		    foundEscrow[0].requestResponseId,
 		    { $set : { "isComplete" : true }},
 		    function(err, foundRequestResponse) {
 			Request.findByIdAndUpdate(
