@@ -3,8 +3,8 @@
     <div class="container">
         <h1>Store page</h1>
         <% if(currentUser.isAdmin || currentUser.isSAdmin) { %>
-            <a class="btn btn-primary" href="/store/new">Post a New Item</a>
-            <a class="btn btn-primary" href="/store/soldItems">Items User's Have Bought</a>
+            <a class="btn btn-success" style="background-color:#001B88" href="/store/new">Post a New Item</a>
+            <a class="btn btn-success" style="background-color:rgb(18, 116, 37);" href="/store/soldItems">Items User's Have Bought</a>
         <% } %>
 		<br><br>
         <div id="history">
@@ -49,6 +49,9 @@
                 <br><br>
             </form>
         </div>
+		<div style="width:100%;
+    max-height: 700px;
+    overflow-y: scroll;">
             <div id="item">
                 <% items.forEach(function(item){ %>
 		   <div class="indivPost1" style="column-count:3;max-height:200px;">
@@ -73,7 +76,7 @@
                 <% }); %>
             </div>
     </div>
-
+</div>
     <script>
         $( "#store" ).addClass( "selected" );
     </script>

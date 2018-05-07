@@ -12,11 +12,12 @@
 }
 </style>
     <div class="container">
-        <h1>Offers</h1><a class="btn btn-success" style="background-color:#001B88" href="/offers/new">Make New Offer</a>
-        <a href="/response" class="btn btn-success" style="background-color:rgb(18, 116, 37);">See responses you have submitted</a>
+        <h1>Offers</h1><a class="btn btn-success" style="background-color:#001B88" href="/offers/new">Post New Offer</a>
+        <a href="/response" class="btn btn-success" style="background-color:rgb(18, 116, 37);">Your Submitted Offer Responses</a>
 		
         <h3>Offers Posted By You:</h3>
         <div class="ScrollStyleYou">
+		
         <div id="offer">
             <% var i = 0; %>
             <% offers.forEach(function(offer){ %>
