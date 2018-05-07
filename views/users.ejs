@@ -3,7 +3,7 @@
     <div class="container">
 
         <h1>Members</h1>
-
+        <% if(currentUser.isAdmin || currentUser.isSAdmin) { %>
         <h3>Current Admins:</h3>
         <div class="ScrollStyleYou" >
         <div id="offer">
@@ -26,6 +26,7 @@
             <% } %>
         </div>
         </div>
+     <% } %>
 
         <h3>Browse All Users:</h3>
         <div class="searchUser">
@@ -49,7 +50,6 @@
    			<input type="text" id="toUser" name="message[toUser]" placeholder="Member's username" style="display:none" value="<%=user.username%>">
                         <input type="submit" id="submitButton" class="btn btn-primary" value="Message">
 			</form>
-                        <% if(user.isSAdmin) { %> <a class="btn btn-primary" href="">Admin</a> <% } %>
                     </p>
 		            </div>	
                 <% }); %>

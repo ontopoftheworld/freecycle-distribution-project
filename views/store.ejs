@@ -3,13 +3,12 @@
     <div class="container">
         <h1>Store page</h1>
         <% if(currentUser.isAdmin || currentUser.isSAdmin) { %>
-            <a class="btn btn-primary" style="background-color:#001B88" href="/store/new">Post a New Item</a>
+           <a class="btn btn-primary" style="background-color:#001B88" href="/store/new">Post a New Item</a>
             <a class="btn btn-success" style="background-color:rgb(18, 116, 37);" href="/store/soldItems">Items User's Have Bought</a>
-        <% } %>
+       <% } %>
+        <a href="/store/history/<%= currentUser._id %>" class="btn btn-primary">Your Purchase History</a>
 		<br><br>
-        <div id="history">
-            <a href="/store/history/<%= currentUser._id %>" class="btn btn-primary">Purchase History</a>
-        </div>
+
         <div class="filterform">
         <div class="searchStore">
             <form action="/search/stores" id="searchForm" method="GET">

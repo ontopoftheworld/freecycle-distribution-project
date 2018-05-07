@@ -2,7 +2,7 @@
 <style>
 .ScrollStyleYou{
     width:100%;
-    max-height: 400px;
+    max-height: 250px;
     overflow-y: scroll;
 }
 .ScrollStyleOthers{
@@ -12,20 +12,22 @@
 }
 </style>
     <div class="container">
+
         <h1>Offers</h1><a class="btn btn-primary" style="background-color:#001B88" href="/offers/new">Post New Offer</a>
-        <a href="/response" class="btn btn-success" style="background-color:rgb(18, 116, 37);">Your Submitted Offer Responses</a>
-		
-        <h3>Offers Posted By You:</h3>
+        <a href="/response" class="btn btn-success" style="background-color:rgb(18, 116, 37);">Offers You Responded To</a>
+        
+        <div class="listingBoxHx">
+        <h3 style="margin-top: 5px">Your Active Offer Posts:</h3>
         <div class="ScrollStyleYou">
 		
         <div id="offer">
             <% var i = 0; %>
             <% offers.forEach(function(offer){ %>
                 <% if((currentUser && offer.author.id.equals(currentUser._id))) { %>
-		            <div class="indivPost1" style="margin: 0 0 0px 0px;">
+		            <div class="indivPost">
                         <p>
                             <span>
-                                <a href="/offers/<%= offer._id %>" class="btn btn-primary"><%= offer.title %></a>
+                                <a href="/offers/<%= offer._id %>" class="btn btn-primary"><%= offer.title.substring(0,79) %></a>
                                 <a href="/offers/<%= offer._id %>" class="btn btn-primary">More Info</a>
                                 <a href="/offers/<%= offer._id %>/response" class="btn btn-primary">See Responses (<%= offer.offerResponse.length %>)</a>
                             </span>
@@ -35,12 +37,13 @@
                 <% } %>
             <% }); %>
             <% if (i == 0) { %>
-                <p>You do not currently have any active offer postings</p>
+                <p style="font-style: italic">You do not currently have any active offer postings</p>
             <% } %>
         </div>
         </div>
+    </div>
 
-        <h3>Browse Offers Posted By Others:</h3>
+        <h3 style="margin-top: 20px">Browse Offers Posted By Others:</h3>
 		
 		
 		<div class="filterform" >

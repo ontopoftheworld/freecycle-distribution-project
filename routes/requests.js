@@ -58,8 +58,9 @@ router.post("/requests", isLoggedIn, function(req, res) {
                 }
                 var hoursOffered = req.body.request.hoursOffered;
                 var category = req.body.request.category;
+                var location = req.body.request.location;
                 var newRequest = {title: title, desc: desc, author: author,
-                        hoursOffered: hoursOffered, category: category};
+                        hoursOffered: hoursOffered, category: category, location: location};
                 Request.create(newRequest, function(err, newR) {
                     if(err){
                         console.log(err);

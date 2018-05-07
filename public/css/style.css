@@ -187,6 +187,15 @@ h6 {
     min-width: 450px;
 }
 
+.listingBoxHx {
+    padding: 20px;
+    border: solid white;
+    border-radius: 10px;
+    margin: 10px;
+    width: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.2));
+}
+
 .listingBoxV {
     padding: 20px;
     border: solid white;
@@ -209,6 +218,16 @@ h6 {
     display: inline-block;
     width: 47%;
     min-width: 450px;
+}
+
+.listingBoxHx ul {
+    margin-top: 0px;
+    list-style-type: none;
+}
+
+.listingBoxHx li {
+    color: black;
+    opacity: 0.8;
 }
 
 .listingBoxHo ul {
@@ -303,6 +322,7 @@ h6 {
     border: solid white;
     padding: 20px 50px 5px 50px;
     background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.2));
+    margin-top: 10px;
 /* display: inline-block;
     width: 25%; */
 }
@@ -766,7 +786,7 @@ div.container {
  .filterform{
 	 margin: 0px 0 20px 0;
                 height:40px;width:100%;
-                background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.2));
+                background: linear-gradient(to bottom, rgba(0, 0, 0, 0.468), rgba(0, 0, 0, 0.379));
 
  }
  .stitle{
