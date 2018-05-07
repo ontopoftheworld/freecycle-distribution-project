@@ -453,7 +453,7 @@ router.post("/response/:id", isLoggedIn, function(req, res) {
 });
 
 router.get("/pastOffers", isLoggedIn, function(req, res) {
-    Offer.find({"author.id": req.user._id}, function(err, foundOffers){
+    Offer.find({"author.id": req.user._id, isActive: false}, function(err, foundOffers){
         if(err){
             console.log(err);
         } else {
@@ -544,7 +544,7 @@ router.post("/response/:id/closeIncomplete", isLoggedIn, function(req, res) {
 		req.flash("error", "This offer has already been closed.");
 		res.redirect("/offers");
 	    } else {
-		OfferReponse.findById(
+		/*OfferReponse.findById(
 		    foundEscrow[0].offerResponseId, function(err, foundOfferResponse) {
 			Offer.findByIdAndUpdate(
 			    foundOfferResponse[0].offerId,
@@ -558,8 +558,15 @@ router.post("/response/:id/closeIncomplete", isLoggedIn, function(req, res) {
 				      "The hours in holding were returned to you";
 				addHours(foundEscrow[0].fromUser, foundEscrow[0].hours,
 					 req, res, messageUponSuccess, logMessage);
-			    });
-		    });
+					 });
+					 });*/
+		const messageUponSuccess = "The offer has been closed." +
+		      " The hours have been returned to the responder.";
+		const logMessage = "An offer that you had requested " +
+		      " was closed without its completion. " +
+		      "The hours in holding were returned to you";
+		addHours(foundEscrow[0].fromUser, foundEscrow[0].hours,
+			 req, res, messageUponSuccess, logMessage);
 	    }
 	}
     });
