@@ -3,13 +3,8 @@
     <div class="container">
         <h1>Store page</h1>
         <% if(currentUser.isAdmin || currentUser.isSAdmin) { %>
-<<<<<<< HEAD
             <a class="btn btn-primary" href="/store/new">Post a New Item</a>
             <a class="btn btn-primary" href="/store/soldItems">Items Users Have Bought</a>
-=======
-            <a class="btn btn-success" style="background-color:#001B88" href="/store/new">Post a New Item</a>
-            <a class="btn btn-success" style="background-color:rgb(18, 116, 37);" href="/store/soldItems">Items User's Have Bought</a>
->>>>>>> c68af7be0cb132506f02d227eea7c0156613cb37
         <% } %>
         <a href="/store/history/<%= currentUser._id %>" class="btn btn-primary">Your Purchase History</a>
 		<br><br>
