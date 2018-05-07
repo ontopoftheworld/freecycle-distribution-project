@@ -1,15 +1,14 @@
 <% include partials/header %>
 
     <div class="container">
-        <h1>Store page</h1>
+        <h1>Store</h1>
         <% if(currentUser.isAdmin || currentUser.isSAdmin) { %>
-            <a class="btn btn-success" style="background-color:#001B88" href="/store/new">Post a New Item</a>
+           <a class="btn btn-primary" style="background-color:#001B88" href="/store/new">Post a New Item</a>
             <a class="btn btn-success" style="background-color:rgb(18, 116, 37);" href="/store/soldItems">Items User's Have Bought</a>
-        <% } %>
+       <% } %>
+        <a href="/store/history/<%= currentUser._id %>" class="btn btn-primary">Your Purchase History</a>
 		<br><br>
-        <div id="history">
-            <a href="/store/history/<%= currentUser._id %>" class="btn btn-primary">Purchase History</a>
-        </div>
+
         <div class="filterform">
         <div class="searchStore">
             <form action="/search/stores" id="searchForm" method="GET">
@@ -58,11 +57,11 @@
                     <img  src="https://s3.amazonaws.com/freecycle-distribution-project-storeimg/<%= item.imgname %>" width="150px" height="150px">
 					<span>
                         <h4><%= item.title %></h4>
-                        <p><%= item.desc %></p>
+                        <br>
                         <h6>Hour Price: <%= item.hourPrice %></h6>
                         <h6>Category: <%= item.category %></h6>
                         <h6>Item Condition: <%= item.condition %></h6>
-                        <h6>Date posted: <%= item.postDate.toDateString() %></h6>
+                        
 						<br><br>
                         <p>Submitted by: <a href="/users/<%= item.author.id %>"><%= item.author.username %></a></p>
                     </span>

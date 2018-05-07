@@ -1,8 +1,8 @@
 <% include partials/header %>
     <div class="container">
         <h1>Requests <%= type %> result for:  <%= searchContent %>  <%= sortCategory %></h1>
-        <a class="btn btn-success"  style="background-color:#001B88" href="/requests/new">Make New Request</a>
-        <a href="/requestsResponse" class="btn btn-primary" style="background-color:rgb(18, 116, 37);">See Your Responses to Requests</a>
+        <a class="btn btn-primary"  style="background-color:#001B88" href="/requests/new">Make New Request</a>
+        <a href="/requestsResponse" class="btn btn-success" style="background-color:rgb(18, 116, 37);">See Your Responses to Requests</a>
 		<br><br>
        <div class="filterform">
 		<div class="searchStore">
@@ -16,7 +16,8 @@
                 <button id="sbutton" class="btn btn-dark" type="submit">Go </button>
             </form>
         </div>
-        <form action="/sort/requests" method="GET">
+        <form action="/sortonsearch/requests" method="GET">
+            <input name="searchContent" type="hidden" value="<%= searchContent %>" >
             <input name="userId" type="hidden" value="<%= currentUser._id %>" >
 			<div class="otitle">
                 <h5 id="selecttext" style="font-weight:500;text-shadow: 0px 0px;">Sort by category:</h5>
@@ -45,7 +46,7 @@
 
         <div id="request">
                 <% if (requests=="") { %>
-                    <h2>No result!</h2>
+                    <h2>Your query did not return any results</h2>
                 <% } %>
             <% requests.forEach(function(request){ %>
                   <div class="indivPost1" style="column-count:3">

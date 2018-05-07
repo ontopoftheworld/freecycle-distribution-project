@@ -1,14 +1,14 @@
 <% include partials/header %>
 
-    <a href="/requests" class="btn btn-primary" id="backButton">Back</a>
     <div class="container">
         <h1>Post a New Request</h1>
 	<div class="newPostForm">
         <form action="/requests" method="POST">
-            <input type="text" name="request[title]" placeholder="Enter title here." required><br><br>
-            <input type="text" name="request[desc]" placeholder="Enter description" required><br><br>
-            <input type="number" name="request[hoursOffered]" placeholder="Enter hours offered" required><br><br>
-            <p>category:</p>
+            <input type="text" name="request[title]" placeholder="Enter Title" required><br><br>
+            <input type="text" name="request[desc]" placeholder="Enter Description" required><br><br>
+            <input type="text" name="offer[location]" placeholder="Location: City, State" required><br><br>
+            <input type="number" name="request[hoursOffered]" placeholder="Enter Hours Offered" required><br><br>
+            <p>Category:</p>
             <select name="request[category]">
                 <option value="Child Care">Child Care</option>
                 <option value="Arts and Crafts">Arts and Crafts</option>
@@ -25,7 +25,8 @@
             <br><br>
             <button>Submit</button>
         </form>
-	</div>
+    </div>
+    <a href="/requests" class="btn btn-primary" id="backButton">Back</a>
     </div>
 
     <script>

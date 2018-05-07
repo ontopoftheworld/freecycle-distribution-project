@@ -12,10 +12,11 @@
 }
 </style>
     <div class="container">
-        <h1>Requests</h1><a class="btn btn-success"  style="background-color:#001B88" href="/requests/new">Post New Request</a>
-        <a href="/requestsResponse" class="btn btn-primary" style="background-color:rgb(18, 116, 37);">Your Submitted Request Responses</a>
-		
-        <h3>Requests Posted By You:</h3>
+
+        <h1>Requests</h1><a class="btn btn-primary"  style="background-color:#001B88" href="/requests/new">Post New Request</a>
+        <a href="/requestsResponse" class="btn btn-success" style="background-color:rgb(18, 116, 37);">Requests You Responded To</a>
+		<div class="listingBoxHx">
+        <h3 style="margin-top: 5px">Your Active Request Posts:</h3>
         <div class="ScrollStyleYou">
         <div id="request">
             <% var i = 0; %>
@@ -24,7 +25,7 @@
 		            <div class="indivPost1" style="margin: 0 0 0px 0px;">
                         <p>
                             <span>
-                                <a href="/requests/<%= request._id %>" class="btn btn-primary"><%= request.title %></a>
+                                <a href="/requests/<%= request._id %>" class="btn btn-primary"><%= request.title.substring(0,79) %></a>
                                 <a href="/requests/<%= request._id %>" class="btn btn-primary">More Info</a>
                                 <a href="/requests/<%= request._id %>/response" class="btn btn-primary">See Responses (<%= request.requestResponse.length %>)</a>
                             </span>
@@ -34,12 +35,13 @@
                 <% } %>
             <% }); %>
             <% if (i == 0) { %>
-                <p>You do not currently have any active request postings</p>
+                <p style="font-style: italic">You do not currently have any active request postings</p>
             <% } %>
         </div>
         </div>
+    </div>
 
-        <h3>Browse Requests Posted By Others:</h3>
+        <h3 style="margin-top: 20px">Browse Requests Posted By Others:</h3>
 		<div class="filterform">
 		<div class="searchStore">
 		

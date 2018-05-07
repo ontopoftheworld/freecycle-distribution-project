@@ -3,7 +3,7 @@
     <div class="container">
 
         <h1>Members</h1>
-
+        <% if(currentUser.isAdmin || currentUser.isSAdmin) { %>
         <h3>Current Admins:</h3>
         <div class="ScrollStyleYou" >
         <div id="offer">
@@ -26,6 +26,7 @@
             <% } %>
         </div>
         </div>
+     <% } %>
 
         <h3>Browse All Users:</h3>
         <div class="searchUser">
@@ -38,10 +39,16 @@
     max-height: 700px;
     overflow-y: scroll;">
                 <% users.forEach(function(user){ %>
-		            <div class="indivPost">	
+		            <div class="indivPost1">	
                     <span>
-                        <h4>Name: <%= user.firstName %></h4>
-                        <h4>Username: <%= user.username %></h4>
+                        <label style="font-family: Arial, sans-serif;font-size:25px;">Name:&nbsp</label><label style="color: white;
+        font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+    text-shadow: 0px 0px 15px black;"><%= user.firstName %></label><br>
+                        <label style="font-family: Arial, sans-serif;font-size:25px;">Username:&nbsp</label><label style="color: white;
+        font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+    text-shadow: 0px 0px 15px black;"><%= user.username %></label><br>
                     </span>
                     <p>
                         <a href="/users/<%= user._id %>" class="btn btn-primary">More Info</a>
@@ -49,7 +56,6 @@
    			<input type="text" id="toUser" name="message[toUser]" placeholder="Member's username" style="display:none" value="<%=user.username%>">
                         <input type="submit" id="submitButton" class="btn btn-primary" value="Message">
 			</form>
-                        <% if(user.isSAdmin) { %> <a class="btn btn-primary" href="">Admin</a> <% } %>
                     </p>
 		            </div>	
                 <% }); %>

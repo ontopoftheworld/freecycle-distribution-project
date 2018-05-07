@@ -30,7 +30,6 @@ var offerSchema = new mongoose.Schema({
         }
     ],
     location: String,
-    type: String
 });
 
 offerSchema.plugin(mongoosePaginate);

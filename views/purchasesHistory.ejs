@@ -5,6 +5,9 @@
         <div class="container">
             <div id="itemnotpickup">
             <h4>Item not picked up yet:</h4>
+			<div style="width:100%;
+    max-height: 700px;
+    overflow-y: scroll;">
             <% items.forEach(function(item){ %>
             <% if(item.isPickedUp==false){ %>
 		          <div class="indivPost" style="column-count:3;max-height:200px;">
@@ -16,15 +19,20 @@
                         <h6>Category: <%= item.category %></h6>
                         <h6>Item Condition: <%= item.condition %></h6>
                         <h6>Date posted: <%= item.postDate.toDateString() %></h6>
+                        <h6>Pickup Location: <%= item.location %></h6>
 						<br><br>
                     </span>
 		          </div>
             <% } %>
         <% }); %>
+		</div>
             </div>
 
             <div id="itempickup">
             <h4>Item already picked up:</h4>
+			<div style="width:100%;
+    max-height: 700px;
+    overflow-y: scroll;">
             <% items.forEach(function(item){ %>
             <% if(item.isPickedUp==true){ %>
                   <div class="indivPost" style="column-count:3;max-height:200px;">
@@ -36,11 +44,13 @@
                         <h6>Category: <%= item.category %></h6>
                         <h6>Item Condition: <%= item.condition %></h6>
                         <h6>Date posted: <%= item.postDate.toDateString() %></h6>
+                        <h6>Pickup Location: <%= item.location %></h6>
                         <br><br>
                     </span>
                   </div>
             <% } %>
         <% }); %>
+		</div>
             </div>
 
 

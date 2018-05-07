@@ -58,8 +58,9 @@ router.post("/requests", isLoggedIn, function(req, res) {
                 }
                 var hoursOffered = req.body.request.hoursOffered;
                 var category = req.body.request.category;
+                var location = req.body.request.location;
                 var newRequest = {title: title, desc: desc, author: author,
-                        hoursOffered: hoursOffered, category: category};
+                        hoursOffered: hoursOffered, category: category, location: location};
                 Request.create(newRequest, function(err, newR) {
                     if(err){
                         console.log(err);
@@ -80,6 +81,8 @@ router.get("/requests/:id", isLoggedIn, function(req, res) {
     Request.findById(req.params.id, function(err, foundRequest) {
         if(err) {
             console.log(err);
+        } if (!foundRequest) {
+            res.redirect("back");
         } else {
             res.render("showrequest", {request: foundRequest});
         }
@@ -90,6 +93,8 @@ router.get("/requests/:id/edit", isLoggedIn, function(req, res) {
     Request.findById(req.params.id, function(err, foundRequest) {
         if(err) {
             res.redirect("/requests");
+        } if (!foundRequest) {
+            res.redirect("back");
         } else {
             if (foundRequest.author.id.equals(req.user._id)) {
                 res.render("editrequest", {request: foundRequest});

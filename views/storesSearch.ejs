@@ -2,7 +2,7 @@
 
     <div class="container">
         <h1>Store <%= type %> result for:  <%= searchContent %>  <%= sortCategory %></h1>
-		<a class="btn btn-success" style="background-color:#001B88" href="/store/new">Post a New Item</a>
+		<a class="btn btn-primary" style="background-color:#001B88" href="/store/new">Post a New Item</a>
           <br><br>
        <div class="filterform">
         <div class="searchStore">
@@ -17,7 +17,8 @@
         </div>
 
  
-            <form action="/sort/stores" method="GET">
+            <form action="/sortonsearch/stores" method="GET">
+            <input name="searchContent" type="hidden" value="<%= searchContent %>" >
 			<input name="userId" type="hidden" value="<%= currentUser._id %>" >
                 <div class="otitle">
                     <h5 id="selecttext" style="font-weight:500;text-shadow: 0px 0px;">Sort by category:</h5>
@@ -46,7 +47,7 @@
 		
           <div id="item">
                 <% if (items=="") { %>
-                    <h2>No result!</h2>
+                    <h2>Your query did not return any results</h2>
                 <% } %>
                 <% items.forEach(function(item){ %>
 		   <div class="indivPost1" style="column-count:3;max-height:200px;">
