@@ -16,7 +16,8 @@ var requestSchema = new mongoose.Schema({
     hoursOffered: Number,
     category: String,
     isActive: {type: Boolean, default: true},
-    isAccepted: {type: Boolean, default: false}, 
+    isAccepted: {type: Boolean, default: false},
+    isCompleted: {type: Boolean, default: false},
     requestResponse: [
         {
             responder: {
@@ -29,7 +30,8 @@ var requestSchema = new mongoose.Schema({
             }
         }
     ],
-    location: String
+    location: String,
+    type: String
 });
     
 requestSchema.plugin(mongoosePaginate);

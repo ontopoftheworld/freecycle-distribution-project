@@ -522,7 +522,7 @@ router.post("/requests/response/:id/closeIncomplete", isLoggedIn, function(req, 
 			Request.findByIdAndUpdate(
 			    foundRequestResponse[0].requestId,
 			    { $set : { "isActive" : false }},
-			    { upsert : false, multi : true },
+			    { upsert : false, multi : true, new: true },
 			    function() {
 				const messageUponSuccess = "This response to the request has been closed " +
 				      "without completion." +
@@ -534,7 +534,7 @@ router.post("/requests/response/:id/closeIncomplete", isLoggedIn, function(req, 
 					 req, res, messageUponSuccess, logMessage);
 			    });
 		    });
-		}
+	    }
 	}
     });
 });
@@ -552,15 +552,19 @@ router.post("/requests/response/:id/markCompleted", isLoggedIn, function(req, re
 		req.flash("error", "This response to the request has already been closed.");
 		res.redirect("/requests");
 	    } else {
+		console.log(foundEscrow[0].requestResponseId);
 		RequestReponse.findByIdAndUpdate(
 		    foundEscrow[0].requestResponseId,
 		    { $set : { "isComplete" : true }},
+		    { new: true },
 		    function(err, foundRequestResponse) {
+			console.log(foundRequestResponse.requestId);
 			Request.findByIdAndUpdate(
 			    foundRequestResponse.requestId,
 			    { $set : { "isActive" : false, "isCompleted": true }},
 			    { upsert : false, multi : true },
 			    function() {
+				console.log("up to add hours part");
 				const messageUponSuccess = "The request has been completed." +
 				      " The hours have been released to the responder.";
 				const logMessage = "You completed a " +

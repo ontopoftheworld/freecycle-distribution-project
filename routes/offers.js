@@ -540,7 +540,7 @@ router.post("/response/:id/closeIncomplete", isLoggedIn, function(req, res) {
 			Offer.findByIdAndUpdate(
 			    foundOfferResponse[0].offerId,
 			    { $set : { "isActive" : false }},
-			    { upsert : false, multi : true },
+			    { upsert : false, multi : true, new: true},
 			    function() {
 				const messageUponSuccess = "The offer has been closed." +
 				      " The hours have been returned to the responder.";
